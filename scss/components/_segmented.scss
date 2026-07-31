@@ -1,9 +1,14 @@
 @use "../tokens" as *;
 @use "../mixins" as *;
 
-// Segmented button — a single-select control drawn as a joined button
-// group, built on a native radio group. Zero JavaScript; arrow keys move
-// the selection because the inputs are real radios.
+// Segmented button — Material SegmentedButton anatomy in Lozenge tokens,
+// on a native radio group. Zero JavaScript; arrow keys move the selection
+// because the inputs are real radios.
+//
+// M3 anatomy: one hairline outline around the whole group, shared divider
+// lines between segments (no gaps), full stadium ends, transparent
+// unselected segments, and a leading checkmark that animates in on the
+// selected segment.
 //
 // Usage:
 // <fieldset class="segmented" aria-label="View">
@@ -14,11 +19,13 @@
 // </fieldset>
 .segmented {
   display: inline-flex;
-  gap: 2px;
   margin: 0;
   padding: 0;
-  border: none;
   min-width: 0;
+  border: 1px solid var(--lz-sys-border);
+  border-radius: $border-radius-pill;
+  overflow: hidden;
+  isolation: isolate;
 
   > input[type="radio"] {
     @include visually-hidden;
@@ -29,8 +36,8 @@
     align-items: center;
     justify-content: center;
     height: 32px;
-    padding: 0 12px;
-    background-color: $btn-default-bg;
+    padding: 0 16px;
+    background-color: transparent;
     color: $text-color;
     font-size: $font-size-base;
     font-weight: $btn-font-weight;
@@ -42,36 +49,55 @@
       background-color var(--lz-motion-fast) var(--lz-ease-standard),
       color var(--lz-motion-fast) var(--lz-ease-standard);
 
+    // Shared divider with the previous segment.
+    + input + label {
+      border-inline-start: 1px solid var(--lz-sys-border);
+    }
+
     &:hover {
-      background-color: $btn-default-hover-bg;
+      background-color: var(--lz-sys-interaction-hovered);
     }
 
-    &:first-of-type {
-      border-top-left-radius: $border-radius;
-      border-bottom-left-radius: $border-radius;
-    }
-
-    &:last-of-type {
-      border-top-right-radius: $border-radius;
-      border-bottom-right-radius: $border-radius;
+    // Leading checkmark, collapsed until selected.
+    &::before {
+      content: "✓";
+      max-width: 0;
+      overflow: hidden;
+      opacity: 0;
+      font-size: $font-size-sm;
+      transition:
+        max-width var(--lz-motion-fast) var(--lz-ease-standard),
+        opacity var(--lz-motion-fast) var(--lz-ease-standard),
+        margin var(--lz-motion-fast) var(--lz-ease-standard);
     }
   }
 
   > input[type="radio"]:checked + label {
     background-color: var(--lz-sys-selected-bg);
     color: var(--lz-sys-selected-text);
+
+    &::before {
+      max-width: 16px;
+      margin-inline-end: 6px;
+      opacity: 1;
+    }
   }
 
   > input[type="radio"]:focus-visible + label {
     position: relative;
     z-index: 1;
-    @include focus-ring;
+    outline: 2px solid transparent;
+    outline-offset: -3px;
+    box-shadow: inset 0 0 0 2px var(--lz-sys-focus-ring);
   }
 
   > input[type="radio"]:disabled + label {
-    background-color: var(--lz-sys-interaction-bg);
     color: $text-disabled;
     cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+    }
   }
 }
 
@@ -83,5 +109,5 @@
 
 .segmented-compact > label {
   height: 24px;
-  padding: 0 8px;
+  padding: 0 12px;
 }
