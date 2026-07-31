@@ -49,6 +49,41 @@
   text-transform: uppercase;
 }
 
+// Collapsible section groups on <details name="sidebar"> — the `name`
+// attribute gives exclusive-accordion behavior with zero JS.
+// <details class="sidebar-group" name="sidebar" open>
+//   <summary class="sidebar-section">Planning</summary>
+//   <a class="sidebar-item" href="#">Board</a>
+// </details>
+.sidebar-group {
+  > summary.sidebar-section {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+
+    &::before {
+      content: "";
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 4px 0 4px 6px;
+      border-color: transparent transparent transparent currentColor;
+      transition: transform var(--lz-motion-fast) var(--lz-ease-standard);
+    }
+  }
+
+  &[open] > summary.sidebar-section::before {
+    transform: rotate(90deg);
+  }
+}
+
 .sidebar-item {
   display: flex;
   align-items: center;

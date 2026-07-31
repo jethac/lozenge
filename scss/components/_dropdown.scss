@@ -1,46 +1,90 @@
 @use "../tokens" as *;
 @use "../mixins" as *;
 
-// CSS-only open state via .open on the wrapper, or drive with JS.
-// Usage:
-// <div class="dropdown open">
-//   <button class="btn">Filter ▾</button>
-//   <div class="dropdown-menu">
-//     <div class="dropdown-heading">Status</div>
-//     <a class="dropdown-item" href="#">To do</a>
-//     <a class="dropdown-item selected" href="#">In progress</a>
-//     <div class="dropdown-divider"></div>
-//     <a class="dropdown-item danger" href="#">Delete</a>
-//   </div>
+// Preferred recipe — popover + implicit-anchor positioning; the invoker
+// button is the anchor, the platform handles light-dismiss/Esc/top-layer:
+//
+// <button class="btn" popovertarget="statusmenu">Status ▾</button>
+// <div id="statusmenu" popover class="dropdown-menu">
+//   <div class="dropdown-heading">Move to</div>
+//   <a class="dropdown-item" href="#">To do</a>
 // </div>
+//
+// Legacy recipe (also the no-anchor-support layout): wrap in
+// <div class="dropdown open"> and toggle .open (or .show on the menu).
+
+// Skin, shared by both recipes.
+.dropdown-menu {
+  min-width: 160px;
+  max-width: 320px;
+  padding: 4px 0;
+  border: none;
+  border-radius: $border-radius;
+  box-shadow: $shadow-overlay;
+  color: $text-color;
+  @include glass(var(--lz-sys-surface-overlay));
+}
+
+// Popover recipe.
+.dropdown-menu[popover] {
+  inset: auto;
+  margin: 4px 0 0;
+
+  @supports (position-area: block-end) {
+    position-area: block-end span-inline-end;
+    position-try-fallbacks: flip-block, flip-inline;
+  }
+
+  @supports not (position-area: block-end) {
+    // No anchor positioning: centered sheet under the top edge.
+    position: fixed;
+    left: 50%;
+    top: 25%;
+    transform: translateX(-50%);
+  }
+
+  opacity: 1;
+  transition:
+    opacity var(--lz-motion-fast) var(--lz-ease-entrance),
+    display var(--lz-motion-fast) allow-discrete,
+    overlay var(--lz-motion-fast) allow-discrete;
+
+  @starting-style {
+    &:popover-open {
+      opacity: 0;
+    }
+  }
+}
+
+// Legacy class-driven recipe.
 .dropdown {
   position: relative;
   display: inline-block;
-}
 
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: $z-dropdown;
-  display: none;
-  min-width: 160px;
-  max-width: 320px;
-  margin-top: 4px;
-  padding: 4px 0;
-  border-radius: $border-radius;
-  background-color: var(--lz-sys-surface-overlay);
-  box-shadow: $shadow-overlay;
-}
+  > .dropdown-menu:not([popover]) {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: $z-dropdown;
+    display: none;
+    margin-top: 4px;
+  }
 
-.dropdown.open > .dropdown-menu,
-.dropdown-menu.show {
-  display: block;
+  &.open > .dropdown-menu:not([popover]),
+  > .dropdown-menu.show {
+    display: block;
+  }
 }
 
 .dropdown-menu-end {
   left: auto;
   right: 0;
+
+  @supports (position-area: block-end) {
+    &[popover] {
+      position-area: block-end span-inline-start;
+    }
+  }
 }
 
 .dropdown-heading {

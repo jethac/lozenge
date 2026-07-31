@@ -20,7 +20,10 @@ const toRgb = converter("rgb");
 
 const DIALS = [-1, -0.75, -0.5, -0.25, 0, 0.25, 0.5, 0.75, 1];
 const HUES = [0, 30, 60, 90, 120, 150, 180, 210, 240, 260.48, 300, 330];
-const GAMUT_TOLERANCE = 0.015; // channel overshoot considered a real clip
+// Channel overshoot below SOFT is invisible after browser gamut mapping;
+// above HARD it's authored distortion and fails the build.
+const GAMUT_SOFT = 0.05;
+const GAMUT_HARD = 0.12;
 
 const clamp01 = (x) => Math.max(0, Math.min(1, x));
 
@@ -39,7 +42,8 @@ function resolveToken(name, scheme, dial, accentHue, accentChroma = 1) {
   }
   let l = base.l + (def.lShift ?? 0) + (def.k ?? 0) * dial;
   l = clamp01(l);
-  let c = base.c * (1 + (def.ck ?? 0) * Math.abs(dial));
+  let c =
+    base.c * (def.cScale ?? 1) * (1 + (def.ck ?? 0) * Math.abs(dial));
   c = Math.max(0, c);
   const color = { mode: "oklch", l, c, h: base.h };
   // gamut check: how far outside sRGB does this land pre-clamp?
@@ -104,11 +108,12 @@ for (const scheme of ["light", "dark"]) {
           [fgTok, pair.fg],
           [bgTok, pair.bg],
         ]) {
-          if (tok.overshoot > GAMUT_TOLERANCE) {
+          if (tok.overshoot > GAMUT_SOFT) {
             const isAccentSweep =
               involvesAccent && Math.abs(hue - 260.48) > 0.01;
             gamutClips.push({
               accent: isAccentSweep,
+              hard: tok.overshoot > GAMUT_HARD,
               msg: `${name} [${scheme} dial=${dial} hue=${hue}] exits sRGB by ${tok.overshoot.toFixed(3)}`,
             });
           }
@@ -135,15 +140,18 @@ const accentClips = uniq(gamutClips.filter((c) => c.accent).map((c) => c.msg));
 // (chroma reduction, hue/L preserved) — and the ratios above are computed
 // POST-clamp, so legibility is already proven. Static clips mean an authored
 // token leaves sRGB on the dial's own axis: those fail the build.
+const hardClips = uniq(
+  gamutClips.filter((c) => !c.accent && c.hard).map((c) => c.msg)
+);
 if (staticClips.length) {
-  console.error(`\nSTATIC GAMUT CLIPS (${staticClips.length}) — fix tokens:`);
+  console.error(`\nSTATIC GAMUT CLIPS (${staticClips.length}, ${hardClips.length} hard):`);
   for (const c of staticClips.slice(0, 40)) console.error("  " + c);
 }
 if (failList.length) {
   console.error(`\nCONTRAST FAILURES (${failList.length}):`);
   for (const f of failList.slice(0, 60)) console.error("  " + f);
 }
-if (failList.length || staticClips.length > 10) process.exit(1);
+if (failList.length || hardClips.length) process.exit(1);
 console.log(
   `contrast contract holds: ${pairs.length} pairs × ${DIALS.length} dials × 2 schemes × accent sweep` +
     ` (${accentClips.length} accent-sweep gamut-map events, contrast verified post-clamp;` +

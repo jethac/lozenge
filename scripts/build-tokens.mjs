@@ -64,10 +64,14 @@ function sysDecl(name, def) {
   ].filter(Boolean);
   const l =
     lTerms.length > 1 ? `clamp(0, calc(${lTerms.join(" + ")}), 1)` : "l";
-  // Chroma gate scales with |dial| so both extremes stay inside sRGB.
-  const c = hasCk
-    ? `max(0, calc(c * (1 + ${def.ck} * abs(var(--lz-contrast)))))`
-    : "c";
+  // Chroma gate scales with |dial| so both extremes stay inside sRGB;
+  // cScale is a static multiplier for tokens whose L shift leaves the
+  // source chroma outside the envelope even at rest.
+  const cs = def.cScale ?? 1;
+  const c =
+    hasCk || cs !== 1
+      ? `max(0, calc(c * ${cs} * (1 + ${def.ck ?? 0} * abs(var(--lz-contrast)))))`
+      : "c";
   const a = hasA ? ` / ${def.alpha}` : "";
   return `  --lz-sys-${name}: oklch(from var(${v}) ${l} ${c} h${a});\n`;
 }

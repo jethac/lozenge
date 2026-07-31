@@ -83,8 +83,8 @@
   max-width: 100%;
   padding: 16px;
   border-radius: $border-radius;
-  background-color: var(--lz-sys-surface-overlay);
   box-shadow: $shadow-modal;
+  @include glass(var(--lz-sys-surface-overlay));
 }
 
 .flag-fixed {

@@ -2,38 +2,56 @@
 @use "../tokens" as *;
 @use "../mixins" as *;
 
-// Usage:
-// <div class="blanket">
-//   <div class="modal modal-medium" role="dialog" aria-modal="true">
-//     <div class="modal-header"><h4 class="modal-title">Create issue</h4></div>
-//     <div class="modal-body">...</div>
-//     <div class="modal-footer">
-//       <button class="btn btn-subtle">Cancel</button>
-//       <button class="btn btn-primary">Create</button>
-//     </div>
-//   </div>
-// </div>
-.blanket {
-  position: fixed;
+// Native <dialog> skin — the platform supplies focus trapping, Esc,
+// top-layer stacking, and ::backdrop; Lozenge supplies the look.
+//
+// <dialog class="modal modal-small" id="confirm">
+//   <div class="modal-header"><h4 class="modal-title">Delete issue?</h4></div>
+//   <div class="modal-body">…</div>
+//   <form method="dialog" class="modal-footer">
+//     <button class="btn btn-subtle" value="cancel">Cancel</button>
+//     <button class="btn btn-danger" value="confirm">Delete</button>
+//   </form>
+// </dialog>
+// <button class="btn" commandfor="confirm" command="show-modal">Open</button>
+// (pre-invoker fallback: onclick="confirm.showModal()")
+dialog.modal {
+  padding: 0;
+  border: none;
   inset: 0;
-  z-index: $z-blanket;
-  display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 60px 16px;
-  background-color: $blanket-bg;
-  overflow-y: auto;
-}
-
-.modal {
-  z-index: $z-modal;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+  margin: auto;
+  width: calc(100% - 32px);
   max-height: calc(100vh - 120px);
   border-radius: $border-radius;
-  background-color: var(--lz-sys-surface-overlay);
   box-shadow: $shadow-modal;
+  color: $text-color;
+  @include glass(var(--lz-sys-surface-overlay));
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background: var(--lz-sys-blanket);
+  }
+
+  // Entrance animation (transition from @starting-style; discrete
+  // display/overlay transitions keep the exit graceful too).
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity var(--lz-motion-medium) var(--lz-ease-entrance),
+    transform var(--lz-motion-medium) var(--lz-ease-entrance),
+    display var(--lz-motion-medium) allow-discrete,
+    overlay var(--lz-motion-medium) allow-discrete;
+
+  @starting-style {
+    &[open] {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
 }
 
 @each $name, $width in $modal-widths {
@@ -65,9 +83,34 @@
   justify-content: flex-end;
   gap: 8px;
   padding: 16px 24px 24px;
+  margin: 0;
 }
 
 // Warning/danger emphasis for destructive confirmation modals.
 .modal-danger .modal-title {
   color: $danger;
+}
+
+// Legacy manual-overlay path (non-dialog hosts). Prefer <dialog>.
+.blanket {
+  position: fixed;
+  inset: 0;
+  z-index: $z-blanket;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 16px;
+  background-color: $blanket-bg;
+  overflow-y: auto;
+
+  .modal {
+    z-index: $z-modal;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-height: calc(100vh - 120px);
+    border-radius: $border-radius;
+    box-shadow: $shadow-modal;
+    @include glass(var(--lz-sys-surface-overlay));
+  }
 }

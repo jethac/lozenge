@@ -2,9 +2,26 @@
 @use "tokens" as *;
 
 // Focus ring used across all interactive components.
+// The transparent outline is invisible normally but is repainted with the
+// system Highlight color under forced-colors mode, where box-shadow vanishes.
 @mixin focus-ring($color: $focus-ring-color) {
-  outline: none;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
   box-shadow: 0 0 0 $focus-ring-width $color;
+}
+
+// Glass material: translucent + blurred when the platform allows it and the
+// --lz-glass axis is on; collapses to the solid anchor color otherwise.
+// Alpha is coupled to --lz-contrast (glass fades to opaque as contrast rises).
+@mixin glass($anchor: var(--lz-sys-surface-overlay)) {
+  background-color: #{$anchor};
+
+  @supports (backdrop-filter: blur(1px)) and
+    (color: oklch(from red l c h / 50%)) {
+    background-color: oklch(from #{$anchor} l c h / var(--lz-material-alpha));
+    backdrop-filter: blur(var(--lz-material-blur))
+      saturate(var(--lz-material-saturate));
+  }
 }
 
 // Atlassian-style heading, by level (100–900).

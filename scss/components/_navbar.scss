@@ -1,7 +1,7 @@
 @use "../tokens" as *;
 @use "../mixins" as *;
 
-// Top navigation bar.
+// Top navigation bar (sticky; frosted-glass when materials are on).
 // Usage:
 // <nav class="navbar">
 //   <a class="navbar-brand" href="#">Logo</a>
@@ -11,15 +11,16 @@
 //   <div class="navbar-actions"> ...buttons/avatar... </div>
 // </nav>
 .navbar {
-  position: relative;
+  position: sticky;
+  top: 0;
   z-index: $z-navigation;
   display: flex;
   align-items: center;
   gap: 16px;
   height: $navbar-height;
   padding: 0 16px;
-  background-color: $surface-bg;
   box-shadow: 0 1px 0 $separator-color;
+  @include glass(var(--lz-sys-surface));
 }
 
 .navbar-brand {

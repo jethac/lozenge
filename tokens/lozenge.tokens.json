@@ -1144,6 +1144,7 @@
               "light": {
                 "ref": "accent.300",
                 "lShift": -0.04,
+                "cScale": 0.82,
                 "k": -0.08,
                 "ck": -0.25
               },
@@ -1563,11 +1564,13 @@
             "schemes": {
               "light": {
                 "ref": "yellow.300",
-                "k": 0.02
+                "k": 0.02,
+                "ck": -0.12
               },
               "dark": {
                 "ref": "yellow.300",
-                "k": 0.02
+                "k": 0.02,
+                "ck": -0.12
               }
             },
             "note": "Resolved at runtime via CSS relative color; see tokens/sys.json"
@@ -1582,11 +1585,13 @@
             "schemes": {
               "light": {
                 "ref": "yellow.400",
-                "k": 0.02
+                "k": 0.02,
+                "ck": -0.12
               },
               "dark": {
                 "ref": "yellow.400",
-                "k": 0.02
+                "k": 0.02,
+                "ck": -0.12
               }
             },
             "note": "Resolved at runtime via CSS relative color; see tokens/sys.json"
@@ -1601,11 +1606,13 @@
             "schemes": {
               "light": {
                 "ref": "yellow.500",
-                "k": 0.02
+                "k": 0.02,
+                "ck": -0.12
               },
               "dark": {
                 "ref": "yellow.500",
-                "k": 0.02
+                "k": 0.02,
+                "ck": -0.12
               }
             },
             "note": "Resolved at runtime via CSS relative color; see tokens/sys.json"
@@ -1928,11 +1935,13 @@
             "schemes": {
               "light": {
                 "ref": "yellow.500",
-                "k": 0.03
+                "k": 0.03,
+                "ck": -0.12
               },
               "dark": {
                 "ref": "yellow.400",
-                "k": 0.03
+                "k": 0.03,
+                "ck": -0.12
               }
             },
             "note": "Resolved at runtime via CSS relative color; see tokens/sys.json"

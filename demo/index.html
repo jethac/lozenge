@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lozenge — kitchen sink</title>
 <script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="./theme-panel.js"></script>
 <style>
   .demo-section { margin-top: 40px; }
   .demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
@@ -173,18 +174,18 @@
           <div class="sidebar-subtitle">Software project</div>
         </div>
       </div>
-      <div class="sidebar-section">Planning</div>
-      <nav>
+      <details class="sidebar-group" name="sidebar" open>
+        <summary class="sidebar-section">Planning</summary>
         <a class="sidebar-item" href="#">Roadmap</a>
         <a class="sidebar-item" href="#">Backlog</a>
         <a class="sidebar-item active" href="#">Board</a>
         <a class="sidebar-item" href="#">Reports</a>
-      </nav>
-      <div class="sidebar-section">Development</div>
-      <nav>
+      </details>
+      <details class="sidebar-group" name="sidebar">
+        <summary class="sidebar-section">Development</summary>
         <a class="sidebar-item" href="#">Code</a>
         <a class="sidebar-item" href="#">Releases</a>
-      </nav>
+      </details>
     </aside>
     <div class="demo-main">
       <nav class="breadcrumbs mb-3">
@@ -198,14 +199,19 @@
         <span class="tag">design-system</span>
         <span class="tag">a11y</span>
       </div>
-      <ul class="tabs">
-        <li><a class="tab active">Details</a></li>
-        <li><a class="tab">Comments</a></li>
-        <li><a class="tab">History</a></li>
-        <li><a class="tab disabled">Automation</a></li>
-      </ul>
-      <div class="tab-pane">
-        <p>All settings surfaces need their hard-coded neutrals swapped for semantic tokens before the dark-mode beta.</p>
+      <div class="tabset">
+        <div class="tabs">
+          <input type="radio" name="issue-tabs" id="it-1" checked><label class="tab" for="it-1">Details</label>
+          <input type="radio" name="issue-tabs" id="it-2"><label class="tab" for="it-2">Comments</label>
+          <input type="radio" name="issue-tabs" id="it-3"><label class="tab" for="it-3">History</label>
+        </div>
+        <div class="tab-panes">
+          <div class="tab-pane">
+            <p>All settings surfaces need their hard-coded neutrals swapped for semantic tokens before the dark-mode beta.</p>
+          </div>
+          <div class="tab-pane"><p class="text-subtle">No comments yet.</p></div>
+          <div class="tab-pane"><p class="text-subtle">Created 2 days ago by Jetha C.</p></div>
+        </div>
       </div>
     </div>
   </div>
@@ -306,17 +312,15 @@
 
 <section class="demo-section">
   <h2>Dropdown, tooltip &amp; progress</h2>
-  <div class="demo-row" style="padding-bottom: 180px">
-    <div class="dropdown open">
-      <button class="btn">Status ▾</button>
-      <div class="dropdown-menu">
-        <div class="dropdown-heading">Move to</div>
-        <a class="dropdown-item" href="#">To do</a>
-        <a class="dropdown-item selected" href="#">In progress</a>
-        <a class="dropdown-item" href="#">Done<span class="dropdown-item-description">Resolves the issue</span></a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item danger" href="#">Delete issue</a>
-      </div>
+  <div class="demo-row">
+    <button class="btn" popovertarget="demo-status-menu">Status ▾</button>
+    <div id="demo-status-menu" popover class="dropdown-menu">
+      <div class="dropdown-heading">Move to</div>
+      <a class="dropdown-item" href="#">To do</a>
+      <a class="dropdown-item selected" href="#">In progress</a>
+      <a class="dropdown-item" href="#">Done<span class="dropdown-item-description">Resolves the issue</span></a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item danger" href="#">Delete issue</a>
     </div>
     <button class="btn" data-tooltip="Assign to me">Hover me (tooltip)</button>
     <button class="btn tooltip-bottom" data-tooltip="Shown below">Tooltip bottom</button>
@@ -371,21 +375,21 @@
 </section>
 
 <section class="demo-section">
-  <h2>Modal (static preview)</h2>
-  <div style="position: relative; height: 360px; border-radius: 3px; overflow: hidden;">
-    <div class="blanket" style="position: absolute;">
-      <div class="modal modal-small" role="dialog" aria-modal="true">
-        <div class="modal-header"><h4 class="modal-title">Delete this issue?</h4></div>
-        <div class="modal-body">
-          <p>LOZ-14 and its 3 subtasks will be permanently deleted. You can't undo this.</p>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-subtle">Cancel</button>
-          <button class="btn btn-danger">Delete</button>
-        </div>
-      </div>
-    </div>
+  <h2>Modal (native &lt;dialog&gt;)</h2>
+  <p class="text-subtle">Focus trap, Esc, backdrop, and open/close all come from the platform.</p>
+  <div class="demo-row">
+    <button class="btn btn-primary" commandfor="demo-modal" command="show-modal">Open modal</button>
   </div>
+  <dialog class="modal modal-small" id="demo-modal">
+    <div class="modal-header"><h4 class="modal-title">Delete this issue?</h4></div>
+    <div class="modal-body">
+      <p>LOZ-14 and its 3 subtasks will be permanently deleted. You can't undo this.</p>
+    </div>
+    <form method="dialog" class="modal-footer">
+      <button class="btn btn-subtle" value="cancel">Cancel</button>
+      <button class="btn btn-danger" value="confirm">Delete</button>
+    </form>
+  </dialog>
 </section>
 
 <section class="demo-section">

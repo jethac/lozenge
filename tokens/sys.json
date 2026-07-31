@@ -9,7 +9,7 @@
     "text-on-bold":    { "light": { "ref": "neutral.0" },                "dark": { "ref": "neutral.0" } },
 
     "link":            { "light": { "ref": "accent.400", "k": -0.08, "ck": -0.25 }, "dark": { "ref": "accent.100", "k": 0.08, "ck": -0.25 } },
-    "link-hover":      { "light": { "ref": "accent.300", "lShift": -0.04, "k": -0.08, "ck": -0.25 }, "dark": { "ref": "accent.75",  "k": 0.05, "ck": -0.25 } },
+    "link-hover":      { "light": { "ref": "accent.300", "lShift": -0.04, "cScale": 0.82, "k": -0.08, "ck": -0.25 }, "dark": { "ref": "accent.75",  "k": 0.05, "ck": -0.25 } },
     "link-active":     { "light": { "ref": "accent.500", "k": -0.06, "ck": -0.2 }, "dark": { "ref": "accent.200", "k": 0.06, "ck": -0.2 } },
 
     "surface":         { "light": { "ref": "neutral.0",  "k": 0.0 },    "dark": { "ref": "darkNeutral.100", "k": -0.02 } },
@@ -36,9 +36,9 @@
     "danger-bold":           { "light": { "ref": "red.400", "k": -0.05, "ck": -0.15 },   "dark": { "ref": "red.400", "k": -0.05, "ck": -0.15 } },
     "danger-bold-hovered":   { "light": { "ref": "red.300", "k": -0.05, "ck": -0.15 },   "dark": { "ref": "red.300", "k": -0.05, "ck": -0.15 } },
     "danger-bold-pressed":   { "light": { "ref": "red.500", "k": -0.04, "ck": -0.15 },   "dark": { "ref": "red.500", "k": -0.03, "ck": -0.15 } },
-    "warning-bold":          { "light": { "ref": "yellow.300", "k": 0.02 },  "dark": { "ref": "yellow.300", "k": 0.02 } },
-    "warning-bold-hovered":  { "light": { "ref": "yellow.400", "k": 0.02 },  "dark": { "ref": "yellow.400", "k": 0.02 } },
-    "warning-bold-pressed":  { "light": { "ref": "yellow.500", "k": 0.02 },  "dark": { "ref": "yellow.500", "k": 0.02 } },
+    "warning-bold":          { "light": { "ref": "yellow.300", "k": 0.02, "ck": -0.12 },  "dark": { "ref": "yellow.300", "k": 0.02, "ck": -0.12 } },
+    "warning-bold-hovered":  { "light": { "ref": "yellow.400", "k": 0.02, "ck": -0.12 },  "dark": { "ref": "yellow.400", "k": 0.02, "ck": -0.12 } },
+    "warning-bold-pressed":  { "light": { "ref": "yellow.500", "k": 0.02, "ck": -0.12 },  "dark": { "ref": "yellow.500", "k": 0.02, "ck": -0.12 } },
 
     "input-bg":              { "light": { "ref": "neutral.10" },             "dark": { "ref": "darkNeutral.0" } },
     "input-hover-bg":        { "light": { "ref": "neutral.30" },             "dark": { "ref": "darkNeutral.250" } },
@@ -60,7 +60,7 @@
 
     "status-warning-subtle-bg":    { "light": { "ref": "yellow.75" },                    "dark": { "ref": "yellow.500", "alpha": 0.28 } },
     "status-warning-subtle-text":  { "light": { "ref": "neutral.800", "k": -0.08 },      "dark": { "ref": "yellow.100", "k": 0.05, "ck": -0.2 } },
-    "status-warning-bold-bg":      { "light": { "ref": "yellow.500", "k": 0.03 },        "dark": { "ref": "yellow.400", "k": 0.03 } },
+    "status-warning-bold-bg":      { "light": { "ref": "yellow.500", "k": 0.03, "ck": -0.12 }, "dark": { "ref": "yellow.400", "k": 0.03, "ck": -0.12 } },
     "status-warning-on-bold":      { "light": { "ref": "neutral.800", "k": -0.08 },      "dark": { "ref": "darkNeutral.deep" } },
 
     "status-danger-subtle-bg":     { "light": { "ref": "red.50" },                       "dark": { "ref": "red.500", "alpha": 0.30 } },

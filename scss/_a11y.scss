@@ -1,0 +1,42 @@
+@use "tokens" as *;
+
+// Forced-colors (Windows Contrast Themes) pass: the engine already zeroes
+// --lz-glass; author colors are repainted by the UA. What we must supply is
+// structure that survives: transparent borders become system-colored, and
+// elevation/selection can no longer ride on shadows or subtle fills.
+@media (forced-colors: active) {
+  .card,
+  .issue-card,
+  .dropdown-menu,
+  .modal,
+  .flag,
+  .message,
+  .banner,
+  .board-column,
+  .lozenge,
+  .badge,
+  .tag,
+  .btn {
+    border: 1px solid transparent;
+  }
+
+  .sidebar-item.active,
+  .dropdown-item.selected,
+  .tab.active {
+    border: 1px solid transparent;
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}
+
+// Reduced motion: collapse transitions/animations to instant.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
