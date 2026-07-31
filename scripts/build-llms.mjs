@@ -143,5 +143,8 @@ for (const g of groupTokens()) {
   out.push("");
 }
 
-fs.writeFileSync(outPath, out.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n");
-console.log(`wrote ${path.relative(repoRoot, outPath)} (${blocks.length} components, ${Object.keys(sys).length} sys tokens)`);
+const body = out.join("\n").replace(/\n{3,}/g, "\n\n").trimEnd() + "\n";
+fs.writeFileSync(outPath, body);
+// Also into public/ so Vite ships it to the deployed site's root.
+fs.writeFileSync(path.join(repoRoot, "public", "llms.txt"), body);
+console.log(`wrote ${path.relative(repoRoot, outPath)} (+public/) (${blocks.length} components, ${Object.keys(sys).length} sys tokens)`);
