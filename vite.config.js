@@ -1,3 +1,4 @@
+import { globSync } from "node:fs";
 import { resolve } from "node:path";
 import { defineConfig } from "vite";
 import { expandLozenge } from "./scripts/expand.mjs";
@@ -19,11 +20,12 @@ export default defineConfig({
   build: {
     outDir: "site",
     rollupOptions: {
-      input: {
-        main: resolve(import.meta.dirname, "index.html"),
-        demo: resolve(import.meta.dirname, "demo/index.html"),
-        tags: resolve(import.meta.dirname, "demo/tags.html"),
-      },
+      input: [
+        "index.html",
+        "demo/index.html",
+        "demo/tags.html",
+        ...globSync("docs/*.html", { cwd: import.meta.dirname }).sort(),
+      ].map((p) => resolve(import.meta.dirname, p)),
     },
   },
 });

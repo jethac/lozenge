@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card — Lozenge</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="../demo/theme-panel.js"></script>
+<style>
+  .docs-shell { display: flex; align-items: stretch; }
+  .docs-shell > .sidebar { flex-shrink: 0; min-height: calc(100vh - 56px); }
+  .docs-main { flex: 1; min-width: 0; max-width: 880px; padding: 24px 32px 96px; }
+  .docs-main section { margin-top: 40px; }
+  .doc-example { margin: 12px 0 24px; }
+  .doc-box { border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); }
+  .doc-box-header { padding: 8px 16px; border-bottom: 1px solid var(--lz-sys-separator); font-weight: 600; }
+  .doc-box-body { padding: 16px; }
+  .doc-live { margin-bottom: 12px; }
+  .doc-src-label { margin: 12px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .doc-example pre { margin: 0 0 4px; }
+  pre { background: var(--lz-sys-surface-sunken); border: 1px solid var(--lz-sys-separator); border-radius: 3px; padding: 12px; overflow-x: auto; font-size: 12px; line-height: 1.5; }
+  pre code { font-family: inherit; }
+  .doc-swatch { width: 48px; height: 24px; border: 1px solid var(--lz-sys-border); border-radius: 3px; }
+  .doc-table-wrap { overflow-x: auto; }
+  .doc-axis-pane { flex: 1 1 240px; min-width: 240px; padding: 16px; border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); color: var(--lz-sys-text); }
+</style>
+</head>
+<body>
+
+<nav class="navbar" aria-label="Main">
+  <a class="navbar-brand" href="/">Lozenge</a>
+  <ul class="navbar-nav">
+    <li><a class="nav-link" href="/">Home</a></li>
+    <li><a class="nav-link active" href="/docs/">Components</a></li>
+    <li><a class="nav-link" href="/demo/">Demo</a></li>
+    <li><a class="nav-link" href="/demo/tags.html">Tags</a></li>
+    <li><a class="nav-link" href="https://github.com/jethac/lozenge">GitHub</a></li>
+  </ul>
+</nav>
+
+<div class="docs-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section">Guide</div>
+    <nav aria-label="Guide">
+      <a class="sidebar-item" href="index.html">Overview</a>
+    </nav>
+    <div class="sidebar-section">Components</div>
+    <nav aria-label="Components">
+      <a class="sidebar-item" href="avatar.html">Avatar</a>
+      <a class="sidebar-item" href="badge.html">Badge</a>
+      <a class="sidebar-item" href="board.html">Board</a>
+      <a class="sidebar-item" href="button.html">Button</a>
+      <a class="sidebar-item active" href="card.html" aria-current="page">Card</a>
+      <a class="sidebar-item" href="forms.html">Forms</a>
+      <a class="sidebar-item" href="lozenge.html">Lozenge</a>
+      <a class="sidebar-item" href="message.html">Message</a>
+      <a class="sidebar-item" href="navbar.html">Navbar</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
+      <a class="sidebar-item" href="tabs.html">Tabs</a>
+      <a class="sidebar-item" href="tag.html">Tag</a>
+    </nav>
+  </aside>
+  <main class="docs-main">
+<h1>Card</h1>
+<p class="text-subtle">Generic raised surface container with optional header/body/footer sections. Use for grouping related content on a page. For draggable-looking Kanban cards use the .issue-card subcomponent instead — it is an independent root, not a .card variant.</p>
+  <p class="text-subtlest">Root: <code>.card</code> on <code>&lt;div&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;article&gt;</code></p>
+<section>
+<h2>Example</h2>
+<div class="doc-box doc-example">
+  <div class="doc-box-header">Example</div>
+  <div class="doc-box-body">
+    <div class="doc-live"><div class="card"><div class="card-header">Sprint 14</div><div class="card-body">Content</div></div></div>
+<pre><code>&lt;div class=&quot;card&quot;&gt;&lt;div class=&quot;card-header&quot;&gt;Sprint 14&lt;/div&gt;&lt;div class=&quot;card-body&quot;&gt;Content&lt;/div&gt;&lt;/div&gt;</code></pre>
+  </div>
+</div>
+<div class="doc-box doc-example">
+  <div class="doc-box-header">Authoring tags — &lt;lz-issue-card&gt;</div>
+  <div class="doc-box-body">
+    <div class="doc-live"><div class="issue-card" data-lz="issue-card" data-lz-version="0.1.0">
+  <div class="issue-card-summary">
+  Login page throws redirect loop on expired session
+  
+</div>
+  <div class="issue-card-meta">
+    <span class="issue-type issue-type-bug" role="img" aria-label="bug"></span>
+    <span class="issue-key">LOZ-14</span>
+    <span class="avatar avatar-sm" data-lz="avatar" data-lz-version="0.1.0">DK</span>
+  </div>
+</div></div>
+<p class="doc-src-label text-subtlest">Authoring source</p><pre><code>&lt;lz-issue-card type=&quot;bug&quot; key=&quot;LOZ-14&quot;&gt;
+  Login page throws redirect loop on expired session
+  &lt;lz-avatar slot=&quot;meta&quot; size=&quot;sm&quot;&gt;DK&lt;/lz-avatar&gt;
+&lt;/lz-issue-card&gt;</code></pre>
+<p class="doc-src-label text-subtlest">Expands to</p><pre><code>&lt;div class=&quot;issue-card&quot; data-lz=&quot;issue-card&quot; data-lz-version=&quot;0.1.0&quot;&gt;
+  &lt;div class=&quot;issue-card-summary&quot;&gt;
+  Login page throws redirect loop on expired session
+  
+&lt;/div&gt;
+  &lt;div class=&quot;issue-card-meta&quot;&gt;
+    &lt;span class=&quot;issue-type issue-type-bug&quot; role=&quot;img&quot; aria-label=&quot;bug&quot;&gt;&lt;/span&gt;
+    &lt;span class=&quot;issue-key&quot;&gt;LOZ-14&lt;/span&gt;
+    &lt;span class=&quot;avatar avatar-sm&quot; data-lz=&quot;avatar&quot; data-lz-version=&quot;0.1.0&quot;&gt;DK&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+  </div>
+</div>
+<p class="text-subtle">Authoring tags are macro-expanded to the canonical HTML above at build time (Vite plugin or <code>lz-expand</code> CLI) — the shipped artifact has no runtime.</p>
+</section>
+<section>
+<h2>Contract</h2>
+  <h3>Structure</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.card-header</code></td><td>optional</td><td>Optional heading strip with bottom separator.</td></tr>
+      <tr><td><code>.card-body</code></td><td>optional</td><td>Padded content region; use for the main content.</td></tr>
+      <tr><td><code>.card-footer</code></td><td>optional</td><td>Optional footer strip with top separator.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Accessibility</h3>
+  <p class="text-subtle">Cards are non-interactive surfaces; if the whole card should be clickable, put a single &lt;a&gt; inside rather than click handlers on the div. Use a real heading element inside .card-header.</p>
+  <h3>Nesting</h3>
+  <p>Allowed in:</p>
+  <ul><li><code>page content</code></li> <li><code>grid/flex layouts</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.card</code></li></ul>
+</section>
+<section>
+<h2>Subcomponents</h2>
+<section id="issue-card">
+<h3>Issue-card</h3>
+<p class="text-subtle">A single issue on a Kanban board: summary text plus a meta row of issue-type icon, key, badge/lozenge, and avatar. Lives inside .board-column-cards; consecutive issue-cards space themselves 8px apart.</p>
+  <p class="text-subtlest">Root: <code>.issue-card</code> on <code>&lt;div&gt;</code></p>
+  <h4>Example</h4>
+<div class="doc-box doc-example">
+  <div class="doc-box-header">Example</div>
+  <div class="doc-box-body">
+    <div class="doc-live"><div class="issue-card"><div class="issue-card-summary">Fix login redirect loop</div><div class="issue-card-meta"><span class="issue-type issue-type-bug" aria-label="Bug"></span><span class="issue-key">PROJ-42</span><span class="badge">3</span><span class="avatar avatar-sm">JC</span></div></div></div>
+<pre><code>&lt;div class=&quot;issue-card&quot;&gt;&lt;div class=&quot;issue-card-summary&quot;&gt;Fix login redirect loop&lt;/div&gt;&lt;div class=&quot;issue-card-meta&quot;&gt;&lt;span class=&quot;issue-type issue-type-bug&quot; aria-label=&quot;Bug&quot;&gt;&lt;/span&gt;&lt;span class=&quot;issue-key&quot;&gt;PROJ-42&lt;/span&gt;&lt;span class=&quot;badge&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;avatar avatar-sm&quot;&gt;JC&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
+  </div>
+</div>
+  <h4>Structure</h4>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.issue-card-summary</code></td><td>required</td><td>The issue title; wraps and word-breaks.</td></tr>
+      <tr><td><code>.issue-card-meta</code></td><td>optional</td><td>Flex meta row (8px gap). Order matters visually: .issue-type first, then .issue-key, then badges/lozenges; put the .avatar last — it right-aligns via margin-left:auto.</td></tr>
+      <tr><td><code>.issue-card-meta &gt; .issue-key</code></td><td>optional</td><td>The issue identifier (e.g. LOZ-42); truncates.</td></tr>
+    </tbody>
+  </table></div>
+  <h4>Accessibility</h4>
+  <p class="text-subtle">The SCSS gives .issue-card cursor:pointer but the demo markup is a plain div — if a card opens the issue, make it (or its summary) a real link/button so it is keyboard-operable. Inner .issue-type icons need a text alternative (see issue-type).</p>
+  <h4>Nesting</h4>
+  <p>Allowed in:</p>
+  <ul><li><code>.board-column-cards</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.issue-card</code></li> <li><code>.card</code></li></ul>
+</section>
+<section id="issue-type">
+<h3>Issue-type</h3>
+<p class="text-subtle">16px colored square standing in for an issue-type glyph icon (story/bug/task/epic). Fixed categorical colors, deliberately not accent-driven. Used in .issue-card-meta, table cells, and inline next to titles.</p>
+  <p class="text-subtlest">Root: <code>.issue-type</code> on <code>&lt;span&gt;</code></p>
+  <h4>Example</h4>
+<div class="card doc-example">
+  <div class="card-header">Example</div>
+  <div class="card-body">
+    <div class="doc-live"><span class="issue-type issue-type-story" aria-label="Story"></span></div>
+<pre><code>&lt;span class=&quot;issue-type issue-type-story&quot; aria-label=&quot;Story&quot;&gt;&lt;/span&gt;</code></pre>
+  </div>
+</div>
+  <h4>Variants &amp; modifiers</h4>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
+    <tbody>
+      <tr><td><code>issue-type-story</code></td><td>type</td><td>one required · exclusive</td></tr>
+      <tr><td><code>issue-type-bug</code></td><td>type</td><td>one required · exclusive</td></tr>
+      <tr><td><code>issue-type-task</code></td><td>type</td><td>one required · exclusive</td></tr>
+      <tr><td><code>issue-type-epic</code></td><td>type</td><td>one required · exclusive</td></tr>
+    </tbody>
+  </table></div>
+  <h4>Accessibility</h4>
+  <p class="text-subtle">The square is color-only with no text content: give it aria-label (&quot;Bug&quot;, &quot;Story&quot;...) when the type is not stated in nearby text, or aria-hidden=&quot;true&quot; when it is purely decorative next to visible text.</p>
+  <h4>Nesting</h4>
+  <p>Allowed in:</p>
+  <ul><li><code>.issue-card-meta</code></li> <li><code>table cells</code></li> <li><code>.flag-icon</code></li> <li><code>inline before titles</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.issue-type</code></li></ul>
+</section>
+</section>
+  </main>
+</div>
+
+</body>
+</html>

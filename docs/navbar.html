@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Navbar — Lozenge</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="../demo/theme-panel.js"></script>
+<style>
+  .docs-shell { display: flex; align-items: stretch; }
+  .docs-shell > .sidebar { flex-shrink: 0; min-height: calc(100vh - 56px); }
+  .docs-main { flex: 1; min-width: 0; max-width: 880px; padding: 24px 32px 96px; }
+  .docs-main section { margin-top: 40px; }
+  .doc-example { margin: 12px 0 24px; }
+  .doc-box { border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); }
+  .doc-box-header { padding: 8px 16px; border-bottom: 1px solid var(--lz-sys-separator); font-weight: 600; }
+  .doc-box-body { padding: 16px; }
+  .doc-live { margin-bottom: 12px; }
+  .doc-src-label { margin: 12px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .doc-example pre { margin: 0 0 4px; }
+  pre { background: var(--lz-sys-surface-sunken); border: 1px solid var(--lz-sys-separator); border-radius: 3px; padding: 12px; overflow-x: auto; font-size: 12px; line-height: 1.5; }
+  pre code { font-family: inherit; }
+  .doc-swatch { width: 48px; height: 24px; border: 1px solid var(--lz-sys-border); border-radius: 3px; }
+  .doc-table-wrap { overflow-x: auto; }
+  .doc-axis-pane { flex: 1 1 240px; min-width: 240px; padding: 16px; border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); color: var(--lz-sys-text); }
+</style>
+</head>
+<body>
+
+<nav class="navbar" aria-label="Main">
+  <a class="navbar-brand" href="/">Lozenge</a>
+  <ul class="navbar-nav">
+    <li><a class="nav-link" href="/">Home</a></li>
+    <li><a class="nav-link active" href="/docs/">Components</a></li>
+    <li><a class="nav-link" href="/demo/">Demo</a></li>
+    <li><a class="nav-link" href="/demo/tags.html">Tags</a></li>
+    <li><a class="nav-link" href="https://github.com/jethac/lozenge">GitHub</a></li>
+  </ul>
+</nav>
+
+<div class="docs-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section">Guide</div>
+    <nav aria-label="Guide">
+      <a class="sidebar-item" href="index.html">Overview</a>
+    </nav>
+    <div class="sidebar-section">Components</div>
+    <nav aria-label="Components">
+      <a class="sidebar-item" href="avatar.html">Avatar</a>
+      <a class="sidebar-item" href="badge.html">Badge</a>
+      <a class="sidebar-item" href="board.html">Board</a>
+      <a class="sidebar-item" href="button.html">Button</a>
+      <a class="sidebar-item" href="card.html">Card</a>
+      <a class="sidebar-item" href="forms.html">Forms</a>
+      <a class="sidebar-item" href="lozenge.html">Lozenge</a>
+      <a class="sidebar-item" href="message.html">Message</a>
+      <a class="sidebar-item active" href="navbar.html" aria-current="page">Navbar</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
+      <a class="sidebar-item" href="tabs.html">Tabs</a>
+      <a class="sidebar-item" href="tag.html">Tag</a>
+    </nav>
+  </aside>
+  <main class="docs-main">
+<h1>Navbar</h1>
+<p class="text-subtle">Sticky top navigation bar: brand, horizontal nav links, and a right-aligned actions cluster. It is a frosted-glass surface when materials are enabled (--lz-glass). Use exactly one per page as the global app header; .navbar-primary gives the bold accent-colored version.</p>
+  <p class="text-subtlest">Root: <code>.navbar</code> on <code>&lt;nav&gt;</code></p>
+<section>
+<h2>Example</h2>
+<div class="card doc-example">
+  <div class="card-header">Example</div>
+  <div class="card-body">
+    <div class="doc-live"><nav class="navbar"><a class="navbar-brand" href="/">Lozenge</a><ul class="navbar-nav"><li><a class="nav-link active" href="#" aria-current="page">Your work</a></li><li><a class="nav-link" href="#">Projects</a></li></ul><div class="navbar-actions"><button class="btn btn-primary">Create</button><span class="avatar avatar-md">JC</span></div></nav></div>
+<pre><code>&lt;nav class=&quot;navbar&quot;&gt;&lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Lozenge&lt;/a&gt;&lt;ul class=&quot;navbar-nav&quot;&gt;&lt;li&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Your work&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Projects&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div class=&quot;navbar-actions&quot;&gt;&lt;button class=&quot;btn btn-primary&quot;&gt;Create&lt;/button&gt;&lt;span class=&quot;avatar avatar-md&quot;&gt;JC&lt;/span&gt;&lt;/div&gt;&lt;/nav&gt;</code></pre>
+  </div>
+</div>
+</section>
+<section>
+<h2>Contract</h2>
+  <h3>Variants &amp; modifiers</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
+    <tbody>
+      <tr><td><code>navbar-primary</code></td><td>modifier</td><td>optional</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Structure</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.navbar-brand</code></td><td>optional</td><td>Logo/product link, typically first child.</td></tr>
+      <tr><td><code>.navbar-nav</code></td><td>optional</td><td>A &lt;ul&gt; of &lt;li&gt; items each containing an &lt;a class=&quot;nav-link&quot;&gt;; mark the current page's link with .active.</td></tr>
+      <tr><td><code>.navbar-actions</code></td><td>optional</td><td>Right-aligned cluster (margin-left:auto) for buttons, search, and the user avatar.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Accessibility</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><code>.navbar</code></td><td><code>aria-label</code></td><td>recommended</td><td>The page contains more than one &lt;nav&gt; landmark (e.g. navbar + breadcrumbs + sidebar nav) — label each to distinguish them.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="text-subtle">Use a real &lt;nav&gt; element. Mark the current page with .active and aria-current=&quot;page&quot; on the nav-link. The navbar is a glass surface: never nest another glass surface (dropdown-menu, flag, modal) in its subtree — glass-on-glass compounds blur and breaks contrast guarantees; dropdowns opened from the navbar should use the popover recipe, which renders in the top layer.</p>
+  <h3>Nesting</h3>
+  <p>Allowed in:</p>
+  <ul><li><code>directly under &lt;body&gt;, above the app shell</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.navbar</code></li> <li><code>.dropdown-menu</code></li> <li><code>.flag</code></li> <li><code>dialog.modal</code></li></ul>
+</section>
+  </main>
+</div>
+
+</body>
+</html>

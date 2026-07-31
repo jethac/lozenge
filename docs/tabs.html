@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tabs — Lozenge</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="../demo/theme-panel.js"></script>
+<style>
+  .docs-shell { display: flex; align-items: stretch; }
+  .docs-shell > .sidebar { flex-shrink: 0; min-height: calc(100vh - 56px); }
+  .docs-main { flex: 1; min-width: 0; max-width: 880px; padding: 24px 32px 96px; }
+  .docs-main section { margin-top: 40px; }
+  .doc-example { margin: 12px 0 24px; }
+  .doc-box { border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); }
+  .doc-box-header { padding: 8px 16px; border-bottom: 1px solid var(--lz-sys-separator); font-weight: 600; }
+  .doc-box-body { padding: 16px; }
+  .doc-live { margin-bottom: 12px; }
+  .doc-src-label { margin: 12px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .doc-example pre { margin: 0 0 4px; }
+  pre { background: var(--lz-sys-surface-sunken); border: 1px solid var(--lz-sys-separator); border-radius: 3px; padding: 12px; overflow-x: auto; font-size: 12px; line-height: 1.5; }
+  pre code { font-family: inherit; }
+  .doc-swatch { width: 48px; height: 24px; border: 1px solid var(--lz-sys-border); border-radius: 3px; }
+  .doc-table-wrap { overflow-x: auto; }
+  .doc-axis-pane { flex: 1 1 240px; min-width: 240px; padding: 16px; border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); color: var(--lz-sys-text); }
+</style>
+</head>
+<body>
+
+<nav class="navbar" aria-label="Main">
+  <a class="navbar-brand" href="/">Lozenge</a>
+  <ul class="navbar-nav">
+    <li><a class="nav-link" href="/">Home</a></li>
+    <li><a class="nav-link active" href="/docs/">Components</a></li>
+    <li><a class="nav-link" href="/demo/">Demo</a></li>
+    <li><a class="nav-link" href="/demo/tags.html">Tags</a></li>
+    <li><a class="nav-link" href="https://github.com/jethac/lozenge">GitHub</a></li>
+  </ul>
+</nav>
+
+<div class="docs-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section">Guide</div>
+    <nav aria-label="Guide">
+      <a class="sidebar-item" href="index.html">Overview</a>
+    </nav>
+    <div class="sidebar-section">Components</div>
+    <nav aria-label="Components">
+      <a class="sidebar-item" href="avatar.html">Avatar</a>
+      <a class="sidebar-item" href="badge.html">Badge</a>
+      <a class="sidebar-item" href="board.html">Board</a>
+      <a class="sidebar-item" href="button.html">Button</a>
+      <a class="sidebar-item" href="card.html">Card</a>
+      <a class="sidebar-item" href="forms.html">Forms</a>
+      <a class="sidebar-item" href="lozenge.html">Lozenge</a>
+      <a class="sidebar-item" href="message.html">Message</a>
+      <a class="sidebar-item" href="navbar.html">Navbar</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
+      <a class="sidebar-item active" href="tabs.html" aria-current="page">Tabs</a>
+      <a class="sidebar-item" href="tag.html">Tag</a>
+    </nav>
+  </aside>
+  <main class="docs-main">
+<h1>Tabs</h1>
+<p class="text-subtle">Horizontal tab strip with an underline indicator. Two recipes share the .tabs/.tab skin: a plain link strip (&lt;ul class=&quot;tabs&quot;&gt;&lt;li&gt;&lt;a class=&quot;tab active&quot;&gt;) where YOU wire the switching, and the zero-JS .tabset subcomponent that switches panes with hidden radio inputs and :has().</p>
+  <p class="text-subtlest">Root: <code>.tabs</code> on <code>&lt;ul&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;nav&gt;</code></p>
+<section>
+<h2>Example</h2>
+<div class="card doc-example">
+  <div class="card-header">Example</div>
+  <div class="card-body">
+    <div class="doc-live"><ul class="tabs"><li><a class="tab active" href="#">Details</a></li><li><a class="tab" href="#">Comments</a></li></ul></div>
+<pre><code>&lt;ul class=&quot;tabs&quot;&gt;&lt;li&gt;&lt;a class=&quot;tab active&quot; href=&quot;#&quot;&gt;Details&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;tab&quot; href=&quot;#&quot;&gt;Comments&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;</code></pre>
+  </div>
+</div>
+</section>
+<section>
+<h2>Contract</h2>
+  <h3>Structure</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.tab</code></td><td>required</td><td>The tab items. In the link recipe: &lt;li&gt;&lt;a class=&quot;tab&quot;&gt; with .active on the current one (.disabled to disable). In the tabset recipe: &lt;label class=&quot;tab&quot;&gt; immediately following its radio input.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Accessibility</h3>
+  <p class="text-subtle">The link recipe carries no tab semantics by itself — add role=&quot;tablist&quot;/&quot;tab&quot;/&quot;tabpanel&quot; and aria-selected if you script it. The .tabset recipe rides on radio semantics instead: focus the group and switch with arrow keys; do not also add ARIA tab roles on top of the radios.</p>
+  <h3>Nesting</h3>
+  <p>Allowed in:</p>
+  <ul><li><code>detail views</code></li> <li><code>cards</code></li> <li><code>.tabset (as the strip of a CSS-only tabset)</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.tabs</code></li></ul>
+</section>
+<section>
+<h2>Subcomponents</h2>
+<section id="tabset">
+<h3>Tabset</h3>
+<p class="text-subtle">CSS-only switching tabs: hidden radio inputs inside .tabs drive which .tab-pane is visible via :has() — no JavaScript. Supports at most 8 tabs (the :has()/:nth pane-matching rules are generated for indices 1-8).</p>
+  <p class="text-subtlest">Root: <code>.tabset</code> on <code>&lt;div&gt;</code></p>
+  <h4>Example</h4>
+<div class="card doc-example">
+  <div class="card-header">Example</div>
+  <div class="card-body">
+    <div class="doc-live"><div class="tabset"><div class="tabs"><input type="radio" name="t" id="t1" checked><label class="tab" for="t1">Details</label><input type="radio" name="t" id="t2"><label class="tab" for="t2">Comments</label></div><div class="tab-panes"><div class="tab-pane">Details…</div><div class="tab-pane">Comments…</div></div></div></div>
+<pre><code>&lt;div class=&quot;tabset&quot;&gt;&lt;div class=&quot;tabs&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;t&quot; id=&quot;t1&quot; checked&gt;&lt;label class=&quot;tab&quot; for=&quot;t1&quot;&gt;Details&lt;/label&gt;&lt;input type=&quot;radio&quot; name=&quot;t&quot; id=&quot;t2&quot;&gt;&lt;label class=&quot;tab&quot; for=&quot;t2&quot;&gt;Comments&lt;/label&gt;&lt;/div&gt;&lt;div class=&quot;tab-panes&quot;&gt;&lt;div class=&quot;tab-pane&quot;&gt;Details…&lt;/div&gt;&lt;div class=&quot;tab-pane&quot;&gt;Comments…&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;</code></pre>
+  </div>
+</div>
+  <h4>Structure</h4>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.tabs</code></td><td>required</td><td>The strip. Its children must be alternating pairs: &lt;input type=&quot;radio&quot;&gt; immediately followed by its &lt;label class=&quot;tab&quot;&gt; (the CSS selects input:checked + .tab). All radios share one name; each label's for matches its input's id; exactly one input carries checked.</td></tr>
+      <tr><td><code>.tabs &gt; input[type=radio]</code></td><td>required</td><td>Visually-hidden radios as DIRECT children of .tabs. CRITICAL ordering constraint: the Nth radio (input:nth-of-type(N)) shows the Nth pane (.tab-pane:nth-child(N)) — radio order and pane order must correspond exactly.</td></tr>
+      <tr><td><code>.tabs &gt; label.tab</code></td><td>required</td><td>Each label must be the immediate next sibling of its radio, and its for attribute must reference that radio's id.</td></tr>
+      <tr><td><code>.tab-panes</code></td><td>required</td><td>Wrapper whose element children are ONLY .tab-pane divs, in the same order as the radios (pane visibility is matched by :nth-child, so any extra child element breaks the correspondence).</td></tr>
+      <tr><td><code>.tab-panes &gt; .tab-pane</code></td><td>required</td><td>One pane per tab, direct children of .tab-panes, same count and order as the radios.</td></tr>
+    </tbody>
+  </table></div>
+  <h4>Accessibility</h4>
+  <p class="text-subtle">Keyboard support comes from native radio groups (arrow keys switch, which also switches panes); the focused radio shows a focus ring on its label. Give the radio group a unique name per tabset on the page. Panes are display:none when inactive, so hidden content is correctly removed from the accessibility tree.</p>
+  <h4>Nesting</h4>
+  <p>Allowed in:</p>
+  <ul><li><code>detail views</code></li> <li><code>cards</code></li> <li><code>.demo-main / main content</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.tabset</code></li></ul>
+</section>
+</section>
+  </main>
+</div>
+
+</body>
+</html>
