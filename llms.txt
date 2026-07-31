@@ -25,6 +25,17 @@ exclusive; "required" axes must have exactly one class; glass surfaces
 
 ## Components
 
+### accordion
+
+Expansion-panel list (Material ExpansionPanel equivalent) on native <details>/<summary>: a bordered surface group of panels separated by separator borders, each with a rotating-chevron header and a padded body. The platform supplies expand/collapse, keyboard, and semantics. Give every panel the same name="…" attribute for exclusive-open behavior (opening one closes the others) with zero JS; omit name to allow several panels open at once.
+
+- Root: `.accordion` (element: div | section)
+- Required structure: `details.accordion-panel`, `details.accordion-panel > summary.accordion-header`, `.accordion-body`
+
+```html
+<div class="accordion"><details class="accordion-panel" name="faq" open><summary class="accordion-header">What is Lozenge?</summary><div class="accordion-body"><p>A zero-JS HTML+CSS design system.</p></div></details><details class="accordion-panel" name="faq"><summary class="accordion-header">Does it need a runtime?</summary><div class="accordion-body"><p>No — platform primitives only.</p></div></details></div>
+```
+
 ### avatar
 
 A circular user/entity avatar showing an image or initials fallback, with optional presence dot and square variant for projects/apps. A size class is mandatory — the base class sets no dimensions. Use .avatar-group to overlap several avatars (watchers, assignees).
@@ -71,6 +82,18 @@ Kanban board layout: a horizontally scrolling flex row of fixed-width columns, e
 <div class="board"><div class="board-column"><div class="board-column-header">To do <span class="badge">4</span></div><div class="board-column-cards"><div class="issue-card"><div class="issue-card-summary">Fix login loop</div></div></div></div></div>
 ```
 
+### bottom-nav
+
+Bottom navigation bar for phone-width layouts (Material NavigationBar equivalent): a 56px frosted-glass bar of 3–5 evenly-spread top-level destinations, each an icon over an 11px label with a pill indicator behind the active item's icon. Use exactly one per page, only for top-level destinations — fewer than 3 wants tabs, more than 5 wants a sidebar or rail. The base bar is static; add .bottom-nav-fixed to pin it to the bottom of the viewport.
+
+- Root: `.bottom-nav` (element: nav)
+- Modifiers: `bottom-nav-fixed`
+- Required structure: `.bottom-nav-item`, `.bottom-nav-item > .bottom-nav-icon`
+
+```html
+<nav class="bottom-nav" aria-label="Primary"><a class="bottom-nav-item active" href="#" aria-current="page"><span class="bottom-nav-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 9l7-6 7 6v8h-5v-5H8v5H3z" fill="currentColor"/></svg></span><span class="bottom-nav-label">Home</span></a><a class="bottom-nav-item" href="#"><span class="bottom-nav-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="9" cy="9" r="5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 13l4 4" stroke="currentColor" stroke-width="2"/></svg></span><span class="bottom-nav-label">Search</span></a><a class="bottom-nav-item" href="#"><span class="bottom-nav-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7" fill="none" stroke="currentColor" stroke-width="2"/></svg></span><span class="bottom-nav-label">Profile</span></a></nav>
+```
+
 ### button
 
 The standard action button. Use <button class="btn"> for actions and <a class="btn"> only for navigation styled as a button. Appearance variants set emphasis (primary for the single main action, danger/warning for destructive/risky ones); .active marks a toggled-on state; group related buttons inside .btn-group.
@@ -81,6 +104,17 @@ The standard action button. Use <button class="btn"> for actions and <a class="b
 
 ```html
 <button class="btn btn-primary">Create</button>
+```
+
+### calendar
+
+Month-grid calendar (Material DatePicker-style) that is honestly presentational: it renders whatever days the app gives it — date math, selection state, month navigation, and range logic are app JS or server-rendered markup, not the stylesheet's. The zero-JS behavior path for actually picking a date remains the native <input type="date"> (.date-field); use .calendar when you control the state and want the picker look — dashboards, availability displays, server-rendered pickers. Day states: .today (accent ring), .selected (accent fill), .outside (adjacent-month days), .disabled/[disabled]; ranges use .range-start / .in-range / .range-end which fill the whole cell so the band reads as continuous.
+
+- Root: `.calendar` (element: div)
+- Required structure: `.calendar-header`, `.calendar-header .calendar-title`, `.calendar-grid`, `.calendar-grid > .calendar-weekday`, `.calendar-grid > .calendar-day`
+
+```html
+<div class="calendar"><div class="calendar-header"><h3 class="calendar-title">August 2026</h3><button class="btn btn-icon btn-compact" aria-label="Previous month"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3L5 8l5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button><button class="btn btn-icon btn-compact" aria-label="Next month"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button></div><div class="calendar-grid"><span class="calendar-weekday">Su</span><span class="calendar-weekday">Mo</span><span class="calendar-weekday">Tu</span><span class="calendar-weekday">We</span><span class="calendar-weekday">Th</span><span class="calendar-weekday">Fr</span><span class="calendar-weekday">Sa</span><button class="calendar-day outside" aria-label="26 July 2026">26</button><button class="calendar-day outside" aria-label="27 July 2026">27</button><button class="calendar-day outside" aria-label="28 July 2026">28</button><button class="calendar-day outside" aria-label="29 July 2026">29</button><button class="calendar-day outside" aria-label="30 July 2026">30</button><button class="calendar-day outside" aria-label="31 July 2026">31</button><button class="calendar-day today" aria-current="date" aria-label="1 August 2026">1</button><button class="calendar-day" aria-label="2 August 2026">2</button><button class="calendar-day selected" aria-label="3 August 2026">3</button><button class="calendar-day" aria-label="4 August 2026">4</button><button class="calendar-day" aria-label="5 August 2026">5</button><button class="calendar-day" aria-label="6 August 2026">6</button><button class="calendar-day" aria-label="7 August 2026">7</button><button class="calendar-day" aria-label="8 August 2026">8</button></div></div>
 ```
 
 ### card
@@ -113,6 +147,17 @@ A single issue on a Kanban board: summary text plus a meta row of issue-type ico
 
 ```html
 <span class="issue-type issue-type-story" aria-label="Story"></span>
+```
+
+### chip
+
+Compact 24px pill for selection and input, built on native form controls with zero JavaScript — the Lozenge take on Material's chip family. Three recipes share the .chip skin: choice chips (single-select) are a <label class="chip chip-choice"> wrapping a hidden radio; filter chips (multi-select) are the same with a checkbox and grow a ✓ when checked; input chips are a plain <span class="chip"> with a .chip-remove button. A bare <span class="chip"> is a static pill (see also the squarer .tag).
+
+- Root: `.chip` (element: span | label)
+- Variants (role; optional, pick one): `chip-choice`, `chip-filter`
+
+```html
+<span class="chip">design</span>
 ```
 
 ### comment-thread
@@ -193,6 +238,18 @@ Centered explanation for a region with nothing in it yet (empty backlog, no sear
 <div class="empty-state"><div class="empty-state-media"><span aria-hidden="true">∅</span></div><h3 class="empty-state-title">The backlog is empty</h3><p class="empty-state-description">Create issues to plan your next sprint.</p><div class="empty-state-actions"><button class="btn btn-primary">Create issue</button><button class="btn btn-subtle">Import issues</button></div></div>
 ```
 
+### fab
+
+Floating action button — the screen's single primary action, drawn as a raised accent circle. Use at most one per view. .fab-extended turns it into a pill with icon + visible text; .fab-fixed pins it to the bottom-right corner above the page content. Equivalent of Material's FloatingActionButton, styled Lozenge.
+
+- Root: `.fab` (element: button)
+- Variants (size; optional, pick one): `fab-small`
+- Modifiers: `fab-small`, `fab-extended`, `fab-fixed`
+
+```html
+<button class="fab" aria-label="Create issue">+</button>
+```
+
 ### forms
 
 Form field stack: .form-group wraps one field (label + control + help/error text) and provides vertical rhythm. Controls are subcomponents with their own roots: .form-control (inputs/textareas), .form-select, .form-check (checkbox/radio rows), and .toggle switches.
@@ -256,6 +313,18 @@ In-place view/edit swap for a single field value. The zero-JS DEFAULT drives the
 
 ```html
 <form class="inline-edit" action="#"><input type="checkbox" id="edit-summary" aria-label="Edit summary"><label class="inline-edit-view" for="edit-summary">Fix redirect loop on expired session</label><div class="inline-edit-editor"><input class="form-control" type="text" name="summary" value="Fix redirect loop on expired session" aria-label="Summary"><button class="btn btn-primary btn-compact" type="submit">Save</button><button class="btn btn-subtle btn-compact" type="reset">Cancel</button></div></form>
+```
+
+### list
+
+List of tiles (Material ListTile equivalent): rows of optional leading icon/avatar, a title with optional 12px subtitle, and optional trailing meta (lozenge, count, chevron). One-line rows are 40px min-height, two-line rows 56px (detected via :has(.list-item-subtitle) — no extra class needed). Rows are static <li class="list-item">, or interactive when the row itself is <a class="list-item"> / <button class="list-item"> (full-bleed reset, interaction-hovered on hover, pressed on :active).
+
+- Root: `.list` (element: ul | ol | div | nav)
+- Modifiers: `list-divided`, `list-compact`
+- Required structure: `.list-item`
+
+```html
+<ul class="list list-divided"><li class="list-item"><span class="list-item-leading"><span class="avatar avatar-md">JC</span></span><span class="list-item-content"><span class="list-item-title">Jetha Chan</span><span class="list-item-subtitle">Product designer</span></span><span class="list-item-trailing"><span class="lozenge lozenge-success">Active</span></span></li><li class="list-item"><span class="list-item-leading"><span class="avatar avatar-md">DK</span></span><span class="list-item-content"><span class="list-item-title">Dana Kim</span><span class="list-item-subtitle">Engineering</span></span><span class="list-item-trailing"><span class="lozenge lozenge-default">Away</span></span></li></ul>
 ```
 
 ### select
@@ -384,6 +453,29 @@ One backlog row: issue-type square, key, flexible truncating summary, then optio
 <div class="backlog-item"><span class="issue-type issue-type-bug" role="img" aria-label="bug"></span><span class="issue-key">LOZ-34</span><span class="backlog-summary">Login page redirect loop</span><span class="badge" aria-label="1 story points">1</span><span class="avatar avatar-sm">DK</span></div>
 ```
 
+### rail
+
+Navigation rail (Material NavigationRail equivalent): a compact 72px vertical strip of top-level destinations for tablet/desktop, each item an icon over an 11px label with the same pill indicator as the bottom nav. It pairs with .sidebar — the rail is the compact form and the sidebar the expanded one; swap between them at a breakpoint rather than showing both. Optional .rail-fab slot holds the primary action at the top; .rail-bottom pushes trailing items (settings, profile) to the end.
+
+- Root: `.rail` (element: nav)
+- Required structure: `.rail-item`, `.rail-item > .rail-icon`
+
+```html
+<nav class="rail" aria-label="Primary"><a class="rail-item active" href="#" aria-current="page"><span class="rail-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 9l7-6 7 6v8h-5v-5H8v5H3z" fill="currentColor"/></svg></span><span class="rail-label">Board</span></a><a class="rail-item" href="#"><span class="rail-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M3 10h14M3 15h9" stroke="currentColor" stroke-width="2"/></svg></span><span class="rail-label">Backlog</span></a><div class="rail-bottom"><a class="rail-item" href="#"><span class="rail-icon"><svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="3" fill="currentColor"/></svg></span><span class="rail-label">Settings</span></a></div></nav>
+```
+
+### ring
+
+Determinate circular progress (Material CircularProgressIndicator equivalent): a conic-gradient donut cut to a 4px ring by a radial-gradient mask — no JS, no SVG. Progress is driven by the --value custom property (0..1) set inline, e.g. style="--value: 0.6". Fill is accent-bold over the track token; sizes 24 (.ring-sm) / 32 (default) / 48 (.ring-lg); optional absolute-centered 11px .ring-label. For indeterminate progress use .spinner; for linear progress use .progress.
+
+- Root: `.ring` (element: div | span)
+- Variants (size; optional, pick one): `ring-sm`, `ring-lg`
+- Variants (status; optional, pick one): `ring-success`, `ring-danger`
+
+```html
+<div class="ring" style="--value: 0.6" role="progressbar" aria-valuenow="60" aria-label="Sprint completion"><span class="ring-label">60%</span></div>
+```
+
 ### search-field
 
 Compact search input with a leading magnifier icon and an optional keyboard-shortcut hint chip. The icon is a currentColor mask (themes with scheme/contrast); the chip is decorative fine print. Authorable via <lz-search> (templates/search.html). The wiring of the shortcut itself is up to the app — the chip is only a hint.
@@ -393,6 +485,42 @@ Compact search input with a leading magnifier icon and an optional keyboard-shor
 
 ```html
 <div class="search-field"><input class="form-control" type="search" placeholder="Search issues" aria-label="Search issues"></div>
+```
+
+### segmented
+
+Segmented button — a single-select control drawn as a joined button group (Material's SegmentedButton, Lozenge-flavoured). Built on a native radio group inside a <fieldset class="segmented">: alternating input+label pairs, 2px gaps, outer corners rounded. The checked segment gets the selected fill (.segmented-bold for accent-bold emphasis); .segmented-compact drops the height to 24px. Zero JavaScript.
+
+- Root: `.segmented` (element: fieldset)
+- Variants (emphasis; optional, pick one): `segmented-bold`
+- Modifiers: `segmented-bold`, `segmented-compact`
+- Required structure: `input[type=radio]`, `label`
+
+```html
+<fieldset class="segmented" aria-label="View"><input type="radio" name="view" id="view-board" checked><label for="view-board">Board</label><input type="radio" name="view" id="view-list"><label for="view-list">List</label><input type="radio" name="view" id="view-timeline"><label for="view-timeline">Timeline</label></fieldset>
+```
+
+### sheet
+
+Bottom sheet on a native <dialog> (Material BottomSheet equivalent): a bottom-anchored glass surface — full-width to 640px, centered, top corners rounded, max-height 60vh (90vh with .sheet-tall) — sliding up over a blanket backdrop. Use for mobile-friendly action lists, share targets, and quick forms. Open declaratively with <button commandfor="id" command="show-modal"> and close with command="close" or a <form method="dialog">; no JavaScript involved.
+
+- Root: `.sheet` (element: dialog)
+- Modifiers: `sheet-tall`
+- Required structure: `.sheet-body`
+
+```html
+<dialog class="sheet" id="share-sheet" aria-labelledby="share-sheet-title"><div class="sheet-handle"></div><div class="sheet-header"><h4 class="sheet-title" id="share-sheet-title">Share board</h4></div><div class="sheet-body"><p>Choose a destination…</p></div><form method="dialog" class="sheet-footer"><button class="btn btn-subtle" value="cancel">Cancel</button></form></dialog>
+```
+
+### modal-fullscreen
+
+Fullscreen dialog (Material fullscreen-dialog equivalent) for mobile-scale creation/edit flows: an edge-to-edge native <dialog> on a solid surface (deliberately NOT glass — nothing behind it remains visible, so translucency would only cost contrast). Reuses the .modal-header idiom with the order close-button → title → confirming action; the title fills the middle.
+
+- Root: `.modal-fullscreen` (element: dialog)
+- Required structure: `.modal-header`, `.modal-header > .modal-title`, `.modal-body`
+
+```html
+<dialog class="modal-fullscreen" id="new-issue" aria-labelledby="new-issue-title"><div class="modal-header"><button class="btn btn-subtle btn-icon" commandfor="new-issue" command="close" aria-label="Close dialog">×</button><h4 class="modal-title" id="new-issue-title">New issue</h4><button class="btn btn-primary" commandfor="new-issue" command="close">Create</button></div><div class="modal-body"><p>Form fields…</p></div></dialog>
 ```
 
 ### sidebar
@@ -437,6 +565,41 @@ Vertical stack of .skeleton-text lines with prose-like rhythm: 8px row gap, and 
 
 ```html
 <div class="skeleton-paragraph"><div class="skeleton skeleton-text" aria-hidden="true"></div><div class="skeleton skeleton-text" aria-hidden="true"></div><div class="skeleton skeleton-text" aria-hidden="true"></div></div>
+```
+
+### slider
+
+Styled native <input type="range"> (Material's Slider, Lozenge-flavoured): 4px rounded track, 16px accent thumb, hover halo, focus ring. Behavior is 100% the platform's. HONEST LIMITATION: the filled portion of the track is painted from a --value custom property (0..1) that the APP must set on the input — inline style="--value: 0.6" for static values, or one line of app JS on input: el.style.setProperty('--value', el.value / (el.max || 100)). Without --value the track degrades gracefully to unfilled; the control still works.
+
+- Root: `.slider` (element: input)
+- Variants (size; optional, pick one): `slider-compact`
+- Modifiers: `slider-compact`
+
+```html
+<input type="range" class="slider" min="0" max="100" value="60" style="--value: 0.6" aria-label="Estimate">
+```
+
+### snackbar
+
+Material-style snackbar: a single-line transient notification on the inverted tooltip surface (var(--lz-sys-tooltip-bg)/tooltip-text), 8px 16px padding, radius 3, with an optional inline action. Static in document flow by default (compose into demos or custom stacks); add .snackbar-fixed to pin it bottom-center of the viewport. For richer multi-line toasts with icons and dismiss buttons use .flag instead.
+
+- Root: `.snackbar` (element: div)
+- Modifiers: `snackbar-fixed`
+- Required structure: `.snackbar-message`
+
+```html
+<div class="snackbar" role="status"><span class="snackbar-message">Issue LOZ-42 moved to Done.</span><button class="snackbar-action" type="button">Undo</button></div>
+```
+
+### stepper
+
+Vertical stepper with per-step content (Material vertical Stepper equivalent) for setup flows and long forms broken into stages. Markers reuse the tracker's state language — done: success circle with a check; current: accent circle; upcoming: sunken circle — joined by a 2px connector down the marker column that turns success-colored for segments owned by done steps. Two flavors share one skin: class-controlled (<ol> of <li class="stepper-step">, content shown by adding .expanded — app/server drives state) and zero-JS expandable (<div class="stepper"> of <details class="stepper-step"> whose <summary class="stepper-header"> holds the marker + title — native disclosure does the toggling). For a compact horizontal progress readout use .tracker instead.
+
+- Root: `.stepper` (element: ol | div)
+- Required structure: `.stepper-step`, `.stepper-step .stepper-header`, `.stepper-header .stepper-marker`, `.stepper-header .stepper-title`
+
+```html
+<ol class="stepper"><li class="stepper-step done"><div class="stepper-header"><span class="stepper-marker">1</span><span class="stepper-title">Project details</span></div><div class="stepper-content"><p>Name and key chosen.</p></div></li><li class="stepper-step current expanded" aria-current="step"><div class="stepper-header"><span class="stepper-marker">2</span><span class="stepper-title">Permissions<span class="stepper-optional">Optional</span></span></div><div class="stepper-content"><p>Choose who can view this project.</p></div></li><li class="stepper-step"><div class="stepper-header"><span class="stepper-marker">3</span><span class="stepper-title">Invite team</span></div></li></ol>
 ```
 
 ### tabs

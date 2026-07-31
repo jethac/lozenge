@@ -1,1 +1,146 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Vertical stepper with per-step content (Material vertical Stepper
+// equivalent). Markers reuse the tracker's state tokens: done = success
+// bold + check, current = accent bold, upcoming = sunken circle. A 2px
+// connector runs down the marker column; segments owned by done steps
+// turn success-colored.
+//
+// Two flavors share one skin:
+//  - class-controlled (state rendered by the app/server):
+//    <ol class="stepper">
+//      <li class="stepper-step done">
+//        <div class="stepper-header">
+//          <span class="stepper-marker">1</span>
+//          <span class="stepper-title">Project details</span>
+//        </div>
+//        <div class="stepper-content">…shown when .expanded…</div>
+//      </li>
+//      <li class="stepper-step current expanded" aria-current="step">…</li>
+//    </ol>
+//  - zero-JS expandable (native disclosure; use a <div class="stepper">
+//    wrapper since <details> cannot be a child of <ol>):
+//    <div class="stepper">
+//      <details class="stepper-step current" open aria-current="step">
+//        <summary class="stepper-header">
+//          <span class="stepper-marker">2</span>
+//          <span class="stepper-title">Permissions
+//            <span class="stepper-optional">Optional</span></span>
+//        </summary>
+//        <div class="stepper-content">…</div>
+//      </details>
+//    </div>
+.stepper {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stepper-step {
+  list-style: none;
+
+  // Connector segment reaching toward the next step. Rendered on the step
+  // itself so it survives collapsed content (details closed, or no
+  // .expanded class).
+  &:not(:last-child)::after {
+    content: "";
+    display: block;
+    height: 16px;
+    margin-block: 4px;
+    margin-inline-start: 11px; // centers the 2px line on the 24px marker
+    border-inline-start: 2px solid var(--lz-sys-track);
+  }
+}
+
+.stepper-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// Details-based steps: the summary is the click target.
+summary.stepper-header {
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  border-radius: $border-radius;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.stepper-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--lz-sys-surface-sunken);
+  color: $text-subtle;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+}
+
+.stepper-step.current .stepper-marker {
+  background-color: var(--lz-sys-accent-bold);
+  color: var(--lz-sys-text-on-bold);
+}
+
+.stepper-step.done .stepper-marker {
+  background-color: var(--lz-sys-status-success-bold-bg);
+  color: var(--lz-sys-status-success-on-bold);
+
+  // Visually swap the number for a check; the number stays in the DOM
+  // (and accessibility tree) as the step's position.
+  font-size: 0;
+
+  &::before {
+    content: "\2713";
+    font-size: $font-size-sm;
+  }
+}
+
+.stepper-title {
+  font-weight: $font-weight-semibold;
+  color: $text-color;
+}
+
+.stepper-optional {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-normal;
+  color: $text-subtle;
+}
+
+// Step body: indented under the title, with the connector continuing down
+// its start edge (border-inline-start doubles as the connector segment).
+.stepper-content {
+  display: none;
+  margin-block-start: 4px;
+  margin-inline-start: 11px;
+  border-inline-start: 2px solid var(--lz-sys-track);
+  padding-block: 4px 8px;
+  padding-inline-start: 23px; // 11 + 2 + 23 = 36 = marker + header gap
+}
+
+.stepper-step.expanded > .stepper-content,
+details.stepper-step[open] > .stepper-content {
+  display: block;
+}
+
+// Segments owned by a done step are complete.
+.stepper-step.done:not(:last-child)::after,
+.stepper-step.done > .stepper-content {
+  border-color: var(--lz-sys-status-success-bold-bg);
+}

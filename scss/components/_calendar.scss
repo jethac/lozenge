@@ -1,1 +1,148 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Calendar month grid (Material DatePicker-style), purely presentational:
+// the grid renders whatever days the app gives it — date math, selection
+// state, and navigation are app JS or server-rendered markup. The zero-JS
+// behavior path for actually picking a date remains the native
+// <input type="date"> (.date-field).
+// Usage:
+// <div class="calendar">
+//   <div class="calendar-header">
+//     <h3 class="calendar-title">August 2026</h3>
+//     <button class="btn btn-icon btn-compact" aria-label="Previous month">…</button>
+//     <button class="btn btn-icon btn-compact" aria-label="Next month">…</button>
+//   </div>
+//   <div class="calendar-grid">
+//     <span class="calendar-weekday">Su</span> ×7
+//     <button class="calendar-day outside">26</button>
+//     <button class="calendar-day today" aria-current="date">1</button>
+//     <button class="calendar-day selected">12</button>
+//     …
+//   </div>
+// </div>
+.calendar {
+  width: 280px;
+  padding: 8px;
+  background-color: var(--lz-sys-surface-raised);
+  border-radius: $border-radius;
+  box-shadow: $shadow-raised;
+}
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 4px 8px;
+}
+
+.calendar-title {
+  flex: 1;
+  margin: 0;
+  padding-inline-start: 4px;
+  @include heading(500);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-items: center;
+  row-gap: 2px;
+}
+
+.calendar-weekday {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 32px;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  color: $text-subtlest;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+.calendar-day {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background-color: transparent;
+  color: $text-color;
+  font-family: inherit;
+  font-size: $font-size-base;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--lz-motion-fast) var(--lz-ease-standard);
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+  }
+
+  &:focus-visible {
+    position: relative; // keep the ring above neighboring cells
+    @include focus-ring;
+  }
+
+  // 1px inset ring marks today without claiming selection.
+  &.today {
+    box-shadow: inset 0 0 0 1px var(--lz-sys-accent-bold);
+
+    &:focus-visible {
+      box-shadow: inset 0 0 0 1px var(--lz-sys-accent-bold),
+        0 0 0 $focus-ring-width $focus-ring-color;
+    }
+  }
+
+  &.selected {
+    background-color: var(--lz-sys-accent-bold);
+    color: var(--lz-sys-text-on-bold);
+  }
+
+  // Leading/trailing days that belong to adjacent months.
+  &.outside {
+    color: $text-disabled;
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $text-disabled;
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+// Range styling: interior days fill the whole cell so the band is
+// continuous; the endpoints keep a pill radius on their outer side only.
+.calendar-day.in-range {
+  width: 100%;
+  border-radius: 0;
+  background-color: var(--lz-sys-selected-bg);
+  color: var(--lz-sys-selected-text);
+}
+
+.calendar-day.range-start,
+.calendar-day.range-end {
+  width: 100%;
+  border-radius: 0;
+  background-color: var(--lz-sys-accent-bold);
+  color: var(--lz-sys-text-on-bold);
+}
+
+.calendar-day.range-start {
+  border-start-start-radius: 16px;
+  border-end-start-radius: 16px;
+}
+
+.calendar-day.range-end {
+  border-start-end-radius: 16px;
+  border-end-end-radius: 16px;
+}

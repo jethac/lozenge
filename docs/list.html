@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>List — Lozenge</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="../demo/theme-panel.js"></script>
+<style>
+  .docs-shell { display: flex; align-items: stretch; }
+  .docs-shell > .sidebar { flex-shrink: 0; min-height: calc(100vh - 56px); }
+  .docs-main { flex: 1; min-width: 0; max-width: 880px; padding: 24px 32px 96px; }
+  .docs-main section { margin-top: 40px; }
+  .doc-example { margin: 12px 0 24px; }
+  .doc-box { border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); }
+  .doc-box-header { padding: 8px 16px; border-bottom: 1px solid var(--lz-sys-separator); font-weight: 600; }
+  .doc-box-body { padding: 16px; }
+  .doc-live { margin-bottom: 12px; }
+  .doc-src-label { margin: 12px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .doc-example pre { margin: 0 0 4px; }
+  pre { background: var(--lz-sys-surface-sunken); border: 1px solid var(--lz-sys-separator); border-radius: 3px; padding: 12px; overflow-x: auto; font-size: 12px; line-height: 1.5; }
+  pre code { font-family: inherit; }
+  .doc-swatch { width: 48px; height: 24px; border: 1px solid var(--lz-sys-border); border-radius: 3px; }
+  .doc-table-wrap { overflow-x: auto; }
+  .doc-axis-pane { flex: 1 1 240px; min-width: 240px; padding: 16px; border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); color: var(--lz-sys-text); }
+</style>
+</head>
+<body>
+
+<nav class="navbar" aria-label="Main">
+  <a class="navbar-brand" href="/">Lozenge</a>
+  <ul class="navbar-nav">
+    <li><a class="nav-link" href="/">Home</a></li>
+    <li><a class="nav-link active" href="/docs/">Components</a></li>
+    <li><a class="nav-link" href="/demo/">Demo</a></li>
+    <li><a class="nav-link" href="/demo/tags.html">Tags</a></li>
+    <li><a class="nav-link" href="https://github.com/jethac/lozenge">GitHub</a></li>
+  </ul>
+</nav>
+
+<div class="docs-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section">Guide</div>
+    <nav aria-label="Guide">
+      <a class="sidebar-item" href="index.html">Overview</a>
+    </nav>
+    <div class="sidebar-section">Components</div>
+    <nav aria-label="Components">
+      <a class="sidebar-item" href="accordion.html">Accordion</a>
+      <a class="sidebar-item" href="avatar.html">Avatar</a>
+      <a class="sidebar-item" href="badge.html">Badge</a>
+      <a class="sidebar-item" href="board.html">Board</a>
+      <a class="sidebar-item" href="bottom-nav.html">Bottom-nav</a>
+      <a class="sidebar-item" href="button.html">Button</a>
+      <a class="sidebar-item" href="calendar.html">Calendar</a>
+      <a class="sidebar-item" href="card.html">Card</a>
+      <a class="sidebar-item" href="chip.html">Chip</a>
+      <a class="sidebar-item" href="comment-thread.html">Comment-thread</a>
+      <a class="sidebar-item" href="date-field.html">Date-field</a>
+      <a class="sidebar-item" href="drawer.html">Drawer</a>
+      <a class="sidebar-item" href="empty-state.html">Empty-state</a>
+      <a class="sidebar-item" href="fab.html">Fab</a>
+      <a class="sidebar-item" href="forms.html">Forms</a>
+      <a class="sidebar-item" href="inline-edit.html">Inline-edit</a>
+      <a class="sidebar-item active" href="list.html" aria-current="page">List</a>
+      <a class="sidebar-item" href="select.html">Select</a>
+      <a class="sidebar-item" href="lozenge.html">Lozenge</a>
+      <a class="sidebar-item" href="message.html">Message</a>
+      <a class="sidebar-item" href="navbar.html">Navbar</a>
+      <a class="sidebar-item" href="pagination.html">Pagination</a>
+      <a class="sidebar-item" href="backlog.html">Backlog</a>
+      <a class="sidebar-item" href="rail.html">Rail</a>
+      <a class="sidebar-item" href="ring.html">Ring</a>
+      <a class="sidebar-item" href="search-field.html">Search-field</a>
+      <a class="sidebar-item" href="segmented.html">Segmented</a>
+      <a class="sidebar-item" href="sheet.html">Sheet</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
+      <a class="sidebar-item" href="skeleton.html">Skeleton</a>
+      <a class="sidebar-item" href="slider.html">Slider</a>
+      <a class="sidebar-item" href="snackbar.html">Snackbar</a>
+      <a class="sidebar-item" href="stepper.html">Stepper</a>
+      <a class="sidebar-item" href="tabs.html">Tabs</a>
+      <a class="sidebar-item" href="tag.html">Tag</a>
+      <a class="sidebar-item" href="timeline.html">Timeline</a>
+      <a class="sidebar-item" href="tracker.html">Tracker</a>
+      <a class="sidebar-item" href="tree.html">Tree</a>
+    </nav>
+  </aside>
+  <main class="docs-main">
+<h1>List</h1>
+<p class="text-subtle">List of tiles (Material ListTile equivalent): rows of optional leading icon/avatar, a title with optional 12px subtitle, and optional trailing meta (lozenge, count, chevron). One-line rows are 40px min-height, two-line rows 56px (detected via :has(.list-item-subtitle) — no extra class needed). Rows are static &lt;li class=&quot;list-item&quot;&gt;, or interactive when the row itself is &lt;a class=&quot;list-item&quot;&gt; / &lt;button class=&quot;list-item&quot;&gt; (full-bleed reset, interaction-hovered on hover, pressed on :active).</p>
+  <p class="text-subtlest">Root: <code>.list</code> on <code>&lt;ul&gt;</code>, <code>&lt;ol&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;nav&gt;</code></p>
+<section>
+<h2>Examples</h2>
+<div class="card doc-example">
+  <div class="card-header">Example 1</div>
+  <div class="card-body">
+    <div class="doc-live"><ul class="list list-divided"><li class="list-item"><span class="list-item-leading"><span class="avatar avatar-md">JC</span></span><span class="list-item-content"><span class="list-item-title">Jetha Chan</span><span class="list-item-subtitle">Product designer</span></span><span class="list-item-trailing"><span class="lozenge lozenge-success">Active</span></span></li><li class="list-item"><span class="list-item-leading"><span class="avatar avatar-md">DK</span></span><span class="list-item-content"><span class="list-item-title">Dana Kim</span><span class="list-item-subtitle">Engineering</span></span><span class="list-item-trailing"><span class="lozenge lozenge-default">Away</span></span></li></ul></div>
+<pre><code>&lt;ul class=&quot;list list-divided&quot;&gt;&lt;li class=&quot;list-item&quot;&gt;&lt;span class=&quot;list-item-leading&quot;&gt;&lt;span class=&quot;avatar avatar-md&quot;&gt;JC&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;list-item-content&quot;&gt;&lt;span class=&quot;list-item-title&quot;&gt;Jetha Chan&lt;/span&gt;&lt;span class=&quot;list-item-subtitle&quot;&gt;Product designer&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;list-item-trailing&quot;&gt;&lt;span class=&quot;lozenge lozenge-success&quot;&gt;Active&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;li class=&quot;list-item&quot;&gt;&lt;span class=&quot;list-item-leading&quot;&gt;&lt;span class=&quot;avatar avatar-md&quot;&gt;DK&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;list-item-content&quot;&gt;&lt;span class=&quot;list-item-title&quot;&gt;Dana Kim&lt;/span&gt;&lt;span class=&quot;list-item-subtitle&quot;&gt;Engineering&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;list-item-trailing&quot;&gt;&lt;span class=&quot;lozenge lozenge-default&quot;&gt;Away&lt;/span&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</code></pre>
+  </div>
+</div>
+<div class="card doc-example">
+  <div class="card-header">Example 2</div>
+  <div class="card-body">
+    <div class="doc-live"><ul class="list list-compact"><li><a class="list-item selected" href="#" aria-current="true"><span class="list-item-content"><span class="list-item-title">Board</span></span></a></li><li><a class="list-item" href="#"><span class="list-item-content"><span class="list-item-title">Backlog</span></span></a></li><li><button class="list-item" type="button"><span class="list-item-content"><span class="list-item-title">Reports</span></span><span class="list-item-trailing">›</span></button></li></ul></div>
+<pre><code>&lt;ul class=&quot;list list-compact&quot;&gt;&lt;li&gt;&lt;a class=&quot;list-item selected&quot; href=&quot;#&quot; aria-current=&quot;true&quot;&gt;&lt;span class=&quot;list-item-content&quot;&gt;&lt;span class=&quot;list-item-title&quot;&gt;Board&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;list-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;list-item-content&quot;&gt;&lt;span class=&quot;list-item-title&quot;&gt;Backlog&lt;/span&gt;&lt;/span&gt;&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;button class=&quot;list-item&quot; type=&quot;button&quot;&gt;&lt;span class=&quot;list-item-content&quot;&gt;&lt;span class=&quot;list-item-title&quot;&gt;Reports&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;list-item-trailing&quot;&gt;›&lt;/span&gt;&lt;/button&gt;&lt;/li&gt;&lt;/ul&gt;</code></pre>
+  </div>
+</div>
+</section>
+<section>
+<h2>Contract</h2>
+  <h3>Variants &amp; modifiers</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
+    <tbody>
+      <tr><td><code>list-divided</code></td><td>modifier</td><td>optional</td></tr>
+      <tr><td><code>list-compact</code></td><td>modifier</td><td>optional</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Structure</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.list-item</code></td><td>required</td><td>Row tile. As &lt;li class=&quot;list-item&quot;&gt; for static rows, or &lt;li&gt;&lt;a class=&quot;list-item&quot;&gt; / &lt;li&gt;&lt;button class=&quot;list-item&quot;&gt; for interactive rows. .selected marks the chosen row (selected-bg/selected-text).</td></tr>
+      <tr><td><code>.list-item-content</code></td><td>optional</td><td>Flexible middle column (flex:1, min-width:0) stacking .list-item-title over an optional .list-item-subtitle; both truncate.</td></tr>
+      <tr><td><code>.list-item-leading</code></td><td>optional</td><td>Leading slot (icon, avatar, checkbox), flex-shrink:0.</td></tr>
+      <tr><td><code>.list-item-subtitle</code></td><td>optional</td><td>Second line, 12px text-subtle; its presence bumps the row to the 56px two-line height (48px in .list-compact).</td></tr>
+      <tr><td><code>.list-item-trailing</code></td><td>optional</td><td>Trailing slot for meta text, lozenges, or a chevron; text-subtle, flex-shrink:0.</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Accessibility</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><code>.list-item</code></td><td><code>aria-current</code></td><td>recommended</td><td>The .selected row represents the current page/item in a navigation list — add aria-current so selection is not conveyed by color alone.</td></tr>
+    </tbody>
+  </table></div>
+  <p class="text-subtle">Keep the list a real &lt;ul&gt;/&lt;ol&gt; with &lt;li&gt; children so item count and position are announced. Interactive rows must be real &lt;a&gt;/&lt;button&gt; elements filling the row (never click handlers on &lt;li&gt;). The .selected state is color-only — pair it with aria-current (navigation) or aria-selected (selection widgets) as appropriate. Leading avatars/icons are decorative unless they carry their own label.</p>
+  <h3>Nesting</h3>
+  <p>Allowed in:</p>
+  <ul><li><code>page content</code></li> <li><code>.card-body</code></li> <li><code>.drawer-body</code></li> <li><code>.sheet-body</code></li> <li><code>.modal-body</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.list</code></li> <li><code>.dropdown-menu</code></li> <li><code>.listbox</code></li></ul>
+</section>
+  </main>
+</div>
+
+</body>
+</html>

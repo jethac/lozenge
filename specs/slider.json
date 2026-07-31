@@ -1,0 +1,27 @@
+{
+  "component": "slider",
+  "version": "0.1.0",
+  "intent": "Styled native <input type=\"range\"> (Material's Slider, Lozenge-flavoured): 4px rounded track, 16px accent thumb, hover halo, focus ring. Behavior is 100% the platform's. HONEST LIMITATION: the filled portion of the track is painted from a --value custom property (0..1) that the APP must set on the input — inline style=\"--value: 0.6\" for static values, or one line of app JS on input: el.style.setProperty('--value', el.value / (el.max || 100)). Without --value the track degrades gracefully to unfilled; the control still works.",
+  "root": { "selector": ".slider", "element": ["input"], "requiredClasses": ["slider"] },
+  "variants": {
+    "size": {
+      "classes": ["slider-compact"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["slider-compact"],
+  "structure": [],
+  "aria": [
+    { "on": ".slider", "attr": "aria-label", "required": true, "when": "no visible <label for> or aria-labelledby references the input" }
+  ],
+  "nesting": {
+    "allowedIn": ["forms", ".form-group", "toolbars", "card bodies"],
+    "disallowed": [".slider"]
+  },
+  "a11yNotes": "All interaction is the native range input: arrow keys step, Home/End jump, drag works, form participation is standard. Name the control with a visible <label for> or aria-label. If min/max aren't self-evident, add aria-valuetext via your app. Remember --value only paints the fill — keyboard/pointer changes move the native value regardless, so keep the two in sync with the one-liner above (or accept an unfilled track).",
+  "examples": [
+    "<input type=\"range\" class=\"slider\" min=\"0\" max=\"100\" value=\"60\" style=\"--value: 0.6\" aria-label=\"Estimate\">",
+    "<input type=\"range\" class=\"slider slider-compact\" min=\"0\" max=\"10\" value=\"3\" style=\"--value: 0.3\" aria-label=\"Story points\">"
+  ]
+}

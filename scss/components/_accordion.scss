@@ -1,1 +1,82 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Accordion (expansion-panel list) on native <details>/<summary> — the
+// platform supplies expand/collapse, keyboard, and semantics. Give every
+// panel the same name="…" attribute for exclusive-open behavior (opening
+// one closes the others) with zero JS; omit it to allow multiple open.
+// Usage:
+// <div class="accordion">
+//   <details class="accordion-panel" name="faq" open>
+//     <summary class="accordion-header">What is Lozenge?</summary>
+//     <div class="accordion-body">…</div>
+//   </details>
+//   <details class="accordion-panel" name="faq">…</details>
+// </div>
+.accordion {
+  background-color: $surface-bg;
+  border: 1px solid $separator-color;
+  border-radius: $border-radius;
+}
+
+.accordion-panel {
+  + .accordion-panel {
+    border-block-start: 1px solid $separator-color;
+  }
+
+  // Round the group's outer corners so the header hover fill stays inside.
+  &:first-child > summary.accordion-header {
+    border-start-start-radius: $border-radius;
+    border-start-end-radius: $border-radius;
+  }
+
+  &:last-child:not([open]) > summary.accordion-header {
+    border-end-start-radius: $border-radius;
+    border-end-end-radius: $border-radius;
+  }
+}
+
+summary.accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  @include heading(400);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+
+  &::-webkit-details-marker {
+    display: none;
+  }
+
+  // Rotating chevron, same recipe as .sidebar-group.
+  &::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 0 4px 6px;
+    border-color: transparent transparent transparent currentColor;
+    transition: transform var(--lz-motion-fast) var(--lz-ease-standard);
+  }
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+  }
+
+  &:focus-visible {
+    position: relative;
+    @include focus-ring;
+  }
+}
+
+.accordion-panel[open] > summary.accordion-header::before {
+  transform: rotate(90deg);
+}
+
+.accordion-body {
+  padding: 16px;
+  border-block-start: 1px solid $separator-color;
+}

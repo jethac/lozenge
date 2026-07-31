@@ -1,0 +1,23 @@
+{
+  "component": "accordion",
+  "version": "0.1.0",
+  "intent": "Expansion-panel list (Material ExpansionPanel equivalent) on native <details>/<summary>: a bordered surface group of panels separated by separator borders, each with a rotating-chevron header and a padded body. The platform supplies expand/collapse, keyboard, and semantics. Give every panel the same name=\"…\" attribute for exclusive-open behavior (opening one closes the others) with zero JS; omit name to allow several panels open at once.",
+  "root": { "selector": ".accordion", "element": ["div", "section"], "requiredClasses": ["accordion"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": "details.accordion-panel", "required": true, "description": "One panel per <details>. Add open for the initially-expanded panel and name=\"group\" (same value on every panel) for exclusivity." },
+    { "selector": "details.accordion-panel > summary.accordion-header", "required": true, "description": "Clickable header: 16px padding, h400 type, leading chevron that rotates 90° when the panel is open (same recipe as .sidebar-group), interaction-hovered on hover." },
+    { "selector": ".accordion-body", "required": true, "description": "Expanded content: 16px padding with a separator top border under the header." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["page content", ".card-body", ".drawer-body", ".sheet-body", ".modal-body"],
+    "disallowed": [".accordion", ".dropdown-menu"]
+  },
+  "a11yNotes": "Native <details>/<summary> carries the disclosure semantics — never re-implement with divs and click handlers. The summary is the accessible header; keep it text (wrap in a heading element inside the summary if the page outline needs it). Exclusive behavior via the name attribute is a platform feature (Chrome 120+, Safari 17.2+, Firefox 130+); older browsers gracefully degrade to independent panels. The chevron rotation uses motion tokens and is collapsed by the framework-wide prefers-reduced-motion rule.",
+  "examples": [
+    "<div class=\"accordion\"><details class=\"accordion-panel\" name=\"faq\" open><summary class=\"accordion-header\">What is Lozenge?</summary><div class=\"accordion-body\"><p>A zero-JS HTML+CSS design system.</p></div></details><details class=\"accordion-panel\" name=\"faq\"><summary class=\"accordion-header\">Does it need a runtime?</summary><div class=\"accordion-body\"><p>No — platform primitives only.</p></div></details></div>"
+  ],
+  "subcomponents": []
+}

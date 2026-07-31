@@ -1,0 +1,30 @@
+{
+  "component": "segmented",
+  "version": "0.1.0",
+  "intent": "Segmented button — a single-select control drawn as a joined button group (Material's SegmentedButton, Lozenge-flavoured). Built on a native radio group inside a <fieldset class=\"segmented\">: alternating input+label pairs, 2px gaps, outer corners rounded. The checked segment gets the selected fill (.segmented-bold for accent-bold emphasis); .segmented-compact drops the height to 24px. Zero JavaScript.",
+  "root": { "selector": ".segmented", "element": ["fieldset"], "requiredClasses": ["segmented"] },
+  "variants": {
+    "emphasis": {
+      "classes": ["segmented-bold"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["segmented-bold", "segmented-compact"],
+  "structure": [
+    { "selector": "input[type=radio]", "required": true, "description": "Visually-hidden radios as DIRECT children of the fieldset. All share one name (unique per group on the page); exactly one carries checked. Each label must be the immediate next sibling of its radio — the CSS selects input:checked + label." },
+    { "selector": "label", "required": true, "description": "One <label> per segment, immediately following its radio, with for matching that radio's id. Labels are the visible segments; first/last get the outer corner radii." }
+  ],
+  "aria": [
+    { "on": ".segmented", "attr": "aria-label", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["toolbars", "card headers", "filter rows", "forms"],
+    "disallowed": [".segmented", ".btn-group"]
+  },
+  "a11yNotes": "Keyboard support is native radio-group behavior: Tab enters the group, arrow keys move the selection (which is also the activation) — add no ARIA roles on top of the radios. The fieldset provides the grouping; aria-label names it (a visually-hidden <legend> also works, but keep the aria-label for the lint contract). Focus shows a ring on the focused segment's label. Disable a single segment by disabling its input.",
+  "examples": [
+    "<fieldset class=\"segmented\" aria-label=\"View\"><input type=\"radio\" name=\"view\" id=\"view-board\" checked><label for=\"view-board\">Board</label><input type=\"radio\" name=\"view\" id=\"view-list\"><label for=\"view-list\">List</label><input type=\"radio\" name=\"view\" id=\"view-timeline\"><label for=\"view-timeline\">Timeline</label></fieldset>",
+    "<fieldset class=\"segmented segmented-bold segmented-compact\" aria-label=\"Density\"><input type=\"radio\" name=\"density\" id=\"d-cozy\" checked><label for=\"d-cozy\">Cozy</label><input type=\"radio\" name=\"density\" id=\"d-compact\"><label for=\"d-compact\">Compact</label></fieldset>"
+  ]
+}

@@ -1,1 +1,66 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+
+// Ring — determinate circular progress as a conic-gradient donut driven by
+// the --value custom property (0..1). No JS, no SVG. The gradient and the
+// radial-gradient mask that cuts it to a 4px ring live on ::before so the
+// optional centered .ring-label is not clipped by the mask.
+// Usage:
+// <div class="ring" style="--value: 0.6" role="progressbar"
+//      aria-valuenow="60" aria-label="Upload progress">
+//   <span class="ring-label">60%</span>
+// </div>
+.ring {
+  --ring-fill: #{$primary};
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: conic-gradient(
+      var(--ring-fill) calc(var(--value, 0) * 360deg),
+      var(--lz-sys-track) 0
+    );
+    // Mask stops are pure alpha geometry, not theme colors.
+    mask-image: radial-gradient(
+      closest-side,
+      transparent calc(100% - 5px),
+      #000 calc(100% - 4px)
+    );
+  }
+}
+
+.ring-sm {
+  width: 24px;
+  height: 24px;
+}
+
+.ring-lg {
+  width: 48px;
+  height: 48px;
+}
+
+.ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  color: $text-subtle;
+}
+
+// Status fills.
+.ring-success {
+  --ring-fill: #{$success};
+}
+
+.ring-danger {
+  --ring-fill: #{$danger};
+}

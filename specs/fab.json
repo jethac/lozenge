@@ -1,0 +1,29 @@
+{
+  "component": "fab",
+  "version": "0.1.0",
+  "intent": "Floating action button — the screen's single primary action, drawn as a raised accent circle. Use at most one per view. .fab-extended turns it into a pill with icon + visible text; .fab-fixed pins it to the bottom-right corner above the page content. Equivalent of Material's FloatingActionButton, styled Lozenge.",
+  "root": { "selector": ".fab", "element": ["button"], "requiredClasses": ["fab"] },
+  "variants": {
+    "size": {
+      "classes": ["fab-small"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["fab-small", "fab-extended", "fab-fixed"],
+  "structure": [],
+  "aria": [
+    { "on": ".fab", "attr": "aria-label", "required": true, "when": "the FAB is icon-only — i.e. not .fab-extended with visible label text. An icon glyph alone is not an accessible name." }
+  ],
+  "nesting": {
+    "allowedIn": ["page root / main content (typically as .fab-fixed)", "cards", "board views", "toolbars"],
+    "disallowed": [".fab", ".btn", ".btn-group"]
+  },
+  "a11yNotes": "Icon-only FABs (default and .fab-small) must carry aria-label naming the action (e.g. aria-label=\"Create issue\"); .fab-extended with visible text needs none. Always a <button> — never a styled <a> — so Space/Enter activation and disabled semantics come free. .fab-fixed sits above scrolling content; keep it out of the way of page-end content by padding the container bottom.",
+  "examples": [
+    "<button class=\"fab\" aria-label=\"Create issue\">+</button>",
+    "<button class=\"fab fab-small\" aria-label=\"Add comment\">+</button>",
+    "<button class=\"fab fab-extended\">+ Create</button>",
+    "<button class=\"fab fab-fixed\" aria-label=\"Create issue\">+</button>"
+  ]
+}

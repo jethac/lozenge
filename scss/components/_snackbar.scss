@@ -1,1 +1,64 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Snackbar — transient bottom notification on the inverted tooltip surface.
+// Static in flow by default; add .snackbar-fixed to pin it bottom-center of
+// the viewport (it also works inside an open <dialog>, positioning against
+// the viewport from the top layer).
+// Usage:
+// <div class="snackbar" role="status">
+//   <span class="snackbar-message">Issue moved to Done.</span>
+//   <button class="snackbar-action">Undo</button>
+// </div>
+.snackbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: max-content;
+  max-width: min(672px, calc(100vw - 32px));
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-tooltip-bg);
+  color: var(--lz-sys-tooltip-text);
+  box-shadow: $shadow-overlay;
+}
+
+.snackbar-message {
+  @include truncate;
+}
+
+// The action inherits the tooltip text color — the one contrast-verified
+// pairing on this inverted surface — and is distinguished by underline +
+// semibold weight instead of hue. A fixed ref accent (e.g. blue-100) would
+// bypass the token contrast guarantees and can fail against the
+// light-scheme tooltip surface.
+.snackbar-action {
+  flex-shrink: 0;
+  margin: -2px -4px;
+  padding: 2px 4px;
+  border: none;
+  border-radius: $border-radius-sm;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-weight: $font-weight-semibold;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.snackbar-fixed {
+  position: fixed;
+  inset-block-end: 24px;
+  inset-inline: 0;
+  z-index: $z-flag;
+  margin-inline: auto;
+}

@@ -1,0 +1,51 @@
+{
+  "component": "sheet",
+  "version": "0.1.0",
+  "intent": "Bottom sheet on a native <dialog> (Material BottomSheet equivalent): a bottom-anchored glass surface — full-width to 640px, centered, top corners rounded, max-height 60vh (90vh with .sheet-tall) — sliding up over a blanket backdrop. Use for mobile-friendly action lists, share targets, and quick forms. Open declaratively with <button commandfor=\"id\" command=\"show-modal\"> and close with command=\"close\" or a <form method=\"dialog\">; no JavaScript involved.",
+  "root": { "selector": ".sheet", "element": ["dialog"], "requiredClasses": ["sheet"] },
+  "variants": {},
+  "modifiers": ["sheet-tall"],
+  "structure": [
+    { "selector": ".sheet-handle", "required": false, "description": "32×4 rounded pill (var(--lz-sys-track)) centered at the top — the grab affordance. Purely decorative; keep it an empty div." },
+    { "selector": ".sheet-header", "required": false, "description": "Title strip below the handle: .sheet-title (h600 scale), space-between for an optional trailing control." },
+    { "selector": ".sheet-body", "required": true, "description": "The scrolling content region (flex:1, overflow-y:auto, 24px inline padding)." },
+    { "selector": ".sheet-footer", "required": false, "description": "End-aligned action row, usually a <form method=\"dialog\"> so buttons close the sheet natively." }
+  ],
+  "aria": [
+    { "on": ".sheet", "attr": "aria-labelledby", "required": true, "when": "The sheet has a visible .sheet-title — point aria-labelledby at its id; otherwise label the dialog directly with aria-label." }
+  ],
+  "nesting": {
+    "allowedIn": ["directly under <body> (the dialog renders in the top layer regardless of DOM position)"],
+    "disallowed": [".sheet", "dialog.modal", ".drawer", ".flag"]
+  },
+  "a11yNotes": "The native <dialog> supplies focus trapping, Esc-to-close, and top-layer stacking — never re-implement them. Give the dialog an accessible name (aria-labelledby → .sheet-title id, or aria-label). The sheet is a glass surface: never nest another glass surface (modal, drawer, flag, another sheet) inside it. The .sheet-handle is decorative only — there is no built-in drag-to-dismiss; Esc, backdrop behavior, and explicit close buttons do that work. Entrance slide uses motion tokens and is collapsed by the framework-wide prefers-reduced-motion rule.",
+  "examples": [
+    "<dialog class=\"sheet\" id=\"share-sheet\" aria-labelledby=\"share-sheet-title\"><div class=\"sheet-handle\"></div><div class=\"sheet-header\"><h4 class=\"sheet-title\" id=\"share-sheet-title\">Share board</h4></div><div class=\"sheet-body\"><p>Choose a destination…</p></div><form method=\"dialog\" class=\"sheet-footer\"><button class=\"btn btn-subtle\" value=\"cancel\">Cancel</button></form></dialog>",
+    "<dialog class=\"sheet sheet-tall\" id=\"filter-sheet\" aria-label=\"Filters\"><div class=\"sheet-handle\"></div><div class=\"sheet-body\"><p>Filter controls…</p></div></dialog>"
+  ],
+  "subcomponents": [
+    {
+      "component": "modal-fullscreen",
+      "intent": "Fullscreen dialog (Material fullscreen-dialog equivalent) for mobile-scale creation/edit flows: an edge-to-edge native <dialog> on a solid surface (deliberately NOT glass — nothing behind it remains visible, so translucency would only cost contrast). Reuses the .modal-header idiom with the order close-button → title → confirming action; the title fills the middle.",
+      "root": { "selector": ".modal-fullscreen", "element": ["dialog"], "requiredClasses": ["modal-fullscreen"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".modal-header", "required": true, "description": "Top bar, in order: leading close button (.btn .btn-subtle .btn-icon with commandfor + command=\"close\"), .modal-title (flex:1, truncates), then the confirming action (.btn .btn-primary)." },
+        { "selector": ".modal-header > .modal-title", "required": true, "description": "Dialog title; give it an id and point the dialog's aria-labelledby at it." },
+        { "selector": ".modal-body", "required": true, "description": "The scrolling content region (flex:1, overflow-y:auto)." }
+      ],
+      "aria": [
+        { "on": ".modal-fullscreen", "attr": "aria-labelledby", "required": true, "when": "Point aria-labelledby at the .modal-title id; use aria-label only if there is no visible title." }
+      ],
+      "nesting": {
+        "allowedIn": ["directly under <body> (the dialog renders in the top layer regardless of DOM position)"],
+        "disallowed": [".sheet", "dialog.modal", ".drawer", ".flag"]
+      },
+      "a11yNotes": "Do not combine with the .modal class — .modal applies the glass material and centered geometry that .modal-fullscreen replaces. The close button is icon-only and must carry aria-label (enforced by the button contract on .btn-icon). Because the dialog covers the viewport, a .snackbar-fixed placed inside it positions against the viewport from the top layer, which is the supported way to toast over a fullscreen flow.",
+      "examples": [
+        "<dialog class=\"modal-fullscreen\" id=\"new-issue\" aria-labelledby=\"new-issue-title\"><div class=\"modal-header\"><button class=\"btn btn-subtle btn-icon\" commandfor=\"new-issue\" command=\"close\" aria-label=\"Close dialog\">×</button><h4 class=\"modal-title\" id=\"new-issue-title\">New issue</h4><button class=\"btn btn-primary\" commandfor=\"new-issue\" command=\"close\">Create</button></div><div class=\"modal-body\"><p>Form fields…</p></div></dialog>"
+      ]
+    }
+  ]
+}

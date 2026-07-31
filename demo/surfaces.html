@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lozenge — surfaces &amp; data</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="./theme-panel.js"></script>
+</head>
+<body>
+<div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
+
+<h1>Surfaces &amp; data</h1>
+<p class="text-subtle">Lists, accordions, sheets, snackbars, and progress rings —
+zero-JS surface &amp; data components on platform primitives. Back to
+<a href="/demo/">the kitchen sink</a>.</p>
+
+<section class="demo-section mt-6">
+  <h2>List</h2>
+  <p class="text-subtle">Two-line divided list; rows are real links, one selected.</p>
+  <ul class="list list-divided mt-3" style="max-width: 440px;">
+    <li><a class="list-item" href="#">
+      <span class="list-item-leading"><span class="avatar avatar-md">JC</span></span>
+      <span class="list-item-content">
+        <span class="list-item-title">Jetha Chan</span>
+        <span class="list-item-subtitle">Product · last active 2h ago</span>
+      </span>
+      <span class="list-item-trailing"><span class="lozenge lozenge-success">Active</span></span>
+    </a></li>
+    <li><a class="list-item selected" href="#" aria-current="true">
+      <span class="list-item-leading"><span class="avatar avatar-md">DK</span></span>
+      <span class="list-item-content">
+        <span class="list-item-title">Dana Kim</span>
+        <span class="list-item-subtitle">Engineering · reviewing LOZ-9</span>
+      </span>
+      <span class="list-item-trailing"><span class="lozenge lozenge-inprogress">In review</span></span>
+    </a></li>
+    <li><a class="list-item" href="#">
+      <span class="list-item-leading"><span class="avatar avatar-md">MW</span></span>
+      <span class="list-item-content">
+        <span class="list-item-title">Mira Watanabe</span>
+        <span class="list-item-subtitle">Design · away until Monday</span>
+      </span>
+      <span class="list-item-trailing"><span class="lozenge lozenge-default">Away</span></span>
+    </a></li>
+  </ul>
+
+  <h3 class="mt-5">Authoring tags</h3>
+  <p class="text-subtle">The same rows via <code>&lt;lz-list-item&gt;</code>, compact.</p>
+  <ul class="list list-divided list-compact mt-3" style="max-width: 440px;">
+    <li class="list-item selected" aria-current="true">
+      <span class="list-item-content"><span class="list-item-title">Board</span></span>
+    </li>
+    <lz-list-item title="Backlog" subtitle="42 issues" trailing="true">
+      <span slot="trailing">›</span>
+    </lz-list-item>
+    <lz-list-item title="Reports" leading="true" trailing="true">
+      <span slot="leading"><span class="avatar avatar-sm avatar-square">R</span></span>
+      <span slot="trailing"><span class="badge">3</span></span>
+    </lz-list-item>
+  </ul>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Accordion</h2>
+  <p class="text-subtle">Native <code>&lt;details&gt;</code> panels sharing a
+  <code>name</code> attribute — exclusive open, zero JS.</p>
+  <div class="accordion mt-3" style="max-width: 640px;">
+    <details class="accordion-panel" name="surfaces-faq" open>
+      <summary class="accordion-header">What is Lozenge?</summary>
+      <div class="accordion-body">
+        <p>An original HTML+CSS implementation of the Jira visual style —
+        tokens, components, and authoring tags, with no runtime JavaScript.</p>
+      </div>
+    </details>
+    <details class="accordion-panel" name="surfaces-faq">
+      <summary class="accordion-header">How do the overlays work?</summary>
+      <div class="accordion-body">
+        <p>Modals, drawers, and sheets are native <code>&lt;dialog&gt;</code>
+        elements; the platform supplies focus trapping, Esc, and the backdrop.</p>
+      </div>
+    </details>
+    <details class="accordion-panel" name="surfaces-faq">
+      <summary class="accordion-header">Why is this accordion exclusive?</summary>
+      <div class="accordion-body">
+        <p>Every panel carries <code>name="surfaces-faq"</code> — the platform's
+        exclusive-accordion behavior for named <code>&lt;details&gt;</code> groups.</p>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Sheets &amp; fullscreen dialog</h2>
+  <div class="d-flex align-items-center gap-2 mt-3">
+    <button class="btn" commandfor="demo-sheet" command="show-modal">Open bottom sheet</button>
+    <button class="btn" commandfor="demo-fullscreen" command="show-modal">Open fullscreen dialog</button>
+  </div>
+
+  <dialog class="sheet" id="demo-sheet" aria-labelledby="demo-sheet-title">
+    <div class="sheet-handle"></div>
+    <div class="sheet-header"><h4 class="sheet-title" id="demo-sheet-title">Share board</h4></div>
+    <div class="sheet-body">
+      <ul class="list">
+        <li><button class="list-item" type="button" commandfor="demo-sheet" command="close">
+          <span class="list-item-content"><span class="list-item-title">Copy link</span></span>
+        </button></li>
+        <li><button class="list-item" type="button" commandfor="demo-sheet" command="close">
+          <span class="list-item-content">
+            <span class="list-item-title">Export CSV</span>
+            <span class="list-item-subtitle">Current sprint only</span>
+          </span>
+        </button></li>
+        <li><button class="list-item" type="button" commandfor="demo-sheet" command="close">
+          <span class="list-item-content"><span class="list-item-title">Print</span></span>
+        </button></li>
+      </ul>
+    </div>
+    <form method="dialog" class="sheet-footer">
+      <button class="btn btn-subtle" value="cancel">Cancel</button>
+    </form>
+  </dialog>
+
+  <dialog class="modal-fullscreen" id="demo-fullscreen" aria-labelledby="demo-fullscreen-title">
+    <div class="modal-header">
+      <button class="btn btn-subtle btn-icon" commandfor="demo-fullscreen" command="close"
+              aria-label="Close dialog">×</button>
+      <h4 class="modal-title" id="demo-fullscreen-title">New issue</h4>
+      <button class="btn btn-primary" commandfor="demo-fullscreen" command="close">Create</button>
+    </div>
+    <div class="modal-body">
+      <p>A fullscreen dialog on a solid surface — close leading, title filling,
+      confirming action trailing. The fixed snackbar below is positioned from
+      the top layer against the viewport.</p>
+    </div>
+    <div class="snackbar snackbar-fixed" role="status">
+      <span class="snackbar-message">Draft saved just now.</span>
+      <button class="snackbar-action" type="button">Undo</button>
+    </div>
+  </dialog>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Snackbar</h2>
+  <p class="text-subtle">Static in flow below; the <code>.snackbar-fixed</code>
+  variant is demonstrated inside the fullscreen dialog above.</p>
+  <div class="snackbar mt-3" role="status">
+    <span class="snackbar-message">Issue LOZ-42 moved to Done.</span>
+    <button class="snackbar-action" type="button">Undo</button>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Rings</h2>
+  <div class="d-flex align-items-center gap-4 mt-3">
+    <span class="ring ring-sm" style="--value: 0.25" role="progressbar"
+          aria-valuenow="25" aria-label="Upload progress"></span>
+    <div class="ring" style="--value: 0.25" role="progressbar"
+         aria-valuenow="25" aria-label="Sprint completion">
+      <span class="ring-label">25%</span>
+    </div>
+    <div class="ring" style="--value: 0.6" role="progressbar"
+         aria-valuenow="60" aria-label="Story points burned">
+      <span class="ring-label">60%</span>
+    </div>
+    <div class="ring ring-lg" style="--value: 1" role="progressbar"
+         aria-valuenow="100" aria-label="Backlog groomed">
+      <span class="ring-label">100%</span>
+    </div>
+    <div class="ring ring-lg ring-success" style="--value: 1" role="progressbar"
+         aria-valuenow="100" aria-label="Import complete">
+      <span class="ring-label">100%</span>
+    </div>
+    <div class="ring ring-lg ring-danger" style="--value: 0.35" role="progressbar"
+         aria-valuenow="35" aria-label="Failing checks">
+      <span class="ring-label">35%</span>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

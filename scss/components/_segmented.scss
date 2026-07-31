@@ -1,1 +1,87 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Segmented button — a single-select control drawn as a joined button
+// group, built on a native radio group. Zero JavaScript; arrow keys move
+// the selection because the inputs are real radios.
+//
+// Usage:
+// <fieldset class="segmented" aria-label="View">
+//   <input type="radio" name="view" id="view-board" checked>
+//   <label for="view-board">Board</label>
+//   <input type="radio" name="view" id="view-list">
+//   <label for="view-list">List</label>
+// </fieldset>
+.segmented {
+  display: inline-flex;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  min-width: 0;
+
+  > input[type="radio"] {
+    @include visually-hidden;
+  }
+
+  > label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    padding: 0 12px;
+    background-color: $btn-default-bg;
+    color: $text-color;
+    font-size: $font-size-base;
+    font-weight: $btn-font-weight;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    transition:
+      background-color var(--lz-motion-fast) var(--lz-ease-standard),
+      color var(--lz-motion-fast) var(--lz-ease-standard);
+
+    &:hover {
+      background-color: $btn-default-hover-bg;
+    }
+
+    &:first-of-type {
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+    }
+
+    &:last-of-type {
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+  }
+
+  > input[type="radio"]:checked + label {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+
+  > input[type="radio"]:focus-visible + label {
+    position: relative;
+    z-index: 1;
+    @include focus-ring;
+  }
+
+  > input[type="radio"]:disabled + label {
+    background-color: var(--lz-sys-interaction-bg);
+    color: $text-disabled;
+    cursor: not-allowed;
+  }
+}
+
+// Bold emphasis: the selected segment uses the accent-bold fill.
+.segmented-bold > input[type="radio"]:checked + label {
+  background-color: var(--lz-sys-accent-bold);
+  color: var(--lz-sys-text-on-bold);
+}
+
+.segmented-compact > label {
+  height: 24px;
+  padding: 0 8px;
+}

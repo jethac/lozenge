@@ -1,1 +1,164 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Bottom sheet on a native <dialog> — same idiom as .drawer: the platform
+// supplies focus trapping, Esc, top-layer stacking, and ::backdrop; Lozenge
+// supplies the bottom-anchored geometry and the glass material. Open it
+// declaratively with <button commandfor="id" command="show-modal">.
+//
+// <button class="btn" commandfor="s1" command="show-modal">Open</button>
+// <dialog class="sheet" id="s1" aria-labelledby="s1-title">
+//   <div class="sheet-handle"></div>
+//   <div class="sheet-header"><h4 class="sheet-title" id="s1-title">Share</h4></div>
+//   <div class="sheet-body">…</div>
+//   <form method="dialog" class="sheet-footer">
+//     <button class="btn btn-subtle" value="cancel">Cancel</button>
+//   </form>
+// </dialog>
+dialog.sheet {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-start: auto;
+  inset-block-end: 0;
+  margin: 0 auto;
+  padding: 0;
+  border: none;
+  width: 100%;
+  max-width: 640px;
+  max-height: 60vh;
+  // Round only the free (top) edge — the sheet is attached at the bottom.
+  border-radius: 0;
+  border-start-start-radius: $border-radius;
+  border-start-end-radius: $border-radius;
+  box-shadow: $shadow-modal;
+  color: $text-color;
+  @include glass(var(--lz-sys-surface-overlay));
+
+  // Slide up from the attached edge (transition from @starting-style;
+  // discrete display/overlay transitions keep the exit graceful too).
+  transform: none;
+  transition:
+    transform var(--lz-motion-slow) var(--lz-ease-entrance),
+    display var(--lz-motion-slow) allow-discrete,
+    overlay var(--lz-motion-slow) allow-discrete;
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background: var(--lz-sys-blanket);
+  }
+
+  @starting-style {
+    &[open] {
+      transform: translateY(100%);
+    }
+  }
+}
+
+dialog.sheet-tall {
+  max-height: 90vh;
+}
+
+// Grab affordance pill at the top of the sheet.
+.sheet-handle {
+  flex-shrink: 0;
+  width: 32px;
+  height: 4px;
+  margin: 8px auto;
+  border-radius: $border-radius-pill;
+  background-color: var(--lz-sys-track);
+}
+
+.sheet-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 4px 24px 8px;
+}
+
+.sheet-title {
+  margin: 0;
+  @include heading(600);
+}
+
+.sheet-body {
+  flex: 1;
+  padding: 0 24px;
+  overflow-y: auto;
+}
+
+.sheet-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 24px 24px;
+  margin: 0;
+}
+
+// Fullscreen dialog — edge-to-edge on a solid surface (NOT glass: nothing
+// behind it remains visible, so translucency would only cost contrast).
+// Reuses the .modal-header idiom with the close button leading and the
+// confirming action trailing:
+//
+// <dialog class="modal-fullscreen" id="f1" aria-labelledby="f1-title">
+//   <div class="modal-header">
+//     <button class="btn btn-subtle btn-icon" commandfor="f1" command="close"
+//             aria-label="Close dialog">×</button>
+//     <h4 class="modal-title" id="f1-title">New issue</h4>
+//     <button class="btn btn-primary">Save</button>
+//   </div>
+//   <div class="modal-body">…</div>
+// </dialog>
+dialog.modal-fullscreen {
+  position: fixed;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  border-radius: 0;
+  background-color: $surface-bg;
+  color: $text-color;
+
+  transform: none;
+  transition:
+    transform var(--lz-motion-slow) var(--lz-ease-entrance),
+    display var(--lz-motion-slow) allow-discrete,
+    overlay var(--lz-motion-slow) allow-discrete;
+
+  &[open] {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &::backdrop {
+    background: var(--lz-sys-blanket);
+  }
+
+  @starting-style {
+    &[open] {
+      transform: translateY(100%);
+    }
+  }
+
+  // Header order is close → title → action; the title fills the middle.
+  .modal-header {
+    justify-content: flex-start;
+  }
+
+  .modal-title {
+    flex: 1;
+    @include truncate;
+  }
+
+  .modal-body {
+    flex: 1;
+  }
+}

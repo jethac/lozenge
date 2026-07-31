@@ -1,0 +1,38 @@
+{
+  "component": "ring",
+  "version": "0.1.0",
+  "intent": "Determinate circular progress (Material CircularProgressIndicator equivalent): a conic-gradient donut cut to a 4px ring by a radial-gradient mask — no JS, no SVG. Progress is driven by the --value custom property (0..1) set inline, e.g. style=\"--value: 0.6\". Fill is accent-bold over the track token; sizes 24 (.ring-sm) / 32 (default) / 48 (.ring-lg); optional absolute-centered 11px .ring-label. For indeterminate progress use .spinner; for linear progress use .progress.",
+  "root": { "selector": ".ring", "element": ["div", "span"], "requiredClasses": ["ring"] },
+  "variants": {
+    "size": {
+      "classes": ["ring-sm", "ring-lg"],
+      "required": false,
+      "exclusive": true
+    },
+    "status": {
+      "classes": ["ring-success", "ring-danger"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": [],
+  "structure": [
+    { "selector": ".ring-label", "required": false, "description": "Optional absolute-centered 11px semibold label (e.g. \"60%\"). It sits inside the donut hole — the gradient and mask live on ::before, so the label is never clipped. Best on the default and .ring-lg sizes; too cramped on .ring-sm." }
+  ],
+  "aria": [
+    { "on": ".ring", "attr": "role", "required": true },
+    { "on": ".ring", "attr": "aria-valuenow", "required": true },
+    { "on": ".ring", "attr": "aria-label", "required": false, "when": "No visible text labels the ring — give it aria-label (or aria-labelledby) naming what is progressing. role=\"progressbar\" defaults aria-valuemin/aria-valuemax to 0/100, so express aria-valuenow on that scale (aria-valuenow=\"60\" for --value: 0.6)." }
+  ],
+  "nesting": {
+    "allowedIn": ["inline content", "table cells", ".list-item-trailing", ".card-body", "stat rows"],
+    "disallowed": [".ring", ".btn"]
+  },
+  "a11yNotes": "role=\"progressbar\" and aria-valuenow are required — the visual arc is invisible to AT. Keep --value (0..1) and aria-valuenow (0..100) in sync; they are the same fact in two scales. Name the ring via aria-label/aria-labelledby. The .ring-label text is supplementary for sighted users and does not replace aria-valuenow. Status variants recolor the fill only (success/danger bold tokens) — pair them with visible text nearby, since color alone must not carry meaning.",
+  "examples": [
+    "<div class=\"ring\" style=\"--value: 0.6\" role=\"progressbar\" aria-valuenow=\"60\" aria-label=\"Sprint completion\"><span class=\"ring-label\">60%</span></div>",
+    "<span class=\"ring ring-sm\" style=\"--value: 0.25\" role=\"progressbar\" aria-valuenow=\"25\" aria-label=\"Upload progress\"></span>",
+    "<div class=\"ring ring-lg ring-success\" style=\"--value: 1\" role=\"progressbar\" aria-valuenow=\"100\" aria-label=\"Import complete\"><span class=\"ring-label\">100%</span></div>"
+  ],
+  "subcomponents": []
+}

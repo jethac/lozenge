@@ -1,0 +1,27 @@
+{
+  "component": "rail",
+  "version": "0.1.0",
+  "intent": "Navigation rail (Material NavigationRail equivalent): a compact 72px vertical strip of top-level destinations for tablet/desktop, each item an icon over an 11px label with the same pill indicator as the bottom nav. It pairs with .sidebar — the rail is the compact form and the sidebar the expanded one; swap between them at a breakpoint rather than showing both. Optional .rail-fab slot holds the primary action at the top; .rail-bottom pushes trailing items (settings, profile) to the end.",
+  "root": { "selector": ".rail", "element": ["nav"], "requiredClasses": ["rail"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".rail-item", "required": true, "description": "One 56px-tall <a> per destination, stacked. Mark the current destination with .active — exactly one. Items may live directly in the rail or inside .rail-bottom." },
+    { "selector": ".rail-item > .rail-icon", "required": true, "description": "20px icon slot (inline SVG sized to fill); the 32×20 selection pill and hover wash render behind it via ::before." },
+    { "selector": ".rail-item > .rail-label", "required": false, "description": "11px label under the icon; truncates at the 72px rail width. If omitted, give the item an aria-label." },
+    { "selector": ".rail-fab", "required": false, "description": "Optional slot at the top of the rail for the primary action button." },
+    { "selector": ".rail-bottom", "required": false, "description": "Optional trailing section pushed to the rail's end (margin-block-start: auto) for settings/profile items." }
+  ],
+  "aria": [
+    { "on": ".rail-item.active", "attr": "aria-current", "required": true },
+    { "on": ".rail", "attr": "aria-label", "required": false, "when": "The page contains more than one <nav> landmark — label each to distinguish them." }
+  ],
+  "nesting": {
+    "allowedIn": ["the start edge of the app shell, beside the content area"],
+    "disallowed": [".rail", ".sidebar", ".navbar", ".bottom-nav"]
+  },
+  "a11yNotes": "Use a real <nav> element with <a> children and aria-current=\"page\" on the active item. Icon SVGs are decorative (aria-hidden=\"true\") as long as the label names the destination; unlabeled items need aria-label. Do not render a rail and a sidebar for the same navigation at the same time — that doubles the landmark and the tab stops.",
+  "examples": [
+    "<nav class=\"rail\" aria-label=\"Primary\"><a class=\"rail-item active\" href=\"#\" aria-current=\"page\"><span class=\"rail-icon\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M3 9l7-6 7 6v8h-5v-5H8v5H3z\" fill=\"currentColor\"/></svg></span><span class=\"rail-label\">Board</span></a><a class=\"rail-item\" href=\"#\"><span class=\"rail-icon\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M3 5h14M3 10h14M3 15h9\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></span><span class=\"rail-label\">Backlog</span></a><div class=\"rail-bottom\"><a class=\"rail-item\" href=\"#\"><span class=\"rail-icon\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><circle cx=\"10\" cy=\"10\" r=\"3\" fill=\"currentColor\"/></svg></span><span class=\"rail-label\">Settings</span></a></div></nav>"
+  ]
+}

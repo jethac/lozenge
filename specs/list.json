@@ -1,0 +1,28 @@
+{
+  "component": "list",
+  "version": "0.1.0",
+  "intent": "List of tiles (Material ListTile equivalent): rows of optional leading icon/avatar, a title with optional 12px subtitle, and optional trailing meta (lozenge, count, chevron). One-line rows are 40px min-height, two-line rows 56px (detected via :has(.list-item-subtitle) — no extra class needed). Rows are static <li class=\"list-item\">, or interactive when the row itself is <a class=\"list-item\"> / <button class=\"list-item\"> (full-bleed reset, interaction-hovered on hover, pressed on :active).",
+  "root": { "selector": ".list", "element": ["ul", "ol", "div", "nav"], "requiredClasses": ["list"] },
+  "variants": {},
+  "modifiers": ["list-divided", "list-compact"],
+  "structure": [
+    { "selector": ".list-item", "required": true, "description": "Row tile. As <li class=\"list-item\"> for static rows, or <li><a class=\"list-item\"> / <li><button class=\"list-item\"> for interactive rows. .selected marks the chosen row (selected-bg/selected-text)." },
+    { "selector": ".list-item-content", "required": false, "description": "Flexible middle column (flex:1, min-width:0) stacking .list-item-title over an optional .list-item-subtitle; both truncate." },
+    { "selector": ".list-item-leading", "required": false, "description": "Leading slot (icon, avatar, checkbox), flex-shrink:0." },
+    { "selector": ".list-item-subtitle", "required": false, "description": "Second line, 12px text-subtle; its presence bumps the row to the 56px two-line height (48px in .list-compact)." },
+    { "selector": ".list-item-trailing", "required": false, "description": "Trailing slot for meta text, lozenges, or a chevron; text-subtle, flex-shrink:0." }
+  ],
+  "aria": [
+    { "on": ".list-item", "attr": "aria-current", "required": false, "when": "The .selected row represents the current page/item in a navigation list — add aria-current so selection is not conveyed by color alone." }
+  ],
+  "nesting": {
+    "allowedIn": ["page content", ".card-body", ".drawer-body", ".sheet-body", ".modal-body"],
+    "disallowed": [".list", ".dropdown-menu", ".listbox"]
+  },
+  "a11yNotes": "Keep the list a real <ul>/<ol> with <li> children so item count and position are announced. Interactive rows must be real <a>/<button> elements filling the row (never click handlers on <li>). The .selected state is color-only — pair it with aria-current (navigation) or aria-selected (selection widgets) as appropriate. Leading avatars/icons are decorative unless they carry their own label.",
+  "examples": [
+    "<ul class=\"list list-divided\"><li class=\"list-item\"><span class=\"list-item-leading\"><span class=\"avatar avatar-md\">JC</span></span><span class=\"list-item-content\"><span class=\"list-item-title\">Jetha Chan</span><span class=\"list-item-subtitle\">Product designer</span></span><span class=\"list-item-trailing\"><span class=\"lozenge lozenge-success\">Active</span></span></li><li class=\"list-item\"><span class=\"list-item-leading\"><span class=\"avatar avatar-md\">DK</span></span><span class=\"list-item-content\"><span class=\"list-item-title\">Dana Kim</span><span class=\"list-item-subtitle\">Engineering</span></span><span class=\"list-item-trailing\"><span class=\"lozenge lozenge-default\">Away</span></span></li></ul>",
+    "<ul class=\"list list-compact\"><li><a class=\"list-item selected\" href=\"#\" aria-current=\"true\"><span class=\"list-item-content\"><span class=\"list-item-title\">Board</span></span></a></li><li><a class=\"list-item\" href=\"#\"><span class=\"list-item-content\"><span class=\"list-item-title\">Backlog</span></span></a></li><li><button class=\"list-item\" type=\"button\"><span class=\"list-item-content\"><span class=\"list-item-title\">Reports</span></span><span class=\"list-item-trailing\">›</span></button></li></ul>"
+  ],
+  "subcomponents": []
+}

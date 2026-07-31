@@ -1,0 +1,34 @@
+{
+  "component": "chip",
+  "version": "0.1.0",
+  "intent": "Compact 24px pill for selection and input, built on native form controls with zero JavaScript — the Lozenge take on Material's chip family. Three recipes share the .chip skin: choice chips (single-select) are a <label class=\"chip chip-choice\"> wrapping a hidden radio; filter chips (multi-select) are the same with a checkbox and grow a ✓ when checked; input chips are a plain <span class=\"chip\"> with a .chip-remove button. A bare <span class=\"chip\"> is a static pill (see also the squarer .tag).",
+  "root": { "selector": ".chip", "element": ["span", "label"], "requiredClasses": ["chip"] },
+  "variants": {
+    "role": {
+      "classes": ["chip-choice", "chip-filter"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": [],
+  "structure": [
+    { "selector": "input[type=radio]", "required": false, "description": "Choice chips only: visually-hidden radio as the first child of the <label class=\"chip chip-choice\">. All chips in one choice group share a name; :checked relays selected styling to the label via :has()." },
+    { "selector": "input[type=checkbox]", "required": false, "description": "Filter chips only: visually-hidden checkbox as the first child of the <label class=\"chip chip-filter\">." },
+    { "selector": "span", "required": false, "description": "Selection chips (choice/filter): the visible label text must sit in a <span> immediately following the input — the ✓ indicator targets input:checked + span::before." },
+    { "selector": "button.chip-remove", "required": false, "description": "Input chips: remove button rendered after the label text; danger colors on hover. Must be a <button> for keyboard operability. Do not combine with chip-choice/chip-filter (a button inside a label would steal the label's activation)." }
+  ],
+  "aria": [
+    { "on": ".chip-remove", "attr": "aria-label", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["filter rows", "toolbars", "forms", "issue detail headers", "card footers"],
+    "disallowed": [".chip", ".btn"]
+  },
+  "a11yNotes": "Selection chips ride on native radio/checkbox semantics: Tab reaches the group, arrow keys move within a radio group, Space toggles a checkbox — add no ARIA roles on top. The hidden input's :focus-visible relays a focus ring to the label via :has(). Give each choice group a distinct radio name. Name what .chip-remove removes (aria-label=\"Remove frontend\", not \"Remove\"). Disable a selection chip by disabling its input, not the label.",
+  "examples": [
+    "<span class=\"chip\">design</span>",
+    "<label class=\"chip chip-choice\"><input type=\"radio\" name=\"priority\" checked><span>Low</span></label>",
+    "<label class=\"chip chip-filter\"><input type=\"checkbox\"><span>Bug</span></label>",
+    "<span class=\"chip\">frontend<button class=\"chip-remove\" aria-label=\"Remove frontend\">×</button></span>"
+  ]
+}

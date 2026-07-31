@@ -1,0 +1,28 @@
+{
+  "component": "stepper",
+  "version": "0.1.0",
+  "intent": "Vertical stepper with per-step content (Material vertical Stepper equivalent) for setup flows and long forms broken into stages. Markers reuse the tracker's state language — done: success circle with a check; current: accent circle; upcoming: sunken circle — joined by a 2px connector down the marker column that turns success-colored for segments owned by done steps. Two flavors share one skin: class-controlled (<ol> of <li class=\"stepper-step\">, content shown by adding .expanded — app/server drives state) and zero-JS expandable (<div class=\"stepper\"> of <details class=\"stepper-step\"> whose <summary class=\"stepper-header\"> holds the marker + title — native disclosure does the toggling). For a compact horizontal progress readout use .tracker instead.",
+  "root": { "selector": ".stepper", "element": ["ol", "div"], "requiredClasses": ["stepper"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".stepper-step", "required": true, "description": "One step per <li> (in an <ol>) or <details> (in a <div> wrapper — <details> cannot be a child of <ol>). State classes on the step: .done, .current (at most one), none = upcoming; .expanded shows the content on the class-controlled flavor, [open] does it on the details flavor." },
+    { "selector": ".stepper-step .stepper-header", "required": true, "description": "Marker + title row. A <div> on the class-controlled flavor; the <summary> on the details flavor (making the whole row the disclosure trigger)." },
+    { "selector": ".stepper-header .stepper-marker", "required": true, "description": "24px circle with the step number. Done steps visually swap the number for a check via CSS — keep the number in the markup." },
+    { "selector": ".stepper-header .stepper-title", "required": true, "description": "Step name (semibold). May contain a nested .stepper-optional." },
+    { "selector": ".stepper-optional", "required": false, "description": "Small subtle annotation under the title, e.g. “Optional” or a completion summary." },
+    { "selector": ".stepper-step > .stepper-content", "required": false, "description": "The step's body, indented under the title with the connector running down its start edge. Hidden unless the step is .expanded or an open <details>." }
+  ],
+  "aria": [
+    { "on": ".stepper-step.current", "attr": "aria-current", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["cards", "modal bodies", "settings and onboarding panes"],
+    "disallowed": [".stepper", ".tracker"]
+  },
+  "a11yNotes": "Prefer the <ol> flavor so step count and position are announced; put aria-current=\"step\" on the current step. The details flavor trades list semantics for built-in keyboard expand/collapse — the summary is natively focusable and toggles on Enter/Space. Don't mix flavors in one stepper. The done-state check is decorative CSS; add visually-hidden “(completed)” text on done steps if completion matters to screen-reader users. Content hidden by a closed step is genuinely hidden from the accessibility tree — don't put the only path forward (e.g. the submit button) inside a collapsed step.",
+  "examples": [
+    "<ol class=\"stepper\"><li class=\"stepper-step done\"><div class=\"stepper-header\"><span class=\"stepper-marker\">1</span><span class=\"stepper-title\">Project details</span></div><div class=\"stepper-content\"><p>Name and key chosen.</p></div></li><li class=\"stepper-step current expanded\" aria-current=\"step\"><div class=\"stepper-header\"><span class=\"stepper-marker\">2</span><span class=\"stepper-title\">Permissions<span class=\"stepper-optional\">Optional</span></span></div><div class=\"stepper-content\"><p>Choose who can view this project.</p></div></li><li class=\"stepper-step\"><div class=\"stepper-header\"><span class=\"stepper-marker\">3</span><span class=\"stepper-title\">Invite team</span></div></li></ol>",
+    "<div class=\"stepper\"><details class=\"stepper-step done\"><summary class=\"stepper-header\"><span class=\"stepper-marker\">1</span><span class=\"stepper-title\">Create account</span></summary><div class=\"stepper-content\"><p>Done on sign-up.</p></div></details><details class=\"stepper-step current\" open aria-current=\"step\"><summary class=\"stepper-header\"><span class=\"stepper-marker\">2</span><span class=\"stepper-title\">Verify email</span></summary><div class=\"stepper-content\"><p>Click the link we sent you.</p></div></details></div>"
+  ]
+}

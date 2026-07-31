@@ -1,0 +1,25 @@
+{
+  "component": "snackbar",
+  "version": "0.1.0",
+  "intent": "Material-style snackbar: a single-line transient notification on the inverted tooltip surface (var(--lz-sys-tooltip-bg)/tooltip-text), 8px 16px padding, radius 3, with an optional inline action. Static in document flow by default (compose into demos or custom stacks); add .snackbar-fixed to pin it bottom-center of the viewport. For richer multi-line toasts with icons and dismiss buttons use .flag instead.",
+  "root": { "selector": ".snackbar", "element": ["div"], "requiredClasses": ["snackbar"] },
+  "variants": {},
+  "modifiers": ["snackbar-fixed"],
+  "structure": [
+    { "selector": ".snackbar-message", "required": true, "description": "The single-line message text; truncates with ellipsis." },
+    { "selector": ".snackbar-action", "required": false, "description": "Optional trailing action as a real <button> or <a>. It inherits the tooltip text color and is distinguished by underline + semibold weight — the contrast-safe choice: tooltip-text is the contrast-verified pairing on this inverted surface in both schemes, whereas a fixed ref accent (e.g. blue-100) would bypass the token contrast guarantees and can fail against the light-scheme tooltip surface." }
+  ],
+  "aria": [
+    { "on": ".snackbar", "attr": "role", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["directly under <body> (with .snackbar-fixed)", "inside an open dialog.modal-fullscreen (with .snackbar-fixed — it positions against the viewport from the top layer)", "page content or a toast stack (static)"],
+    "disallowed": [".snackbar", ".flag", ".dropdown-menu", ".navbar"]
+  },
+  "a11yNotes": "Snackbars appear asynchronously: give them role=\"status\" (or role=\"alert\" for errors) so screen readers announce the message. Keep the message to one line — it truncates; move longer content to a .flag or .message. The action must be a real <button>/<a>, and because snackbars are transient, the same action should also be reachable somewhere persistent. Do not put more than one action in a snackbar.",
+  "examples": [
+    "<div class=\"snackbar\" role=\"status\"><span class=\"snackbar-message\">Issue LOZ-42 moved to Done.</span><button class=\"snackbar-action\" type=\"button\">Undo</button></div>",
+    "<div class=\"snackbar snackbar-fixed\" role=\"status\"><span class=\"snackbar-message\">Connection restored.</span></div>"
+  ],
+  "subcomponents": []
+}

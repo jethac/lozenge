@@ -1,1 +1,101 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Bottom navigation bar (Material NavigationBar equivalent) for phone-width
+// layouts: 3–5 top-level destinations, frosted-glass like the navbar.
+// Usage:
+// <nav class="bottom-nav bottom-nav-fixed" aria-label="Primary">
+//   <a class="bottom-nav-item active" href="#" aria-current="page">
+//     <span class="bottom-nav-icon"><svg aria-hidden="true">…</svg></span>
+//     <span class="bottom-nav-label">Home</span>
+//   </a>
+//   …
+// </nav>
+// The base bar is static (embeds in demos and phone frames); add
+// .bottom-nav-fixed to pin it to the bottom of the viewport.
+.bottom-nav {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 56px;
+  box-shadow: 0 -1px 0 $separator-color; // top separator hairline
+  @include glass(var(--lz-sys-surface));
+}
+
+.bottom-nav-fixed {
+  position: fixed;
+  inset-block-end: 0;
+  inset-inline: 0;
+  z-index: $z-navigation;
+}
+
+.bottom-nav-item {
+  isolation: isolate; // pill pseudo sits at z-index:-1, above the bar bg
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: $text-subtle;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+
+  &:hover {
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    border-radius: $border-radius;
+    @include focus-ring;
+  }
+}
+
+// 20px icon slot; the pill indicator lives behind it.
+.bottom-nav-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+
+  > svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: calc(50% - 10px);
+    left: calc(50% - 16px);
+    width: 32px;
+    height: 20px;
+    border-radius: $border-radius-pill;
+    background-color: transparent;
+    transition: background-color var(--lz-motion-fast) var(--lz-ease-standard);
+  }
+}
+
+.bottom-nav-item:hover .bottom-nav-icon::before {
+  background-color: var(--lz-sys-interaction-hovered);
+}
+
+.bottom-nav-item.active {
+  color: var(--lz-sys-selected-text);
+
+  .bottom-nav-icon::before {
+    background-color: var(--lz-sys-selected-bg);
+  }
+}
+
+.bottom-nav-label {
+  max-width: 100%;
+  padding-inline: 4px;
+  @include truncate;
+}

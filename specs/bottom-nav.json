@@ -1,0 +1,25 @@
+{
+  "component": "bottom-nav",
+  "version": "0.1.0",
+  "intent": "Bottom navigation bar for phone-width layouts (Material NavigationBar equivalent): a 56px frosted-glass bar of 3–5 evenly-spread top-level destinations, each an icon over an 11px label with a pill indicator behind the active item's icon. Use exactly one per page, only for top-level destinations — fewer than 3 wants tabs, more than 5 wants a sidebar or rail. The base bar is static; add .bottom-nav-fixed to pin it to the bottom of the viewport.",
+  "root": { "selector": ".bottom-nav", "element": ["nav"], "requiredClasses": ["bottom-nav"] },
+  "variants": {},
+  "modifiers": ["bottom-nav-fixed"],
+  "structure": [
+    { "selector": ".bottom-nav-item", "required": true, "description": "One <a> per destination (3–5 of them), flexed to equal widths. Mark the current destination with .active — exactly one." },
+    { "selector": ".bottom-nav-item > .bottom-nav-icon", "required": true, "description": "20px icon slot (inline SVG sized to fill). The selection pill (32×20, selected-bg) and the hover wash render behind it via ::before." },
+    { "selector": ".bottom-nav-item > .bottom-nav-label", "required": false, "description": "11px label under the icon; truncates. Omit only when the icon is universally understood — then give the item an aria-label." }
+  ],
+  "aria": [
+    { "on": ".bottom-nav-item.active", "attr": "aria-current", "required": true },
+    { "on": ".bottom-nav", "attr": "aria-label", "required": false, "when": "The page contains more than one <nav> landmark — label each to distinguish them." }
+  ],
+  "nesting": {
+    "allowedIn": ["directly under <body>, after the page content", "phone-frame demo containers"],
+    "disallowed": [".bottom-nav", ".navbar", ".dropdown-menu", ".flag", "dialog.modal"]
+  },
+  "a11yNotes": "Use a real <nav> element with <a> children so the bar is a landmark of links. Put aria-current=\"page\" on the active item. Icons are decorative — aria-hidden=\"true\" on the SVG — because the label carries the name; if you drop the label, move the name to aria-label on the item. Like the navbar this is a glass surface: never nest another glass surface inside it, and when using .bottom-nav-fixed give the scrolling content enough bottom padding that nothing hides behind the bar.",
+  "examples": [
+    "<nav class=\"bottom-nav\" aria-label=\"Primary\"><a class=\"bottom-nav-item active\" href=\"#\" aria-current=\"page\"><span class=\"bottom-nav-icon\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><path d=\"M3 9l7-6 7 6v8h-5v-5H8v5H3z\" fill=\"currentColor\"/></svg></span><span class=\"bottom-nav-label\">Home</span></a><a class=\"bottom-nav-item\" href=\"#\"><span class=\"bottom-nav-icon\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><circle cx=\"9\" cy=\"9\" r=\"5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/><path d=\"M13 13l4 4\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></span><span class=\"bottom-nav-label\">Search</span></a><a class=\"bottom-nav-item\" href=\"#\"><span class=\"bottom-nav-icon\"><svg viewBox=\"0 0 20 20\" aria-hidden=\"true\"><circle cx=\"10\" cy=\"10\" r=\"7\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></span><span class=\"bottom-nav-label\">Profile</span></a></nav>"
+  ]
+}

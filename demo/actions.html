@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lozenge — actions &amp; selection</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="./theme-panel.js"></script>
+<style>
+  .demo-section { margin-top: 40px; }
+  .demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+</style>
+</head>
+<body>
+<div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
+
+<h1>Actions &amp; selection</h1>
+<p class="text-subtle">FABs, chips, segmented buttons, and sliders — zero JavaScript,
+platform primitives only. Back to <a href="/demo/">the kitchen sink</a>.
+A fixed FAB floats at the bottom-right of this page.</p>
+
+<section class="demo-section">
+  <h2>Floating action button</h2>
+  <div class="demo-row">
+    <button class="fab" aria-label="Create issue">+</button>
+    <button class="fab fab-small" aria-label="Add comment">+</button>
+    <button class="fab fab-extended">+ Create</button>
+    <button class="fab fab-extended fab-small">+ Create</button>
+    <button class="fab" aria-label="Create issue" disabled>+</button>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Choice chips <span class="text-subtle">(single-select, radio)</span></h2>
+  <div class="demo-row" role="radiogroup" aria-label="Priority">
+    <label class="chip chip-choice"><input type="radio" name="priority" checked><span>Low</span></label>
+    <label class="chip chip-choice"><input type="radio" name="priority"><span>Medium</span></label>
+    <label class="chip chip-choice"><input type="radio" name="priority"><span>High</span></label>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Filter chips <span class="text-subtle">(multi-select, checkbox)</span></h2>
+  <div class="demo-row">
+    <label class="chip chip-filter"><input type="checkbox" checked><span>Bug</span></label>
+    <label class="chip chip-filter"><input type="checkbox"><span>Frontend</span></label>
+    <label class="chip chip-filter"><input type="checkbox" checked><span>Needs triage</span></label>
+    <label class="chip chip-filter"><input type="checkbox"><span>Blocked</span></label>
+    <label class="chip chip-filter"><input type="checkbox" disabled><span>Archived</span></label>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Input chips</h2>
+  <div class="demo-row">
+    <span class="chip">design<button class="chip-remove" aria-label="Remove design">×</button></span>
+    <span class="chip">frontend<button class="chip-remove" aria-label="Remove frontend">×</button></span>
+    <span class="chip">tokens<button class="chip-remove" aria-label="Remove tokens">×</button></span>
+    <span class="chip">static</span>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Segmented button</h2>
+  <div class="demo-row">
+    <fieldset class="segmented" aria-label="View">
+      <input type="radio" name="view" id="view-board" checked>
+      <label for="view-board">Board</label>
+      <input type="radio" name="view" id="view-list">
+      <label for="view-list">List</label>
+      <input type="radio" name="view" id="view-timeline">
+      <label for="view-timeline">Timeline</label>
+    </fieldset>
+  </div>
+  <div class="demo-row">
+    <fieldset class="segmented segmented-bold" aria-label="View (bold)">
+      <input type="radio" name="view-bold" id="viewb-board" checked>
+      <label for="viewb-board">Board</label>
+      <input type="radio" name="view-bold" id="viewb-list">
+      <label for="viewb-list">List</label>
+      <input type="radio" name="view-bold" id="viewb-timeline">
+      <label for="viewb-timeline">Timeline</label>
+    </fieldset>
+  </div>
+  <div class="demo-row">
+    <fieldset class="segmented segmented-compact" aria-label="View (compact)">
+      <input type="radio" name="view-compact" id="viewc-board" checked>
+      <label for="viewc-board">Board</label>
+      <input type="radio" name="view-compact" id="viewc-list">
+      <label for="viewc-list">List</label>
+      <input type="radio" name="view-compact" id="viewc-timeline">
+      <label for="viewc-timeline">Timeline</label>
+    </fieldset>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Slider</h2>
+  <p class="text-subtle">The track fill reads a <code>--value</code> custom property
+  (0–1) set by the app — inline here; without it the track is simply unfilled.</p>
+  <div class="demo-row">
+    <input type="range" class="slider" min="0" max="100" value="60"
+           style="--value: 0.6; width: 240px" aria-label="Estimate">
+    <input type="range" class="slider" min="0" max="100" value="40"
+           style="--value: 0.4; width: 240px" aria-label="Disabled slider" disabled>
+    <input type="range" class="slider slider-compact" min="0" max="100" value="60"
+           style="--value: 0.6; width: 160px" aria-label="Compact slider">
+  </div>
+</section>
+
+</div>
+
+<button class="fab fab-fixed" aria-label="Create issue">+</button>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "component": "calendar",
+  "version": "0.1.0",
+  "intent": "Month-grid calendar (Material DatePicker-style) that is honestly presentational: it renders whatever days the app gives it — date math, selection state, month navigation, and range logic are app JS or server-rendered markup, not the stylesheet's. The zero-JS behavior path for actually picking a date remains the native <input type=\"date\"> (.date-field); use .calendar when you control the state and want the picker look — dashboards, availability displays, server-rendered pickers. Day states: .today (accent ring), .selected (accent fill), .outside (adjacent-month days), .disabled/[disabled]; ranges use .range-start / .in-range / .range-end which fill the whole cell so the band reads as continuous.",
+  "root": { "selector": ".calendar", "element": ["div"], "requiredClasses": ["calendar"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".calendar-header", "required": true, "description": "Header row: .calendar-title (the month, h500) plus optional prev/next month controls as .btn.btn-icon.btn-compact — wire those up in app code or as links/form posts." },
+    { "selector": ".calendar-header .calendar-title", "required": true, "description": "Month name + year. Use a heading element at the right level for the page." },
+    { "selector": ".calendar-grid", "required": true, "description": "7-column grid: one row of .calendar-weekday cells, then 28–42 .calendar-day cells covering full weeks (pad with .outside days from adjacent months)." },
+    { "selector": ".calendar-grid > .calendar-weekday", "required": true, "description": "Seven weekday initials (11px, bold, subtlest, uppercase), in the locale's week order." },
+    { "selector": ".calendar-grid > .calendar-day", "required": true, "description": "One <button> per day cell, 32×32 circle. State classes: .today, .selected, .outside, .disabled (or the disabled attribute); range classes .range-start / .in-range / .range-end stretch to the full cell." }
+  ],
+  "aria": [
+    { "on": ".calendar-day.today", "attr": "aria-current", "required": true },
+    { "on": ".calendar-day.selected", "attr": "aria-pressed", "required": false, "when": "The grid is an interactive picker (buttons wired to selection state) — expose the selection; for a display-only grid prefer visually-hidden text like “(selected)” instead." }
+  ],
+  "nesting": {
+    "allowedIn": ["popovers opened from a date field", "cards", "settings panes", "scheduling layouts"],
+    "disallowed": [".calendar", ".navbar", ".bottom-nav"]
+  },
+  "a11yNotes": "Day cells are real <button>s so they are focusable and clickable, but the stylesheet ships no behavior: an interactive picker needs app JS for selection, month paging, and roving arrow-key focus (a plain Tab-through of 35+ buttons is poor). Give each button a full accessible date, e.g. aria-label=\"12 August 2026\", since the visible text is just the day number. Put aria-current=\"date\" on .today. If the grid is display-only, prefer disabled buttons or a table variant in app code. When the user just needs to enter a date, use the native date field instead of building a picker.",
+  "examples": [
+    "<div class=\"calendar\"><div class=\"calendar-header\"><h3 class=\"calendar-title\">August 2026</h3><button class=\"btn btn-icon btn-compact\" aria-label=\"Previous month\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M10 3L5 8l5 5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></button><button class=\"btn btn-icon btn-compact\" aria-label=\"Next month\"><svg viewBox=\"0 0 16 16\" aria-hidden=\"true\"><path d=\"M6 3l5 5-5 5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg></button></div><div class=\"calendar-grid\"><span class=\"calendar-weekday\">Su</span><span class=\"calendar-weekday\">Mo</span><span class=\"calendar-weekday\">Tu</span><span class=\"calendar-weekday\">We</span><span class=\"calendar-weekday\">Th</span><span class=\"calendar-weekday\">Fr</span><span class=\"calendar-weekday\">Sa</span><button class=\"calendar-day outside\" aria-label=\"26 July 2026\">26</button><button class=\"calendar-day outside\" aria-label=\"27 July 2026\">27</button><button class=\"calendar-day outside\" aria-label=\"28 July 2026\">28</button><button class=\"calendar-day outside\" aria-label=\"29 July 2026\">29</button><button class=\"calendar-day outside\" aria-label=\"30 July 2026\">30</button><button class=\"calendar-day outside\" aria-label=\"31 July 2026\">31</button><button class=\"calendar-day today\" aria-current=\"date\" aria-label=\"1 August 2026\">1</button><button class=\"calendar-day\" aria-label=\"2 August 2026\">2</button><button class=\"calendar-day selected\" aria-label=\"3 August 2026\">3</button><button class=\"calendar-day\" aria-label=\"4 August 2026\">4</button><button class=\"calendar-day\" aria-label=\"5 August 2026\">5</button><button class=\"calendar-day\" aria-label=\"6 August 2026\">6</button><button class=\"calendar-day\" aria-label=\"7 August 2026\">7</button><button class=\"calendar-day\" aria-label=\"8 August 2026\">8</button></div></div>"
+  ]
+}

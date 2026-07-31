@@ -1,0 +1,8 @@
+<li class="list-item {selected?selected}">
+  <span class="list-item-leading" data-lz-if="leading"><slot name="leading"></slot></span>
+  <span class="list-item-content">
+    <span class="list-item-title">{title}</span>
+    <span class="list-item-subtitle" data-lz-if="subtitle">{subtitle}</span>
+  </span>
+  <span class="list-item-trailing" data-lz-if="trailing"><slot name="trailing"></slot></span>
+</li>

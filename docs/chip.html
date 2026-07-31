@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chip — Lozenge</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="../demo/theme-panel.js"></script>
+<style>
+  .docs-shell { display: flex; align-items: stretch; }
+  .docs-shell > .sidebar { flex-shrink: 0; min-height: calc(100vh - 56px); }
+  .docs-main { flex: 1; min-width: 0; max-width: 880px; padding: 24px 32px 96px; }
+  .docs-main section { margin-top: 40px; }
+  .doc-example { margin: 12px 0 24px; }
+  .doc-box { border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); }
+  .doc-box-header { padding: 8px 16px; border-bottom: 1px solid var(--lz-sys-separator); font-weight: 600; }
+  .doc-box-body { padding: 16px; }
+  .doc-live { margin-bottom: 12px; }
+  .doc-src-label { margin: 12px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .doc-example pre { margin: 0 0 4px; }
+  pre { background: var(--lz-sys-surface-sunken); border: 1px solid var(--lz-sys-separator); border-radius: 3px; padding: 12px; overflow-x: auto; font-size: 12px; line-height: 1.5; }
+  pre code { font-family: inherit; }
+  .doc-swatch { width: 48px; height: 24px; border: 1px solid var(--lz-sys-border); border-radius: 3px; }
+  .doc-table-wrap { overflow-x: auto; }
+  .doc-axis-pane { flex: 1 1 240px; min-width: 240px; padding: 16px; border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); color: var(--lz-sys-text); }
+</style>
+</head>
+<body>
+
+<nav class="navbar" aria-label="Main">
+  <a class="navbar-brand" href="/">Lozenge</a>
+  <ul class="navbar-nav">
+    <li><a class="nav-link" href="/">Home</a></li>
+    <li><a class="nav-link active" href="/docs/">Components</a></li>
+    <li><a class="nav-link" href="/demo/">Demo</a></li>
+    <li><a class="nav-link" href="/demo/tags.html">Tags</a></li>
+    <li><a class="nav-link" href="https://github.com/jethac/lozenge">GitHub</a></li>
+  </ul>
+</nav>
+
+<div class="docs-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section">Guide</div>
+    <nav aria-label="Guide">
+      <a class="sidebar-item" href="index.html">Overview</a>
+    </nav>
+    <div class="sidebar-section">Components</div>
+    <nav aria-label="Components">
+      <a class="sidebar-item" href="accordion.html">Accordion</a>
+      <a class="sidebar-item" href="avatar.html">Avatar</a>
+      <a class="sidebar-item" href="badge.html">Badge</a>
+      <a class="sidebar-item" href="board.html">Board</a>
+      <a class="sidebar-item" href="bottom-nav.html">Bottom-nav</a>
+      <a class="sidebar-item" href="button.html">Button</a>
+      <a class="sidebar-item" href="calendar.html">Calendar</a>
+      <a class="sidebar-item" href="card.html">Card</a>
+      <a class="sidebar-item active" href="chip.html" aria-current="page">Chip</a>
+      <a class="sidebar-item" href="comment-thread.html">Comment-thread</a>
+      <a class="sidebar-item" href="date-field.html">Date-field</a>
+      <a class="sidebar-item" href="drawer.html">Drawer</a>
+      <a class="sidebar-item" href="empty-state.html">Empty-state</a>
+      <a class="sidebar-item" href="fab.html">Fab</a>
+      <a class="sidebar-item" href="forms.html">Forms</a>
+      <a class="sidebar-item" href="inline-edit.html">Inline-edit</a>
+      <a class="sidebar-item" href="list.html">List</a>
+      <a class="sidebar-item" href="select.html">Select</a>
+      <a class="sidebar-item" href="lozenge.html">Lozenge</a>
+      <a class="sidebar-item" href="message.html">Message</a>
+      <a class="sidebar-item" href="navbar.html">Navbar</a>
+      <a class="sidebar-item" href="pagination.html">Pagination</a>
+      <a class="sidebar-item" href="backlog.html">Backlog</a>
+      <a class="sidebar-item" href="rail.html">Rail</a>
+      <a class="sidebar-item" href="ring.html">Ring</a>
+      <a class="sidebar-item" href="search-field.html">Search-field</a>
+      <a class="sidebar-item" href="segmented.html">Segmented</a>
+      <a class="sidebar-item" href="sheet.html">Sheet</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
+      <a class="sidebar-item" href="skeleton.html">Skeleton</a>
+      <a class="sidebar-item" href="slider.html">Slider</a>
+      <a class="sidebar-item" href="snackbar.html">Snackbar</a>
+      <a class="sidebar-item" href="stepper.html">Stepper</a>
+      <a class="sidebar-item" href="tabs.html">Tabs</a>
+      <a class="sidebar-item" href="tag.html">Tag</a>
+      <a class="sidebar-item" href="timeline.html">Timeline</a>
+      <a class="sidebar-item" href="tracker.html">Tracker</a>
+      <a class="sidebar-item" href="tree.html">Tree</a>
+    </nav>
+  </aside>
+  <main class="docs-main">
+<h1>Chip</h1>
+<p class="text-subtle">Compact 24px pill for selection and input, built on native form controls with zero JavaScript — the Lozenge take on Material's chip family. Three recipes share the .chip skin: choice chips (single-select) are a &lt;label class=&quot;chip chip-choice&quot;&gt; wrapping a hidden radio; filter chips (multi-select) are the same with a checkbox and grow a ✓ when checked; input chips are a plain &lt;span class=&quot;chip&quot;&gt; with a .chip-remove button. A bare &lt;span class=&quot;chip&quot;&gt; is a static pill (see also the squarer .tag).</p>
+  <p class="text-subtlest">Root: <code>.chip</code> on <code>&lt;span&gt;</code>, <code>&lt;label&gt;</code></p>
+<section>
+<h2>Examples</h2>
+<div class="card doc-example">
+  <div class="card-header">Example 1</div>
+  <div class="card-body">
+    <div class="doc-live"><span class="chip">design</span></div>
+<pre><code>&lt;span class=&quot;chip&quot;&gt;design&lt;/span&gt;</code></pre>
+  </div>
+</div>
+<div class="card doc-example">
+  <div class="card-header">Example 2</div>
+  <div class="card-body">
+    <div class="doc-live"><label class="chip chip-choice"><input type="radio" name="priority" checked><span>Low</span></label></div>
+<pre><code>&lt;label class=&quot;chip chip-choice&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;priority&quot; checked&gt;&lt;span&gt;Low&lt;/span&gt;&lt;/label&gt;</code></pre>
+  </div>
+</div>
+<div class="card doc-example">
+  <div class="card-header">Example 3</div>
+  <div class="card-body">
+    <div class="doc-live"><label class="chip chip-filter"><input type="checkbox"><span>Bug</span></label></div>
+<pre><code>&lt;label class=&quot;chip chip-filter&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt;&lt;span&gt;Bug&lt;/span&gt;&lt;/label&gt;</code></pre>
+  </div>
+</div>
+<div class="card doc-example">
+  <div class="card-header">Example 4</div>
+  <div class="card-body">
+    <div class="doc-live"><span class="chip">frontend<button class="chip-remove" aria-label="Remove frontend">×</button></span></div>
+<pre><code>&lt;span class=&quot;chip&quot;&gt;frontend&lt;button class=&quot;chip-remove&quot; aria-label=&quot;Remove frontend&quot;&gt;×&lt;/button&gt;&lt;/span&gt;</code></pre>
+  </div>
+</div>
+</section>
+<section>
+<h2>Contract</h2>
+  <h3>Variants &amp; modifiers</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
+    <tbody>
+      <tr><td><code>chip-choice</code></td><td>role</td><td>optional · exclusive</td></tr>
+      <tr><td><code>chip-filter</code></td><td>role</td><td>optional · exclusive</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Structure</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>input[type=radio]</code></td><td>optional</td><td>Choice chips only: visually-hidden radio as the first child of the &lt;label class=&quot;chip chip-choice&quot;&gt;. All chips in one choice group share a name; :checked relays selected styling to the label via :has().</td></tr>
+      <tr><td><code>input[type=checkbox]</code></td><td>optional</td><td>Filter chips only: visually-hidden checkbox as the first child of the &lt;label class=&quot;chip chip-filter&quot;&gt;.</td></tr>
+      <tr><td><code>span</code></td><td>optional</td><td>Selection chips (choice/filter): the visible label text must sit in a &lt;span&gt; immediately following the input — the ✓ indicator targets input:checked + span::before.</td></tr>
+      <tr><td><code>button.chip-remove</code></td><td>optional</td><td>Input chips: remove button rendered after the label text; danger colors on hover. Must be a &lt;button&gt; for keyboard operability. Do not combine with chip-choice/chip-filter (a button inside a label would steal the label's activation).</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Accessibility</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><code>.chip-remove</code></td><td><code>aria-label</code></td><td>required</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p class="text-subtle">Selection chips ride on native radio/checkbox semantics: Tab reaches the group, arrow keys move within a radio group, Space toggles a checkbox — add no ARIA roles on top. The hidden input's :focus-visible relays a focus ring to the label via :has(). Give each choice group a distinct radio name. Name what .chip-remove removes (aria-label=&quot;Remove frontend&quot;, not &quot;Remove&quot;). Disable a selection chip by disabling its input, not the label.</p>
+  <h3>Nesting</h3>
+  <p>Allowed in:</p>
+  <ul><li><code>filter rows</code></li> <li><code>toolbars</code></li> <li><code>forms</code></li> <li><code>issue detail headers</code></li> <li><code>card footers</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.chip</code></li> <li><code>.btn</code></li></ul>
+</section>
+  </main>
+</div>
+
+</body>
+</html>

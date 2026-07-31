@@ -1,1 +1,81 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Floating action button — the screen's single primary action.
+// Usage:
+// <button class="fab" aria-label="Create issue">+</button>
+// <button class="fab fab-extended">+ Create</button>
+// <button class="fab fab-fixed" aria-label="Create issue">+</button>
+.fab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--lz-sys-accent-bold);
+  color: var(--lz-sys-text-on-bold);
+  box-shadow: $shadow-modal;
+  font-family: inherit;
+  font-size: 20px;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--lz-motion-fast) var(--lz-ease-standard),
+    transform var(--lz-motion-fast) var(--lz-ease-standard);
+
+  &:hover {
+    background-color: var(--lz-sys-accent-bold-hovered);
+    transform: scale(1.04);
+  }
+
+  &:active {
+    background-color: var(--lz-sys-accent-bold-pressed);
+    transform: scale(0.98);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled {
+    background-color: var(--lz-sys-interaction-bg);
+    color: $text-disabled;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.fab-small {
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+}
+
+// Pill FAB with an icon + text label. Needs no aria-label when the
+// label text is visible.
+.fab-extended {
+  width: auto;
+  padding: 0 16px;
+  gap: 8px;
+  border-radius: $border-radius-pill;
+  font-size: $font-size-base;
+
+  &.fab-small {
+    padding: 0 12px;
+  }
+}
+
+// Pinned above the page content, bottom-right.
+.fab-fixed {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: $z-navigation;
+}

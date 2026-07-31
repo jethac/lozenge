@@ -1,1 +1,112 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Chip family — compact selectable/removable pills built on native form
+// controls. Zero JavaScript: choice chips are radios, filter chips are
+// checkboxes, wrapped in the chip-styled <label>.
+//
+// Usage:
+//   <span class="chip">design</span>
+//   <label class="chip chip-choice"><input type="radio" name="pri" checked><span>Low</span></label>
+//   <label class="chip chip-filter"><input type="checkbox"><span>Bug</span></label>
+//   <span class="chip">frontend<button class="chip-remove" aria-label="Remove frontend">×</button></span>
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: $border-radius-pill;
+  background-color: var(--lz-sys-status-neutral-subtle-bg);
+  color: $text-color;
+  font-size: $font-size-sm;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+// Selection chips: the label wraps a visually-hidden radio (choice) or
+// checkbox (filter); checked/focus/disabled state relays to the label.
+.chip-choice,
+.chip-filter {
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color var(--lz-motion-fast) var(--lz-ease-standard),
+    color var(--lz-motion-fast) var(--lz-ease-standard),
+    border-color var(--lz-motion-fast) var(--lz-ease-standard);
+
+  > input[type="radio"],
+  > input[type="checkbox"] {
+    @include visually-hidden;
+  }
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+  }
+
+  &:has(> input:checked) {
+    border-color: var(--lz-sys-selected-text);
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+
+  &:has(> input:focus-visible) {
+    @include focus-ring;
+  }
+
+  &:has(> input:disabled) {
+    background-color: var(--lz-sys-interaction-bg);
+    color: $text-disabled;
+    cursor: not-allowed;
+  }
+}
+
+// Filter chips grow a check mark in front of the label when checked.
+.chip-filter > input + span::before {
+  content: "✓";
+  display: inline-block;
+  max-width: 0;
+  margin-right: 0;
+  overflow: hidden;
+  opacity: 0;
+  vertical-align: bottom;
+  transition:
+    max-width var(--lz-motion-fast) var(--lz-ease-standard),
+    margin-right var(--lz-motion-fast) var(--lz-ease-standard),
+    opacity var(--lz-motion-fast) var(--lz-ease-standard);
+}
+
+.chip-filter > input:checked + span::before {
+  max-width: 1.2em;
+  margin-right: 2px;
+  opacity: 1;
+}
+
+// Remove affordance for input chips (tag-remove idiom).
+.chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-right: -6px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: none;
+  color: inherit;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--lz-sys-status-danger-subtle-bg);
+    color: var(--lz-sys-status-danger-subtle-text);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}

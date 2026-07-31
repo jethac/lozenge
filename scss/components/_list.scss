@@ -1,1 +1,121 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// List / list tile — the ListTile workhorse: rows of leading icon/avatar,
+// title (+ optional subtitle), and trailing meta, as plain semantic markup.
+// Usage:
+// <ul class="list list-divided">
+//   <li class="list-item">
+//     <span class="list-item-leading"><span class="avatar avatar-md">JC</span></span>
+//     <span class="list-item-content">
+//       <span class="list-item-title">Jetha Chan</span>
+//       <span class="list-item-subtitle">Product designer</span>
+//     </span>
+//     <span class="list-item-trailing"><span class="lozenge lozenge-success">Active</span></span>
+//   </li>
+//   <li><a class="list-item" href="#">…interactive row…</a></li>
+// </ul>
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    list-style: none;
+  }
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 40px;
+  padding: 8px 16px;
+  color: $text-color;
+
+  // Two-line tile (title + subtitle).
+  &:has(.list-item-subtitle) {
+    min-height: 56px;
+  }
+}
+
+// Interactive rows: full-bleed link/button reset with hover/pressed states.
+a.list-item,
+button.list-item {
+  width: 100%;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  text-align: start;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: var(--lz-sys-interaction-pressed);
+  }
+
+  &:focus-visible {
+    // Lift the ring above adjacent rows' divider borders.
+    position: relative;
+    @include focus-ring;
+  }
+}
+
+.list-item.selected {
+  background-color: var(--lz-sys-selected-bg);
+  color: var(--lz-sys-selected-text);
+}
+
+.list-item-leading {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.list-item-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.list-item-title {
+  @include truncate;
+}
+
+.list-item-subtitle {
+  font-size: $font-size-sm;
+  color: $text-subtle;
+  @include truncate;
+}
+
+.list-item-trailing {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  color: $text-subtle;
+}
+
+// Separator borders between rows.
+.list-divided > :not(:first-child) {
+  border-block-start: 1px solid $separator-color;
+}
+
+// Denser rows.
+.list-compact .list-item {
+  gap: 8px;
+  min-height: 32px;
+  padding: 4px 12px;
+
+  &:has(.list-item-subtitle) {
+    min-height: 48px;
+  }
+}

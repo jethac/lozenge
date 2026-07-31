@@ -1,1 +1,122 @@
-// stub — populated by component workstream
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Slider — a styled native <input type="range">. Behavior is 100% the
+// platform's; only the paint changes.
+//
+// The filled portion of the track is driven by a --value custom property
+// in the 0..1 range that the APP sets on the input — inline
+// (style="--value: 0.6") or with a one-liner on input:
+//   el.style.setProperty("--value", el.value / (el.max || 100));
+// When --value is absent the track degrades gracefully to unfilled;
+// the control itself still works.
+//
+// Usage:
+// <input type="range" class="slider" min="0" max="100" value="60"
+//        style="--value: 0.6" aria-label="Estimate">
+.slider {
+  appearance: none;
+  height: 16px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  vertical-align: middle;
+  cursor: pointer;
+
+  // Track: 4px rounded bar; the accent fill stops at --value.
+  &::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: $border-radius-pill;
+    background: linear-gradient(
+      to right,
+      var(--lz-sys-accent-bold) calc(var(--value, 0) * 100%),
+      var(--lz-sys-track) 0
+    );
+  }
+
+  &::-moz-range-track {
+    height: 4px;
+    border-radius: $border-radius-pill;
+    background: linear-gradient(
+      to right,
+      var(--lz-sys-accent-bold) calc(var(--value, 0) * 100%),
+      var(--lz-sys-track) 0
+    );
+  }
+
+  // Thumb: 16px accent circle.
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -6px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--lz-sys-accent-bold);
+    transition: box-shadow var(--lz-motion-fast) var(--lz-ease-standard);
+  }
+
+  &::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--lz-sys-accent-bold);
+    transition: box-shadow var(--lz-motion-fast) var(--lz-ease-standard);
+  }
+
+  &:hover:not(:disabled)::-webkit-slider-thumb {
+    box-shadow: 0 0 0 4px var(--lz-sys-selected-bg);
+  }
+
+  &:hover:not(:disabled)::-moz-range-thumb {
+    box-shadow: 0 0 0 4px var(--lz-sys-selected-bg);
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    &::-webkit-slider-thumb {
+      @include focus-ring;
+    }
+
+    &::-moz-range-thumb {
+      @include focus-ring;
+    }
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &::-webkit-slider-runnable-track {
+      background: var(--lz-sys-track);
+    }
+
+    &::-moz-range-track {
+      background: var(--lz-sys-track);
+    }
+
+    &::-webkit-slider-thumb {
+      background-color: var(--lz-sys-toggle-off);
+    }
+
+    &::-moz-range-thumb {
+      background-color: var(--lz-sys-toggle-off);
+    }
+  }
+}
+
+.slider-compact {
+  height: 12px;
+
+  &::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    margin-top: -4px;
+  }
+
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+  }
+}
