@@ -34,28 +34,6 @@ jobs:
         with:
           path: site
 
-  flutter:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci
-      - name: Regenerate Dart engine + fixture
-        run: npm run tokens:dart
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-      - name: Analyze
-        working-directory: packages/lozenge_flutter
-        run: flutter pub get && flutter analyze
-      - name: Cross-engine token test + widget tests
-        working-directory: packages/lozenge_flutter
-        run: flutter test
-
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: build

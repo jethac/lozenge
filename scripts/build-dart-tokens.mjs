@@ -87,7 +87,8 @@ extension LzSysColors on LzThemeData {
 ${gettersDart}}
 `;
 
-const pkg = join(root, "packages/lozenge_flutter");
+// Target package dir: CLI arg, else a sibling checkout of jethac/lozenge-flutter.
+const pkg = process.argv[2] ?? join(root, "..", "lozenge-flutter");
 mkdirSync(join(pkg, "lib/src"), { recursive: true });
 writeFileSync(join(pkg, "lib/src/tokens.g.dart"), dart);
 

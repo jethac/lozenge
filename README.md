@@ -81,7 +81,7 @@ WCAG 2.2 AA ratios are the normative CI gate (APCA advisory only). Forced-colors
 
 ## Flutter
 
-`packages/lozenge_flutter` is the Flutter arm: the same `tokens/*.json` generates a Dart token engine (`tokens.g.dart`) with the identical four runtime axes — `LzThemeData(dark:, contrast:, accentHue:, accentChroma:, glass:)` — resolved through a Dart OKLCH implementation whose output is CI-proven to match the web engine within ±2/255 per channel (a generated fixture of resolved colors is asserted by `flutter test`). `AnimatedLzTheme` makes axis changes sweep implicitly. On top: a Jira-flavoured widget set (`LzButton`, `LzLozenge`, `LzIssueCard`, `LzBoard`, `LzModal`, `LzMenu`, `LzSidebar`, trackers, skeletons, comments, …) plus a kitchen-sink example app with live axis sliders.
+[**jethac/lozenge-flutter**](https://github.com/jethac/lozenge-flutter) is the Flutter arm: a Dart token engine generated from this repo's `tokens/*.json` with the identical four runtime axes, CI-proven to resolve the same colors as the web engine within ±2/255 per channel, plus a Jira-flavoured widget set. `npm run tokens:dart` regenerates its engine from here (sibling checkout or path argument).
 
 ## Structure
 
