@@ -6,6 +6,7 @@
 <title>Lozenge — app navigation &amp; pickers</title>
 <script type="module">import "../scss/lozenge.scss";</script>
 <script type="module" src="./theme-panel.js"></script>
+<script src="/lozenge-sprinkle.js" defer></script>
 </head>
 <body>
 <div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
@@ -275,6 +276,38 @@ vertical stepper — zero JS, platform primitives only. Back to
       </details>
     </div>
   </div>
+</section>
+
+
+<section class="demo-section">
+  <h2>Menu bar</h2>
+  <p class="text-subtle">File/Edit-style cascading menus — popovers all the way down.
+  The Export item opens a nested submenu; every leaf item closes the chain.
+  Arrow keys work when <code>/lozenge-sprinkle.js</code> is loaded (it is here).</p>
+  <nav class="menubar border rounded" aria-label="App menu" style="max-width:480px">
+    <button class="menubar-trigger" popovertarget="mb-file" interestfor="mb-file">File</button>
+    <div id="mb-file" popover class="dropdown-menu">
+      <button class="dropdown-item" popovertarget="mb-file" popovertargetaction="hide">New issue<span class="menubar-kbd">⌘N</span></button>
+      <button class="dropdown-item" popovertarget="mb-file" popovertargetaction="hide">New sprint</button>
+      <button class="dropdown-item menubar-subtrigger" popovertarget="mb-export">Export</button>
+      <div id="mb-export" popover class="dropdown-menu menubar-submenu">
+        <button class="dropdown-item" popovertarget="mb-file" popovertargetaction="hide">CSV</button>
+        <button class="dropdown-item" popovertarget="mb-file" popovertargetaction="hide">JSON</button>
+      </div>
+      <div class="dropdown-divider"></div>
+      <button class="dropdown-item" popovertarget="mb-file" popovertargetaction="hide">Archive project</button>
+    </div>
+    <button class="menubar-trigger" popovertarget="mb-edit" interestfor="mb-edit">Edit</button>
+    <div id="mb-edit" popover class="dropdown-menu">
+      <button class="dropdown-item" popovertarget="mb-edit" popovertargetaction="hide">Undo<span class="menubar-kbd">⌘Z</span></button>
+      <button class="dropdown-item disabled">Redo<span class="menubar-kbd">⇧⌘Z</span></button>
+    </div>
+    <button class="menubar-trigger" popovertarget="mb-view" interestfor="mb-view">View</button>
+    <div id="mb-view" popover class="dropdown-menu">
+      <button class="dropdown-item selected" popovertarget="mb-view" popovertargetaction="hide">Board</button>
+      <button class="dropdown-item" popovertarget="mb-view" popovertargetaction="hide">Timeline</button>
+    </div>
+  </nav>
 </section>
 
 </div>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sidebar — Lozenge</title>
+<title>Dropdown — Lozenge</title>
 <script type="module">import "../scss/lozenge.scss";</script>
 <script type="module" src="../demo/theme-panel.js"></script>
 <style>
@@ -60,7 +60,7 @@
       <a class="sidebar-item" href="comment-thread.html">Comment-thread</a>
       <a class="sidebar-item" href="date-field.html">Date-field</a>
       <a class="sidebar-item" href="drawer.html">Drawer</a>
-      <a class="sidebar-item" href="dropdown.html">Dropdown</a>
+      <a class="sidebar-item active" href="dropdown.html" aria-current="page">Dropdown</a>
       <a class="sidebar-item" href="empty-state.html">Empty-state</a>
       <a class="sidebar-item" href="fab.html">Fab</a>
       <a class="sidebar-item" href="forms.html">Forms</a>
@@ -78,7 +78,7 @@
       <a class="sidebar-item" href="search-field.html">Search-field</a>
       <a class="sidebar-item" href="segmented.html">Segmented</a>
       <a class="sidebar-item" href="sheet.html">Sheet</a>
-      <a class="sidebar-item active" href="sidebar.html" aria-current="page">Sidebar</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
       <a class="sidebar-item" href="skeleton.html">Skeleton</a>
       <a class="sidebar-item" href="slider.html">Slider</a>
       <a class="sidebar-item" href="snackbar.html">Snackbar</a>
@@ -92,74 +92,49 @@
     </nav>
   </aside>
   <main class="docs-main">
-<h1>Sidebar</h1>
-<p class="text-subtle">Project sidebar navigation: a fixed-width vertical column with a project header, section labels, and .sidebar-item links. Use .sidebar-group (&lt;details name=&quot;sidebar&quot;&gt;) for collapsible sections with zero-JS exclusive-accordion behavior.</p>
-  <p class="text-subtlest">Root: <code>.sidebar</code> on <code>&lt;aside&gt;</code></p>
+<h1>Dropdown</h1>
+<p class="text-subtle">Dropdown menu (Material's MenuAnchor/PopupMenuButton, Lozenge-flavoured), zero JS. Preferred recipe: a trigger button with popovertarget opens a [popover].dropdown-menu anchored to it (implicit-anchor positioning) — the platform supplies open/close, light-dismiss, Esc, top-layer, and focus return. Items close the menu on activation via popovertarget + popovertargetaction=&quot;hide&quot;; plain links just navigate. Legacy recipe: .dropdown wrapper with a class-toggled .open. Optional /lozenge-sprinkle.js adds arrow-key roving focus and typeahead.</p>
+  <p class="text-subtlest">Root: <code>.dropdown-menu</code> on <code>&lt;div&gt;</code></p>
 <section>
 <h2>Example</h2>
 <div class="card doc-example">
   <div class="card-header">Example</div>
   <div class="card-body">
-    <div class="doc-live"><aside class="sidebar"><div class="sidebar-header"><span class="avatar avatar-sm avatar-square">P</span><div><div class="sidebar-title">Project</div><div class="sidebar-subtitle">Software project</div></div></div><details class="sidebar-group" name="sidebar" open><summary class="sidebar-section">Planning</summary><a class="sidebar-item active" href="#">Board</a><a class="sidebar-item" href="#">Backlog</a></details></aside></div>
-<pre><code>&lt;aside class=&quot;sidebar&quot;&gt;&lt;div class=&quot;sidebar-header&quot;&gt;&lt;span class=&quot;avatar avatar-sm avatar-square&quot;&gt;P&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;sidebar-title&quot;&gt;Project&lt;/div&gt;&lt;div class=&quot;sidebar-subtitle&quot;&gt;Software project&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;details class=&quot;sidebar-group&quot; name=&quot;sidebar&quot; open&gt;&lt;summary class=&quot;sidebar-section&quot;&gt;Planning&lt;/summary&gt;&lt;a class=&quot;sidebar-item active&quot; href=&quot;#&quot;&gt;Board&lt;/a&gt;&lt;a class=&quot;sidebar-item&quot; href=&quot;#&quot;&gt;Backlog&lt;/a&gt;&lt;/details&gt;&lt;/aside&gt;</code></pre>
+    <div class="doc-live"><button class="btn" popovertarget="m1">Actions</button><div id="m1" popover class="dropdown-menu"><div class="dropdown-heading">Move to</div><button class="dropdown-item" popovertarget="m1" popovertargetaction="hide">Done</button><div class="dropdown-divider"></div><a class="dropdown-item danger" href="#">Delete</a></div></div>
+<pre><code>&lt;button class=&quot;btn&quot; popovertarget=&quot;m1&quot;&gt;Actions&lt;/button&gt;&lt;div id=&quot;m1&quot; popover class=&quot;dropdown-menu&quot;&gt;&lt;div class=&quot;dropdown-heading&quot;&gt;Move to&lt;/div&gt;&lt;button class=&quot;dropdown-item&quot; popovertarget=&quot;m1&quot; popovertargetaction=&quot;hide&quot;&gt;Done&lt;/button&gt;&lt;div class=&quot;dropdown-divider&quot;&gt;&lt;/div&gt;&lt;a class=&quot;dropdown-item danger&quot; href=&quot;#&quot;&gt;Delete&lt;/a&gt;&lt;/div&gt;</code></pre>
   </div>
 </div>
 </section>
 <section>
 <h2>Contract</h2>
+  <h3>Variants &amp; modifiers</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
+    <tbody>
+      <tr><td><code>dropdown-menu-end</code></td><td>placement</td><td>optional · exclusive</td></tr>
+      <tr><td><code>dropdown-menu-end</code></td><td>modifier</td><td>optional</td></tr>
+    </tbody>
+  </table></div>
   <h3>Structure</h3>
   <div class="doc-table-wrap"><table class="table table-compact">
     <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>.sidebar-header</code></td><td>optional</td><td>Project identity row: square avatar plus a min-width:0 wrapper holding .sidebar-title and .sidebar-subtitle (both truncate).</td></tr>
-      <tr><td><code>.sidebar-item</code></td><td>optional</td><td>Navigation links; mark the current view with .active (selected background).</td></tr>
-      <tr><td><code>.sidebar-section</code></td><td>optional</td><td>Uppercase section label — either a plain div, or the &lt;summary&gt; of a .sidebar-group.</td></tr>
+      <tr><td><code>.dropdown-item</code></td><td>required</td><td>One or more items (a or button). Optional .dropdown-heading, .dropdown-divider, .dropdown-item-description inside items.</td></tr>
     </tbody>
   </table></div>
   <h3>Accessibility</h3>
   <div class="doc-table-wrap"><table class="table table-compact">
     <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
     <tbody>
-      <tr><td><code>.sidebar-item.active</code></td><td><code>aria-current</code></td><td>recommended</td><td>Recommended on the active item so assistive tech announces the current view (aria-current=&quot;page&quot;).</td></tr>
+      <tr><td><code>.dropdown-menu</code></td><td><code>id</code></td><td>recommended</td><td>popover recipe: the id popovertarget points at</td></tr>
     </tbody>
   </table></div>
-  <p class="text-subtle">Wrap link runs in &lt;nav&gt; or use &lt;aside&gt; + labelled nav for landmark navigation. In .sidebar-group the &lt;summary&gt; is the toggle and is keyboard-operable for free; keep .sidebar-section on the summary so the disclosure triangle renders. Pair .active with aria-current=&quot;page&quot;.</p>
+  <p class="text-subtle">The popover recipe inherits platform semantics: Esc closes, focus returns to the invoker, outside interaction light-dismisses. Tab/Shift-Tab traverse items natively; add /lozenge-sprinkle.js for ArrowUp/Down/Home/End + typeahead (the full ARIA menu feel). Use button items for actions and a items for navigation; mark the current choice with .selected.</p>
   <h3>Nesting</h3>
   <p>Allowed in:</p>
-  <ul><li><code>app shell, alongside the main content area, below the navbar</code></li></ul>
+  <ul><li><code>anywhere a trigger button can live; nested inside a parent .dropdown-menu for submenus (menubar recipe)</code></li></ul>
   <p>Never inside (or containing):</p>
-  <ul><li><code>.sidebar</code></li></ul>
-</section>
-<section>
-<h2>Subcomponents</h2>
-<section id="sidebar-group">
-<h3>Sidebar-group</h3>
-<p class="text-subtle">Collapsible sidebar section built on native &lt;details&gt;/&lt;summary&gt;. Giving every group the same name attribute (name=&quot;sidebar&quot;) makes them an exclusive accordion with zero JS.</p>
-  <p class="text-subtlest">Root: <code>.sidebar-group</code> on <code>&lt;details&gt;</code></p>
-  <h4>Example</h4>
-<div class="card doc-example">
-  <div class="card-header">Example</div>
-  <div class="card-body">
-    <div class="doc-live"><details class="sidebar-group" name="sidebar" open><summary class="sidebar-section">Planning</summary><a class="sidebar-item" href="#">Board</a></details></div>
-<pre><code>&lt;details class=&quot;sidebar-group&quot; name=&quot;sidebar&quot; open&gt;&lt;summary class=&quot;sidebar-section&quot;&gt;Planning&lt;/summary&gt;&lt;a class=&quot;sidebar-item&quot; href=&quot;#&quot;&gt;Board&lt;/a&gt;&lt;/details&gt;</code></pre>
-  </div>
-</div>
-  <h4>Structure</h4>
-  <div class="doc-table-wrap"><table class="table table-compact">
-    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
-    <tbody>
-      <tr><td><code>summary.sidebar-section</code></td><td>required</td><td>Must be the first child; styled with a rotating disclosure triangle (rotates when [open]).</td></tr>
-      <tr><td><code>.sidebar-item</code></td><td>optional</td><td>The section's links, as following siblings of the summary inside the details.</td></tr>
-    </tbody>
-  </table></div>
-  <h4>Accessibility</h4>
-  <p class="text-subtle">Native details/summary supplies expand/collapse semantics and keyboard support. Use the same name=&quot;...&quot; on sibling groups for exclusive-open behavior; omit name to allow multiple open sections. Add `open` to the group that contains the current page.</p>
-  <h4>Nesting</h4>
-  <p>Allowed in:</p>
-  <ul><li><code>.sidebar</code></li></ul>
-  <p>Never inside (or containing):</p>
-  <ul><li><code>.sidebar-group</code></li></ul>
-</section>
+  <ul><li><code>.dropdown-menu .flag</code></li> <li><code>.dropdown-menu dialog.modal</code></li></ul>
 </section>
   </main>
 </div>

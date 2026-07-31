@@ -1,0 +1,91 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Menu bar — desktop-style File/Edit/View menus, zero JS.
+// Structure: triggers open popover menus (the .dropdown-menu skin);
+// submenus are popovers nested INSIDE their parent menu's DOM, so opening
+// one doesn't light-dismiss the ancestor. Items close the whole chain via
+// popovertarget/popovertargetaction="hide". Hover-open is a progressive
+// layer via interest invokers (interestfor) where the browser has them;
+// the optional /lozenge-sprinkle.js adds roving arrow-key focus.
+//
+// <nav class="menubar" aria-label="App menu">
+//   <button class="menubar-trigger" popovertarget="m-file">File</button>
+//   <div id="m-file" popover class="dropdown-menu">
+//     <button class="dropdown-item" popovertarget="m-file"
+//             popovertargetaction="hide">New issue</button>
+//     <button class="dropdown-item menubar-subtrigger"
+//             popovertarget="m-file-export">Export</button>
+//     <div id="m-file-export" popover class="dropdown-menu menubar-submenu">
+//       …
+//     </div>
+//   </div>
+//   …
+// </nav>
+.menubar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 4px;
+}
+
+.menubar-trigger {
+  height: 32px;
+  padding: 0 12px;
+  border: none;
+  border-radius: $border-radius;
+  background: transparent;
+  color: $text-color;
+  font-family: inherit;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  // Pressed look while its menu (the adjacent popover) is open.
+  &:has(+ :popover-open) {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+}
+
+// Submenu items get a trailing chevron.
+.menubar-subtrigger::after {
+  content: "";
+  float: inline-end;
+  margin-top: 5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 4px 0 4px 6px;
+  border-color: transparent transparent transparent currentColor;
+}
+
+// Cascade placement: submenus open to the inline-end of their invoker item.
+.menubar-submenu[popover] {
+  @supports (position-area: inline-end) {
+    position-area: inline-end span-block-end;
+    position-try-fallbacks: flip-inline, flip-block;
+    margin: -4px 2px 0;
+  }
+}
+
+// Keyboard hint chips inside menu items (⌘K style).
+.menubar-kbd {
+  float: inline-end;
+  margin-inline-start: 16px;
+  padding: 0 4px;
+  border-radius: $border-radius-sm;
+  background: var(--lz-sys-status-neutral-subtle-bg);
+  color: $text-subtle;
+  font-family: $font-family-monospace;
+  font-size: $font-size-xs;
+  line-height: 16px;
+}

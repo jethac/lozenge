@@ -1,0 +1,28 @@
+{
+  "component": "dropdown",
+  "version": "0.1.0",
+  "intent": "Dropdown menu (Material's MenuAnchor/PopupMenuButton, Lozenge-flavoured), zero JS. Preferred recipe: a trigger button with popovertarget opens a [popover].dropdown-menu anchored to it (implicit-anchor positioning) — the platform supplies open/close, light-dismiss, Esc, top-layer, and focus return. Items close the menu on activation via popovertarget + popovertargetaction=\"hide\"; plain links just navigate. Legacy recipe: .dropdown wrapper with a class-toggled .open. Optional /lozenge-sprinkle.js adds arrow-key roving focus and typeahead.",
+  "root": { "selector": ".dropdown-menu", "element": ["div"], "requiredClasses": ["dropdown-menu"] },
+  "variants": {
+    "placement": {
+      "classes": ["dropdown-menu-end"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["dropdown-menu-end"],
+  "structure": [
+    { "selector": ".dropdown-item", "required": true, "description": "One or more items (a or button). Optional .dropdown-heading, .dropdown-divider, .dropdown-item-description inside items." }
+  ],
+  "aria": [
+    { "on": ".dropdown-menu", "attr": "id", "required": false, "when": "popover recipe: the id popovertarget points at" }
+  ],
+  "nesting": {
+    "allowedIn": ["anywhere a trigger button can live; nested inside a parent .dropdown-menu for submenus (menubar recipe)"],
+    "disallowed": [".dropdown-menu .flag", ".dropdown-menu dialog.modal"]
+  },
+  "a11yNotes": "The popover recipe inherits platform semantics: Esc closes, focus returns to the invoker, outside interaction light-dismisses. Tab/Shift-Tab traverse items natively; add /lozenge-sprinkle.js for ArrowUp/Down/Home/End + typeahead (the full ARIA menu feel). Use button items for actions and a items for navigation; mark the current choice with .selected.",
+  "examples": [
+    "<button class=\"btn\" popovertarget=\"m1\">Actions</button><div id=\"m1\" popover class=\"dropdown-menu\"><div class=\"dropdown-heading\">Move to</div><button class=\"dropdown-item\" popovertarget=\"m1\" popovertargetaction=\"hide\">Done</button><div class=\"dropdown-divider\"></div><a class=\"dropdown-item danger\" href=\"#\">Delete</a></div>"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "component": "tooltip",
+  "version": "0.1.0",
+  "intent": "Pure-CSS tooltip (Material's plain Tooltip): any element with a data-tooltip attribute grows a positioned label on hover/focus-visible — no elements, no JS. Position with .tooltip-bottom/.tooltip-left/.tooltip-right (default: above). For rich tooltips (title + body + action), compose a small [popover] panel on the .dropdown-menu skin with an interestfor trigger instead.",
+  "root": { "selector": "[data-tooltip]", "element": [], "requiredClasses": [] },
+  "variants": {
+    "position": {
+      "classes": ["tooltip-bottom", "tooltip-left", "tooltip-right"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["tooltip-bottom", "tooltip-left", "tooltip-right"],
+  "structure": [],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["any focusable or hoverable element"],
+    "disallowed": []
+  },
+  "a11yNotes": "The tooltip text is CSS content, invisible to assistive tech — data-tooltip must NEVER be the only label. Pair it with a real accessible name (aria-label or visible text): the tooltip is a visual reinforcement, not the name. It shows on :focus-visible as well as hover, and disappears for touch-only users — never put essential information here.",
+  "examples": [
+    "<button class=\"btn btn-icon\" aria-label=\"Assign to me\" data-tooltip=\"Assign to me\">@</button>"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "component": "menubar",
+  "version": "0.1.0",
+  "intent": "Desktop-style menu bar (File/Edit/View with cascading submenus), zero JS. Triggers open popover menus on the .dropdown-menu skin; submenus are popovers nested inside their parent menu's DOM (so opening one keeps the ancestor open), placed to the inline-end of their invoker item via implicit-anchor positioning. Items dismiss the chain with popovertarget/popovertargetaction=\"hide\". Progressive layers: interest invokers (interestfor attribute, Chromium-first) add hover-open; /lozenge-sprinkle.js adds roving arrow-key focus.",
+  "root": { "selector": ".menubar", "element": ["nav", "div"], "requiredClasses": ["menubar"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".menubar-trigger", "required": true, "description": "One trigger button per top-level menu, each followed by its [popover].dropdown-menu sibling (adjacency drives the pressed state via :has(+ :popover-open))." }
+  ],
+  "aria": [
+    { "on": ".menubar", "attr": "aria-label", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["page headers", ".navbar", "toolbars"],
+    "disallowed": [".menubar .menubar"]
+  },
+  "a11yNotes": "This is intentionally NOT role=menubar out of the box: without roving focus, honest semantics are a nav of buttons opening menus — which is what the markup says. If you load the sprinkle and want full ARIA menu semantics, add role=menubar/menu/menuitem yourself; the visual layer is identical. .menubar-subtrigger marks items that open submenus (chevron); .menubar-kbd renders shortcut hints.",
+  "examples": [
+    "<nav class=\"menubar\" aria-label=\"App menu\"><button class=\"menubar-trigger\" popovertarget=\"mb-f\">File</button><div id=\"mb-f\" popover class=\"dropdown-menu\"><button class=\"dropdown-item\" popovertarget=\"mb-f\" popovertargetaction=\"hide\">New issue<span class=\"menubar-kbd\">⌘N</span></button></div></nav>"
+  ]
+}

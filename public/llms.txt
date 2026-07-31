@@ -240,6 +240,19 @@ Side panel on a native <dialog>: full-height glass surface anchored to the inlin
 <dialog class="drawer" id="issue-drawer" aria-labelledby="issue-drawer-title"><div class="drawer-header"><h4 class="drawer-title" id="issue-drawer-title">Issue details</h4><button class="btn btn-subtle btn-icon drawer-close" commandfor="issue-drawer" command="close" aria-label="Close drawer">×</button></div><div class="drawer-body"><p>LOZ-14 — Login page throws a redirect loop on expired session.</p></div><form method="dialog" class="drawer-footer"><button class="btn btn-subtle" value="cancel">Cancel</button><button class="btn btn-primary" value="save">Save</button></form></dialog>
 ```
 
+### dropdown
+
+Dropdown menu (Material's MenuAnchor/PopupMenuButton, Lozenge-flavoured), zero JS. Preferred recipe: a trigger button with popovertarget opens a [popover].dropdown-menu anchored to it (implicit-anchor positioning) — the platform supplies open/close, light-dismiss, Esc, top-layer, and focus return. Items close the menu on activation via popovertarget + popovertargetaction="hide"; plain links just navigate. Legacy recipe: .dropdown wrapper with a class-toggled .open. Optional /lozenge-sprinkle.js adds arrow-key roving focus and typeahead.
+
+- Root: `.dropdown-menu` (element: div)
+- Variants (placement; optional, pick one): `dropdown-menu-end`
+- Modifiers: `dropdown-menu-end`
+- Required structure: `.dropdown-item`
+
+```html
+<button class="btn" popovertarget="m1">Actions</button><div id="m1" popover class="dropdown-menu"><div class="dropdown-heading">Move to</div><button class="dropdown-item" popovertarget="m1" popovertargetaction="hide">Done</button><div class="dropdown-divider"></div><a class="dropdown-item danger" href="#">Delete</a></div>
+```
+
 ### empty-state
 
 Centered explanation for a region with nothing in it yet (empty backlog, no search results, no notifications): optional illustration circle, a title, subtle description text, and a row of next-step actions. Max 460px wide, centered in its container.
@@ -374,6 +387,17 @@ The signature Jira-style status pill: a small uppercase label communicating work
 
 ```html
 <span class="lozenge lozenge-inprogress">In progress</span>
+```
+
+### menubar
+
+Desktop-style menu bar (File/Edit/View with cascading submenus), zero JS. Triggers open popover menus on the .dropdown-menu skin; submenus are popovers nested inside their parent menu's DOM (so opening one keeps the ancestor open), placed to the inline-end of their invoker item via implicit-anchor positioning. Items dismiss the chain with popovertarget/popovertargetaction="hide". Progressive layers: interest invokers (interestfor attribute, Chromium-first) add hover-open; /lozenge-sprinkle.js adds roving arrow-key focus.
+
+- Root: `.menubar` (element: nav | div)
+- Required structure: `.menubar-trigger`
+
+```html
+<nav class="menubar" aria-label="App menu"><button class="menubar-trigger" popovertarget="mb-f">File</button><div id="mb-f" popover class="dropdown-menu"><button class="dropdown-item" popovertarget="mb-f" popovertargetaction="hide">New issue<span class="menubar-kbd">⌘N</span></button></div></nav>
 ```
 
 ### message
@@ -671,6 +695,18 @@ Roadmap / Gantt-lite timeline: a CSS grid with a 200px label column plus --lz-ti
 <div class="timeline" style="--lz-timeline-cols: 12"><div class="timeline-header"><div>Epics</div><div style="grid-column: span 4">April</div><div style="grid-column: span 4">May</div><div style="grid-column: span 4">June</div></div><div class="timeline-row"><div class="timeline-label"><span class="issue-type issue-type-epic" role="img" aria-label="Epic"></span> Runtime theme axes</div><div class="timeline-bar timeline-bar-done" style="--start: 1; --span: 4" title="April"></div></div></div>
 ```
 
+### tooltip
+
+Pure-CSS tooltip (Material's plain Tooltip): any element with a data-tooltip attribute grows a positioned label on hover/focus-visible — no elements, no JS. Position with .tooltip-bottom/.tooltip-left/.tooltip-right (default: above). For rich tooltips (title + body + action), compose a small [popover] panel on the .dropdown-menu skin with an interestfor trigger instead.
+
+- Root: `[data-tooltip]`
+- Variants (position; optional, pick one): `tooltip-bottom`, `tooltip-left`, `tooltip-right`
+- Modifiers: `tooltip-bottom`, `tooltip-left`, `tooltip-right`
+
+```html
+<button class="btn btn-icon" aria-label="Assign to me" data-tooltip="Assign to me">@</button>
+```
+
 ### tracker
 
 Progress tracker / stepper for multi-step flows (wizards, onboarding): an ordered list of steps with numbered circle markers joined by connector lines. Steps default to upcoming; add .tracker-step-done to completed steps (marker shows a check, connectors turn green) and .tracker-step-current to the active one. Purely presentational — the wizard's pages do the actual navigation.
@@ -740,7 +776,7 @@ If you know Google's Material or Flutter widget names, translate with this table
 - Radio button (Radio) → `.form-check-input[type=radio]`
 - Switch (Switch) → `label.toggle (+ -lg)`
 - Chips (assist / filter / input / choice) (ActionChip / FilterChip / InputChip / ChoiceChip) → `.chip · .chip-filter (checkbox) · .chip + .chip-remove · .chip-choice (radio)`
-- Menus (MenuAnchor / PopupMenuButton) → `popover .dropdown-menu recipe (implicit-anchor positioning)`
+- Menus (MenuAnchor / PopupMenuButton) → `popover .dropdown-menu recipe; desktop cascades via .menubar`
 - Exposed dropdown (DropdownMenu) → `select.select (appearance: base-select ::picker) → .form-select fallback`
 - Sliders (Slider / RangeSlider) → `input[type=range].slider (live zero-JS fill; + -compact, -thin) · .range-slider (dual-thumb)`
 - Text fields (TextField) → `.form-control (+ label/helper/.is-invalid; -compact/-subtle), textarea`
