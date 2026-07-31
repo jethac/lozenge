@@ -1,0 +1,393 @@
+# Lozenge
+
+Lozenge is a Jira-flavoured design system: SCSS + CSS custom properties, plain
+class-based HTML components (no JavaScript required for core components — tabs,
+accordions, modals and dropdowns ride on radios, <details>, <dialog> and
+popover/anchor positioning).
+
+Theming is runtime-parametric via four CSS custom properties on :root:
+
+- --lz-contrast      contrast boost, 0..1 (shifts lightness/chroma of system colors)
+- --lz-accent-hue    OKLCH hue of the accent ramp (default 260.48 — Jira blue)
+- --lz-accent-chroma accent chroma multiplier (0 = grayscale accent)
+- --lz-glass         frosted-glass materials on/off (navbar, modal, dropdown, flag)
+
+Dark scheme: set data-theme="dark" on <html> (system tokens carry light and dark
+values; components never hard-code scheme colors).
+
+Color layers: --lz-ref-* are raw ramps (accent ramp is parametric); --lz-sys-*
+are the semantic tokens components consume. Always style with --lz-sys-*.
+
+Markup contracts below are machine-checked by scripts/lozenge-lint.mjs against
+specs/*.json. Rules of thumb: variant classes on one axis are mutually
+exclusive; "required" axes must have exactly one class; glass surfaces
+(navbar, dropdown-menu, modal, flag) must never nest inside each other.
+
+## Components
+
+### avatar
+
+A circular user/entity avatar showing an image or initials fallback, with optional presence dot and square variant for projects/apps. A size class is mandatory — the base class sets no dimensions. Use .avatar-group to overlap several avatars (watchers, assignees).
+
+- Root: `.avatar` (element: span)
+- Variants (size; required, pick one): `avatar-xs`, `avatar-sm`, `avatar-md`, `avatar-lg`, `avatar-xl`
+- Variants (presence; optional, pick one): `avatar-online`, `avatar-busy`, `avatar-offline`
+- Modifiers: `avatar-square`
+
+```html
+<span class="avatar avatar-md"><img src="dana.png" alt="Dana K"></span>
+```
+
+### avatar-group
+
+Overlapping horizontal stack of avatars, each gaining a surface-colored ring; consecutive avatars overlap by 8px.
+
+- Root: `.avatar-group` (element: span | div)
+- Required structure: `.avatar`
+
+```html
+<span class="avatar-group"><span class="avatar avatar-md">A</span><span class="avatar avatar-md">B</span><span class="avatar avatar-md">+4</span></span>
+```
+
+### badge
+
+A small pill for numeric counters — unread counts, story points, +/− deltas. Use it next to a label or inside .issue-card-meta / .board-column-header. For status words use .lozenge instead; for free-text labels use .tag.
+
+- Root: `.badge` (element: span)
+- Variants (tone; optional, pick one): `badge-primary`, `badge-important`, `badge-added`, `badge-removed`
+
+```html
+<span class="badge">25</span>
+```
+
+### board
+
+Kanban board layout: a horizontally scrolling flex row of fixed-width columns, each with a header and a cards well. Use it as the main work view of a project; fill .board-column-cards with .issue-card elements.
+
+- Root: `.board` (element: div)
+- Required structure: `.board-column`
+
+```html
+<div class="board"><div class="board-column"><div class="board-column-header">To do <span class="badge">4</span></div><div class="board-column-cards"><div class="issue-card"><div class="issue-card-summary">Fix login loop</div></div></div></div></div>
+```
+
+### button
+
+The standard action button. Use <button class="btn"> for actions and <a class="btn"> only for navigation styled as a button. Appearance variants set emphasis (primary for the single main action, danger/warning for destructive/risky ones); .active marks a toggled-on state; group related buttons inside .btn-group.
+
+- Root: `.btn` (element: button | a)
+- Variants (appearance; optional, pick one): `btn-primary`, `btn-warning`, `btn-danger`, `btn-subtle`, `btn-link`, `btn-subtle-link`
+- Modifiers: `btn-compact`, `btn-icon`, `btn-block`, `active`, `disabled`
+
+```html
+<button class="btn btn-primary">Create</button>
+```
+
+### card
+
+Generic raised surface container with optional header/body/footer sections. Use for grouping related content on a page. For draggable-looking Kanban cards use the .issue-card subcomponent instead — it is an independent root, not a .card variant.
+
+- Root: `.card` (element: div | section | article)
+
+```html
+<div class="card"><div class="card-header">Sprint 14</div><div class="card-body">Content</div></div>
+```
+
+### issue-card
+
+A single issue on a Kanban board: summary text plus a meta row of issue-type icon, key, badge/lozenge, and avatar. Lives inside .board-column-cards; consecutive issue-cards space themselves 8px apart.
+
+- Root: `.issue-card` (element: div)
+- Required structure: `.issue-card-summary`
+
+```html
+<div class="issue-card"><div class="issue-card-summary">Fix login redirect loop</div><div class="issue-card-meta"><span class="issue-type issue-type-bug" aria-label="Bug"></span><span class="issue-key">PROJ-42</span><span class="badge">3</span><span class="avatar avatar-sm">JC</span></div></div>
+```
+
+### issue-type
+
+16px colored square standing in for an issue-type glyph icon (story/bug/task/epic). Fixed categorical colors, deliberately not accent-driven. Used in .issue-card-meta, table cells, and inline next to titles.
+
+- Root: `.issue-type` (element: span)
+- Variants (type; required, pick one): `issue-type-story`, `issue-type-bug`, `issue-type-task`, `issue-type-epic`
+
+```html
+<span class="issue-type issue-type-story" aria-label="Story"></span>
+```
+
+### forms
+
+Form field stack: .form-group wraps one field (label + control + help/error text) and provides vertical rhythm. Controls are subcomponents with their own roots: .form-control (inputs/textareas), .form-select, .form-check (checkbox/radio rows), and .toggle switches.
+
+- Root: `.form-group` (element: div | fieldset)
+
+```html
+<div class="form-group"><label class="form-label" for="summary">Summary <span class="required">*</span></label><input class="form-control" id="summary" type="text" required><span class="form-text">Keep it short.</span></div>
+```
+
+### form-control
+
+Text-style input skin for <input> and <textarea>. Textareas grow (min-height 80px, resize vertical). .form-control-subtle is invisible until hovered/focused (inline edit); .is-invalid shows the danger border.
+
+- Root: `.form-control` (element: input | textarea)
+- Modifiers: `form-control-compact`, `form-control-subtle`, `is-invalid`
+
+```html
+<input class="form-control" id="summary" type="text" placeholder="What needs doing?">
+```
+
+### form-select
+
+Native <select> skinned with a chevron. Same sizing/interaction states as .form-control.
+
+- Root: `.form-select` (element: select)
+
+```html
+<select class="form-select" id="type"><option>Story</option><option>Bug</option></select>
+```
+
+### form-check
+
+One checkbox or radio row: an .form-check-input followed by its text <label>. Stack rows inside a .form-group; radios in one group share a name attribute.
+
+- Root: `.form-check` (element: div)
+- Required structure: `.form-check-input`
+
+```html
+<div class="form-check"><input class="form-check-input" type="checkbox" id="watch" checked><label for="watch">Notify watchers</label></div>
+```
+
+### toggle
+
+iOS-style switch: a <label class="toggle"> wrapping a visually-hidden checkbox and a .toggle-slider span. The wrapping label makes the whole switch clickable; .toggle-lg is the larger size.
+
+- Root: `.toggle` (element: label)
+- Modifiers: `toggle-lg`
+- Required structure: `input`, `.toggle-slider`
+
+```html
+<label class="toggle"><input type="checkbox" aria-label="Send me updates" checked><span class="toggle-slider"></span></label>
+```
+
+### lozenge
+
+The signature Jira-style status pill: a small uppercase label communicating workflow state (To do, In progress, Done...). Use it wherever an item's status must be scannable at a glance — issue cards, tables, detail headers. It is purely presentational text; it is not interactive.
+
+- Root: `.lozenge` (element: span)
+- Variants (status; required, pick one): `lozenge-default`, `lozenge-inprogress`, `lozenge-moved`, `lozenge-new`, `lozenge-removed`, `lozenge-success`
+- Modifiers: `lozenge-bold`
+
+```html
+<span class="lozenge lozenge-inprogress">In progress</span>
+```
+
+### message
+
+Inline section message (callout) with a colored edge bar: contextual info, warnings, errors, successes, or discovery announcements embedded in page flow. For full-width page-level announcements use the .banner subcomponent; for floating toast notifications use .flag.
+
+- Root: `.message` (element: div | section)
+- Variants (tone; optional, pick one): `message-info`, `message-warning`, `message-error`, `message-success`, `message-discovery`
+
+```html
+<div class="message message-warning"><div class="message-title">Trial ending</div><p>Your trial expires in 3 days.</p><div class="message-actions"><a href="#">Upgrade</a></div></div>
+```
+
+### banner
+
+Full-width single-line page banner (maintenance notices, read-only mode, outages). Sits above or below the navbar spanning the viewport; content is centered and links inherit the bold text color.
+
+- Root: `.banner` (element: div)
+- Variants (tone; optional, pick one): `banner-warning`, `banner-error`
+
+```html
+<div class="banner banner-error">Something's gone wrong — retrying…</div>
+```
+
+### flag
+
+Floating toast notification (bottom-left in Jira): icon, content block (title/description/actions), and a dismiss button. Add .flag-fixed to pin it to the viewport; bold tone variants recolor the whole flag for success/error toasts. It is a glass surface.
+
+- Root: `.flag` (element: div)
+- Variants (tone; optional, pick one): `flag-info`, `flag-warning`, `flag-error`, `flag-success`, `flag-discovery`
+- Modifiers: `flag-fixed`
+- Required structure: `.flag-content`
+
+```html
+<div class="flag flag-success" role="status"><div class="flag-content"><div class="flag-title">Changes saved</div></div><button class="flag-dismiss" aria-label="Dismiss">×</button></div>
+```
+
+### navbar
+
+Sticky top navigation bar: brand, horizontal nav links, and a right-aligned actions cluster. It is a frosted-glass surface when materials are enabled (--lz-glass). Use exactly one per page as the global app header; .navbar-primary gives the bold accent-colored version.
+
+- Root: `.navbar` (element: nav)
+- Modifiers: `navbar-primary`
+
+```html
+<nav class="navbar"><a class="navbar-brand" href="/">Lozenge</a><ul class="navbar-nav"><li><a class="nav-link active" href="#" aria-current="page">Your work</a></li><li><a class="nav-link" href="#">Projects</a></li></ul><div class="navbar-actions"><button class="btn btn-primary">Create</button><span class="avatar avatar-md">JC</span></div></nav>
+```
+
+### sidebar
+
+Project sidebar navigation: a fixed-width vertical column with a project header, section labels, and .sidebar-item links. Use .sidebar-group (<details name="sidebar">) for collapsible sections with zero-JS exclusive-accordion behavior.
+
+- Root: `.sidebar` (element: aside)
+
+```html
+<aside class="sidebar"><div class="sidebar-header"><span class="avatar avatar-sm avatar-square">P</span><div><div class="sidebar-title">Project</div><div class="sidebar-subtitle">Software project</div></div></div><details class="sidebar-group" name="sidebar" open><summary class="sidebar-section">Planning</summary><a class="sidebar-item active" href="#">Board</a><a class="sidebar-item" href="#">Backlog</a></details></aside>
+```
+
+### sidebar-group
+
+Collapsible sidebar section built on native <details>/<summary>. Giving every group the same name attribute (name="sidebar") makes them an exclusive accordion with zero JS.
+
+- Root: `.sidebar-group` (element: details)
+- Required structure: `summary.sidebar-section`
+
+```html
+<details class="sidebar-group" name="sidebar" open><summary class="sidebar-section">Planning</summary><a class="sidebar-item" href="#">Board</a></details>
+```
+
+### tabs
+
+Horizontal tab strip with an underline indicator. Two recipes share the .tabs/.tab skin: a plain link strip (<ul class="tabs"><li><a class="tab active">) where YOU wire the switching, and the zero-JS .tabset subcomponent that switches panes with hidden radio inputs and :has().
+
+- Root: `.tabs` (element: ul | div | nav)
+- Required structure: `.tab`
+
+```html
+<ul class="tabs"><li><a class="tab active" href="#">Details</a></li><li><a class="tab" href="#">Comments</a></li></ul>
+```
+
+### tabset
+
+CSS-only switching tabs: hidden radio inputs inside .tabs drive which .tab-pane is visible via :has() — no JavaScript. Supports at most 8 tabs (the :has()/:nth pane-matching rules are generated for indices 1-8).
+
+- Root: `.tabset` (element: div)
+- Required structure: `.tabs`, `.tabs > input[type=radio]`, `.tabs > label.tab`, `.tab-panes`, `.tab-panes > .tab-pane`
+
+```html
+<div class="tabset"><div class="tabs"><input type="radio" name="t" id="t1" checked><label class="tab" for="t1">Details</label><input type="radio" name="t" id="t2"><label class="tab" for="t2">Comments</label></div><div class="tab-panes"><div class="tab-pane">Details…</div><div class="tab-pane">Comments…</div></div></div>
+```
+
+### tag
+
+A label/keyword chip, optionally linked and optionally removable. Use for labels on issues, filters, and topic chips. Plain text children render as a static chip; an <a> child makes it navigable; a .tag-remove button makes it dismissible.
+
+- Root: `.tag` (element: span)
+- Modifiers: `tag-rounded`
+
+```html
+<span class="tag">design</span>
+```
+
+## System tokens (--lz-sys-*)
+
+Consume these as CSS custom properties, e.g. `color: var(--lz-sys-text)`.
+
+### Text
+
+Foreground text colors; -on-bold/-inverse sit on bold/status backgrounds.
+
+- `--lz-sys-text`
+- `--lz-sys-text-subtle`
+- `--lz-sys-text-subtlest`
+- `--lz-sys-text-disabled`
+- `--lz-sys-text-inverse`
+- `--lz-sys-text-on-bold`
+
+### Links
+
+Anchor colors for rest/hover/active states.
+
+- `--lz-sys-link`
+- `--lz-sys-link-hover`
+- `--lz-sys-link-active`
+
+### Surfaces
+
+Background layers: base page, sunken wells, raised cards, overlay popups.
+
+- `--lz-sys-surface`
+- `--lz-sys-surface-sunken`
+- `--lz-sys-surface-raised`
+- `--lz-sys-surface-overlay`
+- `--lz-sys-surface-raised-hovered`
+
+### Borders & separators
+
+Hairline borders on controls and dividers between regions.
+
+- `--lz-sys-border`
+- `--lz-sys-separator`
+
+### Focus & selection
+
+Focus ring and selected-item background/text.
+
+- `--lz-sys-focus-ring`
+- `--lz-sys-selected-bg`
+- `--lz-sys-selected-text`
+
+### Interaction states
+
+Translucent hover/pressed washes and the modal blanket.
+
+- `--lz-sys-interaction-bg`
+- `--lz-sys-interaction-hovered`
+- `--lz-sys-interaction-pressed`
+- `--lz-sys-blanket`
+
+### Bold action colors
+
+Solid button fills (accent/danger/warning) with hovered/pressed steps.
+
+- `--lz-sys-accent-bold`
+- `--lz-sys-accent-bold-hovered`
+- `--lz-sys-accent-bold-pressed`
+- `--lz-sys-danger-bold`
+- `--lz-sys-danger-bold-hovered`
+- `--lz-sys-danger-bold-pressed`
+- `--lz-sys-warning-bold`
+- `--lz-sys-warning-bold-hovered`
+- `--lz-sys-warning-bold-pressed`
+
+### Form controls
+
+Input backgrounds, toggle track, progress track, tooltip surface.
+
+- `--lz-sys-input-bg`
+- `--lz-sys-input-hover-bg`
+- `--lz-sys-toggle-off`
+- `--lz-sys-track`
+- `--lz-sys-tooltip-bg`
+- `--lz-sys-tooltip-text`
+
+### Status
+
+Per-family (neutral/info/warning/danger/success/discovery) subtle bg+text and bold bg+on-bold pairs used by lozenge, message, banner, flag.
+
+- `--lz-sys-status-neutral-subtle-bg`
+- `--lz-sys-status-neutral-subtle-text`
+- `--lz-sys-status-neutral-bold-bg`
+- `--lz-sys-status-neutral-on-bold`
+- `--lz-sys-status-info-subtle-bg`
+- `--lz-sys-status-info-subtle-text`
+- `--lz-sys-status-info-bold-bg`
+- `--lz-sys-status-info-on-bold`
+- `--lz-sys-status-warning-subtle-bg`
+- `--lz-sys-status-warning-subtle-text`
+- `--lz-sys-status-warning-bold-bg`
+- `--lz-sys-status-warning-on-bold`
+- `--lz-sys-status-danger-subtle-bg`
+- `--lz-sys-status-danger-subtle-text`
+- `--lz-sys-status-danger-bold-bg`
+- `--lz-sys-status-danger-on-bold`
+- `--lz-sys-status-success-subtle-bg`
+- `--lz-sys-status-success-subtle-text`
+- `--lz-sys-status-success-bold-bg`
+- `--lz-sys-status-success-on-bold`
+- `--lz-sys-status-discovery-subtle-bg`
+- `--lz-sys-status-discovery-subtle-text`
+- `--lz-sys-status-discovery-bold-bg`
+- `--lz-sys-status-discovery-on-bold`

@@ -1,0 +1,80 @@
+{
+  "component": "message",
+  "version": "0.1.0",
+  "intent": "Inline section message (callout) with a colored edge bar: contextual info, warnings, errors, successes, or discovery announcements embedded in page flow. For full-width page-level announcements use the .banner subcomponent; for floating toast notifications use .flag.",
+  "root": { "selector": ".message", "element": ["div", "section"], "requiredClasses": ["message"] },
+  "variants": {
+    "tone": {
+      "classes": ["message-info", "message-warning", "message-error", "message-success", "message-discovery"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": [],
+  "structure": [
+    { "selector": ".message-title", "required": false, "description": "Bold heading line, first child." },
+    { "selector": ".message-actions", "required": false, "description": "Row of action links after the body text." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["page content", ".modal-body", ".card-body"],
+    "disallowed": [".message"]
+  },
+  "a11yNotes": "Tone is conveyed by color only — make the text itself state the severity (the title usually does). Messages inserted dynamically should get role=\"status\" (or role=\"alert\" for errors) so they are announced.",
+  "examples": [
+    "<div class=\"message message-warning\"><div class=\"message-title\">Trial ending</div><p>Your trial expires in 3 days.</p><div class=\"message-actions\"><a href=\"#\">Upgrade</a></div></div>"
+  ],
+  "subcomponents": [
+    {
+      "component": "banner",
+      "intent": "Full-width single-line page banner (maintenance notices, read-only mode, outages). Sits above or below the navbar spanning the viewport; content is centered and links inherit the bold text color.",
+      "root": { "selector": ".banner", "element": ["div"], "requiredClasses": ["banner"] },
+      "variants": {
+        "tone": {
+          "classes": ["banner-warning", "banner-error"],
+          "required": false,
+          "exclusive": true
+        }
+      },
+      "modifiers": [],
+      "structure": [],
+      "aria": [],
+      "nesting": { "allowedIn": ["directly under <body>, adjacent to .navbar"], "disallowed": [".banner"] },
+      "a11yNotes": "Banners on bold backgrounds keep sufficient contrast via on-bold tokens. If a banner appears dynamically (e.g. connection lost) give it role=\"status\" / role=\"alert\".",
+      "examples": [
+        "<div class=\"banner banner-error\">Something's gone wrong — retrying…</div>"
+      ]
+    },
+    {
+      "component": "flag",
+      "intent": "Floating toast notification (bottom-left in Jira): icon, content block (title/description/actions), and a dismiss button. Add .flag-fixed to pin it to the viewport; bold tone variants recolor the whole flag for success/error toasts. It is a glass surface.",
+      "root": { "selector": ".flag", "element": ["div"], "requiredClasses": ["flag"] },
+      "variants": {
+        "tone": {
+          "classes": ["flag-info", "flag-warning", "flag-error", "flag-success", "flag-discovery"],
+          "required": false,
+          "exclusive": true
+        }
+      },
+      "modifiers": ["flag-fixed"],
+      "structure": [
+        { "selector": ".flag-content", "required": true, "description": "The flexible middle block (flex:1, min-width:0) holding .flag-title, optional .flag-description, and optional .flag-actions." },
+        { "selector": ".flag-content > .flag-title", "required": false, "description": "Heading line of the toast." },
+        { "selector": ".flag-icon", "required": false, "description": "Optional leading icon block (e.g. an .issue-type square), flex-shrink:0." },
+        { "selector": "button.flag-dismiss", "required": false, "description": "Optional trailing × close button." }
+      ],
+      "aria": [
+        { "on": ".flag-dismiss", "attr": "aria-label", "required": true }
+      ],
+      "nesting": {
+        "allowedIn": ["directly under <body> (with .flag-fixed), or a toast stack container"],
+        "disallowed": [".flag", ".dropdown-menu", "dialog.modal", ".navbar"]
+      },
+      "a11yNotes": "Toasts appear asynchronously: give the flag (or its container) role=\"status\", or role=\"alert\" for error flags, so screen readers announce it. .flag-dismiss must carry aria-label (its content is just ×). The flag is a glass surface — never nest another glass surface (dropdown-menu, modal, navbar, another flag) inside it, and never mount a flag inside one; glass-on-glass compounds blur and voids the contrast guarantees.",
+      "examples": [
+        "<div class=\"flag flag-success\" role=\"status\"><div class=\"flag-content\"><div class=\"flag-title\">Changes saved</div></div><button class=\"flag-dismiss\" aria-label=\"Dismiss\">×</button></div>",
+        "<div class=\"flag\" role=\"status\"><div class=\"flag-icon\"><span class=\"issue-type issue-type-story\" aria-label=\"Story\"></span></div><div class=\"flag-content\"><div class=\"flag-title\">Issue created</div><div class=\"flag-description\">LOZ-42 added to the backlog.</div><div class=\"flag-actions\"><a href=\"#\">View issue</a></div></div><button class=\"flag-dismiss\" aria-label=\"Dismiss\">×</button></div>"
+      ]
+    }
+  ]
+}

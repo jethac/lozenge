@@ -1,0 +1,24 @@
+{
+  "component": "navbar",
+  "version": "0.1.0",
+  "intent": "Sticky top navigation bar: brand, horizontal nav links, and a right-aligned actions cluster. It is a frosted-glass surface when materials are enabled (--lz-glass). Use exactly one per page as the global app header; .navbar-primary gives the bold accent-colored version.",
+  "root": { "selector": ".navbar", "element": ["nav"], "requiredClasses": ["navbar"] },
+  "variants": {},
+  "modifiers": ["navbar-primary"],
+  "structure": [
+    { "selector": ".navbar-brand", "required": false, "description": "Logo/product link, typically first child." },
+    { "selector": ".navbar-nav", "required": false, "description": "A <ul> of <li> items each containing an <a class=\"nav-link\">; mark the current page's link with .active." },
+    { "selector": ".navbar-actions", "required": false, "description": "Right-aligned cluster (margin-left:auto) for buttons, search, and the user avatar." }
+  ],
+  "aria": [
+    { "on": ".navbar", "attr": "aria-label", "required": false, "when": "The page contains more than one <nav> landmark (e.g. navbar + breadcrumbs + sidebar nav) — label each to distinguish them." }
+  ],
+  "nesting": {
+    "allowedIn": ["directly under <body>, above the app shell"],
+    "disallowed": [".navbar", ".dropdown-menu", ".flag", "dialog.modal"]
+  },
+  "a11yNotes": "Use a real <nav> element. Mark the current page with .active and aria-current=\"page\" on the nav-link. The navbar is a glass surface: never nest another glass surface (dropdown-menu, flag, modal) in its subtree — glass-on-glass compounds blur and breaks contrast guarantees; dropdowns opened from the navbar should use the popover recipe, which renders in the top layer.",
+  "examples": [
+    "<nav class=\"navbar\"><a class=\"navbar-brand\" href=\"/\">Lozenge</a><ul class=\"navbar-nav\"><li><a class=\"nav-link active\" href=\"#\" aria-current=\"page\">Your work</a></li><li><a class=\"nav-link\" href=\"#\">Projects</a></li></ul><div class=\"navbar-actions\"><button class=\"btn btn-primary\">Create</button><span class=\"avatar avatar-md\">JC</span></div></nav>"
+  ]
+}

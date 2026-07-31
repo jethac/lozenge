@@ -13,9 +13,12 @@
     "dev": "npm run tokens && vite",
     "tokens": "node scripts/build-tokens.mjs",
     "check": "node scripts/check-contrast.mjs",
+    "lint": "node scripts/lozenge-lint.mjs demo/index.html",
+    "llms": "node scripts/build-llms.mjs",
+    "docs": "node scripts/build-docs.mjs",
     "build": "npm run tokens && sass scss/lozenge.scss dist/lozenge.css --style=expanded --no-source-map && sass scss/lozenge.scss dist/lozenge.min.css --style=compressed --no-source-map",
     "watch": "sass --watch scss/lozenge.scss dist/lozenge.css --style=expanded",
-    "test": "npm run check"
+    "test": "npm run check && npm run lint"
   },
   "license": "MIT",
   "devDependencies": {

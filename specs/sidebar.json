@@ -1,0 +1,43 @@
+{
+  "component": "sidebar",
+  "version": "0.1.0",
+  "intent": "Project sidebar navigation: a fixed-width vertical column with a project header, section labels, and .sidebar-item links. Use .sidebar-group (<details name=\"sidebar\">) for collapsible sections with zero-JS exclusive-accordion behavior.",
+  "root": { "selector": ".sidebar", "element": ["aside"], "requiredClasses": ["sidebar"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".sidebar-header", "required": false, "description": "Project identity row: square avatar plus a min-width:0 wrapper holding .sidebar-title and .sidebar-subtitle (both truncate)." },
+    { "selector": ".sidebar-item", "required": false, "description": "Navigation links; mark the current view with .active (selected background)." },
+    { "selector": ".sidebar-section", "required": false, "description": "Uppercase section label — either a plain div, or the <summary> of a .sidebar-group." }
+  ],
+  "aria": [
+    { "on": ".sidebar-item.active", "attr": "aria-current", "required": false, "when": "Recommended on the active item so assistive tech announces the current view (aria-current=\"page\")." }
+  ],
+  "nesting": {
+    "allowedIn": ["app shell, alongside the main content area, below the navbar"],
+    "disallowed": [".sidebar"]
+  },
+  "a11yNotes": "Wrap link runs in <nav> or use <aside> + labelled nav for landmark navigation. In .sidebar-group the <summary> is the toggle and is keyboard-operable for free; keep .sidebar-section on the summary so the disclosure triangle renders. Pair .active with aria-current=\"page\".",
+  "examples": [
+    "<aside class=\"sidebar\"><div class=\"sidebar-header\"><span class=\"avatar avatar-sm avatar-square\">P</span><div><div class=\"sidebar-title\">Project</div><div class=\"sidebar-subtitle\">Software project</div></div></div><details class=\"sidebar-group\" name=\"sidebar\" open><summary class=\"sidebar-section\">Planning</summary><a class=\"sidebar-item active\" href=\"#\">Board</a><a class=\"sidebar-item\" href=\"#\">Backlog</a></details></aside>"
+  ],
+  "subcomponents": [
+    {
+      "component": "sidebar-group",
+      "intent": "Collapsible sidebar section built on native <details>/<summary>. Giving every group the same name attribute (name=\"sidebar\") makes them an exclusive accordion with zero JS.",
+      "root": { "selector": ".sidebar-group", "element": ["details"], "requiredClasses": ["sidebar-group"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": "summary.sidebar-section", "required": true, "description": "Must be the first child; styled with a rotating disclosure triangle (rotates when [open])." },
+        { "selector": ".sidebar-item", "required": false, "description": "The section's links, as following siblings of the summary inside the details." }
+      ],
+      "aria": [],
+      "nesting": { "allowedIn": [".sidebar"], "disallowed": [".sidebar-group"] },
+      "a11yNotes": "Native details/summary supplies expand/collapse semantics and keyboard support. Use the same name=\"...\" on sibling groups for exclusive-open behavior; omit name to allow multiple open sections. Add `open` to the group that contains the current page.",
+      "examples": [
+        "<details class=\"sidebar-group\" name=\"sidebar\" open><summary class=\"sidebar-section\">Planning</summary><a class=\"sidebar-item\" href=\"#\">Board</a></details>"
+      ]
+    }
+  ]
+}

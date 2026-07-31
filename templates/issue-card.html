@@ -1,7 +1,7 @@
 <div class="issue-card" data-lz-defaults='{"type":"task"}'>
   <div class="issue-card-summary"><slot></slot></div>
   <div class="issue-card-meta">
-    <span class="issue-type issue-type-{type}"></span>
+    <span class="issue-type issue-type-{type}" role="img" aria-label="{type}"></span>
     <span class="issue-key">{key}</span>
     <slot name="meta"></slot>
   </div>

@@ -1,0 +1,91 @@
+{
+  "component": "forms",
+  "version": "0.1.0",
+  "intent": "Form field stack: .form-group wraps one field (label + control + help/error text) and provides vertical rhythm. Controls are subcomponents with their own roots: .form-control (inputs/textareas), .form-select, .form-check (checkbox/radio rows), and .toggle switches.",
+  "root": { "selector": ".form-group", "element": ["div", "fieldset"], "requiredClasses": ["form-group"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".form-label", "required": false, "description": "A <label class=\"form-label\" for=\"...\"> above the control; append <span class=\"required\">*</span> for mandatory fields." },
+    { "selector": ".form-text", "required": false, "description": "Help text below the control." },
+    { "selector": ".invalid-feedback", "required": false, "description": "Error text; pair with .is-invalid on the control." }
+  ],
+  "aria": [
+    { "on": ".form-label", "attr": "for", "required": false, "when": "Always when the label is not wrapping its control — every control needs a programmatically associated label." }
+  ],
+  "nesting": {
+    "allowedIn": ["<form>", ".modal-body", ".card-body", "settings panels"],
+    "disallowed": [".form-group"]
+  },
+  "a11yNotes": "Associate every control with a label via for/id (the demo does this throughout). Mark invalid controls with .is-invalid AND aria-invalid=\"true\", and link the .invalid-feedback text with aria-describedby. The .required asterisk is visual; also set the required attribute on the control.",
+  "examples": [
+    "<div class=\"form-group\"><label class=\"form-label\" for=\"summary\">Summary <span class=\"required\">*</span></label><input class=\"form-control\" id=\"summary\" type=\"text\" required><span class=\"form-text\">Keep it short.</span></div>"
+  ],
+  "subcomponents": [
+    {
+      "component": "form-control",
+      "intent": "Text-style input skin for <input> and <textarea>. Textareas grow (min-height 80px, resize vertical). .form-control-subtle is invisible until hovered/focused (inline edit); .is-invalid shows the danger border.",
+      "root": { "selector": ".form-control", "element": ["input", "textarea"], "requiredClasses": ["form-control"] },
+      "variants": {},
+      "modifiers": ["form-control-compact", "form-control-subtle", "is-invalid"],
+      "structure": [],
+      "aria": [
+        { "on": ".form-control.is-invalid", "attr": "aria-invalid", "required": false, "when": "Recommended whenever .is-invalid is applied, together with aria-describedby pointing at the .invalid-feedback element." }
+      ],
+      "nesting": { "allowedIn": [".form-group"], "disallowed": [] },
+      "a11yNotes": "Must have an associated <label> (for/id), or aria-label when a visible label is genuinely impossible. Placeholder text is not a label.",
+      "examples": [
+        "<input class=\"form-control\" id=\"summary\" type=\"text\" placeholder=\"What needs doing?\">",
+        "<textarea class=\"form-control\" id=\"desc\"></textarea>"
+      ]
+    },
+    {
+      "component": "form-select",
+      "intent": "Native <select> skinned with a chevron. Same sizing/interaction states as .form-control.",
+      "root": { "selector": ".form-select", "element": ["select"], "requiredClasses": ["form-select"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [],
+      "aria": [],
+      "nesting": { "allowedIn": [".form-group"], "disallowed": [] },
+      "a11yNotes": "Must have an associated <label>. Prefer native select over custom dropdowns for form input — it is free keyboard/AT support.",
+      "examples": [
+        "<select class=\"form-select\" id=\"type\"><option>Story</option><option>Bug</option></select>"
+      ]
+    },
+    {
+      "component": "form-check",
+      "intent": "One checkbox or radio row: an .form-check-input followed by its text <label>. Stack rows inside a .form-group; radios in one group share a name attribute.",
+      "root": { "selector": ".form-check", "element": ["div"], "requiredClasses": ["form-check"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".form-check-input", "required": true, "description": "An <input type=\"checkbox\"> or <input type=\"radio\"> with class form-check-input (custom-drawn box/dot; 2px top margin aligns it with the label's first line)." },
+        { "selector": "label", "required": false, "description": "Text label with for pointing at the input's id. Not a CSS dependency, but a control without one has no accessible name." }
+      ],
+      "aria": [],
+      "nesting": { "allowedIn": [".form-group"], "disallowed": [".form-check"] },
+      "a11yNotes": "Always pair the input with a label via for/id so the text is clickable and the control is named. The custom appearance keeps the native input element, so keyboard and AT behavior are native.",
+      "examples": [
+        "<div class=\"form-check\"><input class=\"form-check-input\" type=\"checkbox\" id=\"watch\" checked><label for=\"watch\">Notify watchers</label></div>"
+      ]
+    },
+    {
+      "component": "toggle",
+      "intent": "iOS-style switch: a <label class=\"toggle\"> wrapping a visually-hidden checkbox and a .toggle-slider span. The wrapping label makes the whole switch clickable; .toggle-lg is the larger size.",
+      "root": { "selector": ".toggle", "element": ["label"], "requiredClasses": ["toggle"] },
+      "variants": {},
+      "modifiers": ["toggle-lg"],
+      "structure": [
+        { "selector": "input", "required": true, "description": "A visually-hidden <input type=\"checkbox\"> that must come IMMEDIATELY BEFORE .toggle-slider (the CSS drives the slider via input:checked + .toggle-slider)." },
+        { "selector": ".toggle-slider", "required": true, "description": "The drawn track/knob span, immediate next sibling of the input." }
+      ],
+      "aria": [],
+      "nesting": { "allowedIn": [".form-group", "settings rows"], "disallowed": [".toggle"] },
+      "a11yNotes": "The wrapping <label> gives click-anywhere behavior, but the checkbox still needs a text name: put visible text inside the label, or aria-label on the input (the demo places adjacent text outside the label, which does NOT name the control).",
+      "examples": [
+        "<label class=\"toggle\"><input type=\"checkbox\" aria-label=\"Send me updates\" checked><span class=\"toggle-slider\"></span></label>"
+      ]
+    }
+  ]
+}

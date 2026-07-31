@@ -1,0 +1,65 @@
+{
+  "component": "card",
+  "version": "0.1.0",
+  "intent": "Generic raised surface container with optional header/body/footer sections. Use for grouping related content on a page. For draggable-looking Kanban cards use the .issue-card subcomponent instead — it is an independent root, not a .card variant.",
+  "root": { "selector": ".card", "element": ["div", "section", "article"], "requiredClasses": ["card"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".card-header", "required": false, "description": "Optional heading strip with bottom separator." },
+    { "selector": ".card-body", "required": false, "description": "Padded content region; use for the main content." },
+    { "selector": ".card-footer", "required": false, "description": "Optional footer strip with top separator." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["page content", "grid/flex layouts"],
+    "disallowed": [".card"]
+  },
+  "a11yNotes": "Cards are non-interactive surfaces; if the whole card should be clickable, put a single <a> inside rather than click handlers on the div. Use a real heading element inside .card-header.",
+  "examples": [
+    "<div class=\"card\"><div class=\"card-header\">Sprint 14</div><div class=\"card-body\">Content</div></div>"
+  ],
+  "subcomponents": [
+    {
+      "component": "issue-card",
+      "intent": "A single issue on a Kanban board: summary text plus a meta row of issue-type icon, key, badge/lozenge, and avatar. Lives inside .board-column-cards; consecutive issue-cards space themselves 8px apart.",
+      "root": { "selector": ".issue-card", "element": ["div"], "requiredClasses": ["issue-card"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".issue-card-summary", "required": true, "description": "The issue title; wraps and word-breaks." },
+        { "selector": ".issue-card-meta", "required": false, "description": "Flex meta row (8px gap). Order matters visually: .issue-type first, then .issue-key, then badges/lozenges; put the .avatar last — it right-aligns via margin-left:auto." },
+        { "selector": ".issue-card-meta > .issue-key", "required": false, "description": "The issue identifier (e.g. LOZ-42); truncates." }
+      ],
+      "aria": [],
+      "nesting": {
+        "allowedIn": [".board-column-cards"],
+        "disallowed": [".issue-card", ".card"]
+      },
+      "a11yNotes": "The SCSS gives .issue-card cursor:pointer but the demo markup is a plain div — if a card opens the issue, make it (or its summary) a real link/button so it is keyboard-operable. Inner .issue-type icons need a text alternative (see issue-type).",
+      "examples": [
+        "<div class=\"issue-card\"><div class=\"issue-card-summary\">Fix login redirect loop</div><div class=\"issue-card-meta\"><span class=\"issue-type issue-type-bug\" aria-label=\"Bug\"></span><span class=\"issue-key\">PROJ-42</span><span class=\"badge\">3</span><span class=\"avatar avatar-sm\">JC</span></div></div>"
+      ]
+    },
+    {
+      "component": "issue-type",
+      "intent": "16px colored square standing in for an issue-type glyph icon (story/bug/task/epic). Fixed categorical colors, deliberately not accent-driven. Used in .issue-card-meta, table cells, and inline next to titles.",
+      "root": { "selector": ".issue-type", "element": ["span"], "requiredClasses": ["issue-type"] },
+      "variants": {
+        "type": {
+          "classes": ["issue-type-story", "issue-type-bug", "issue-type-task", "issue-type-epic"],
+          "required": true,
+          "exclusive": true
+        }
+      },
+      "modifiers": [],
+      "structure": [],
+      "aria": [],
+      "nesting": { "allowedIn": [".issue-card-meta", "table cells", ".flag-icon", "inline before titles"], "disallowed": [".issue-type"] },
+      "a11yNotes": "The square is color-only with no text content: give it aria-label (\"Bug\", \"Story\"...) when the type is not stated in nearby text, or aria-hidden=\"true\" when it is purely decorative next to visible text.",
+      "examples": [
+        "<span class=\"issue-type issue-type-story\" aria-label=\"Story\"></span>"
+      ]
+    }
+  ]
+}

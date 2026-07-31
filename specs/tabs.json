@@ -1,0 +1,42 @@
+{
+  "component": "tabs",
+  "version": "0.1.0",
+  "intent": "Horizontal tab strip with an underline indicator. Two recipes share the .tabs/.tab skin: a plain link strip (<ul class=\"tabs\"><li><a class=\"tab active\">) where YOU wire the switching, and the zero-JS .tabset subcomponent that switches panes with hidden radio inputs and :has().",
+  "root": { "selector": ".tabs", "element": ["ul", "div", "nav"], "requiredClasses": ["tabs"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".tab", "required": true, "description": "The tab items. In the link recipe: <li><a class=\"tab\"> with .active on the current one (.disabled to disable). In the tabset recipe: <label class=\"tab\"> immediately following its radio input." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["detail views", "cards", ".tabset (as the strip of a CSS-only tabset)"],
+    "disallowed": [".tabs"]
+  },
+  "a11yNotes": "The link recipe carries no tab semantics by itself — add role=\"tablist\"/\"tab\"/\"tabpanel\" and aria-selected if you script it. The .tabset recipe rides on radio semantics instead: focus the group and switch with arrow keys; do not also add ARIA tab roles on top of the radios.",
+  "examples": [
+    "<ul class=\"tabs\"><li><a class=\"tab active\" href=\"#\">Details</a></li><li><a class=\"tab\" href=\"#\">Comments</a></li></ul>"
+  ],
+  "subcomponents": [
+    {
+      "component": "tabset",
+      "intent": "CSS-only switching tabs: hidden radio inputs inside .tabs drive which .tab-pane is visible via :has() — no JavaScript. Supports at most 8 tabs (the :has()/:nth pane-matching rules are generated for indices 1-8).",
+      "root": { "selector": ".tabset", "element": ["div"], "requiredClasses": ["tabset"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".tabs", "required": true, "description": "The strip. Its children must be alternating pairs: <input type=\"radio\"> immediately followed by its <label class=\"tab\"> (the CSS selects input:checked + .tab). All radios share one name; each label's for matches its input's id; exactly one input carries checked." },
+        { "selector": ".tabs > input[type=radio]", "required": true, "description": "Visually-hidden radios as DIRECT children of .tabs. CRITICAL ordering constraint: the Nth radio (input:nth-of-type(N)) shows the Nth pane (.tab-pane:nth-child(N)) — radio order and pane order must correspond exactly." },
+        { "selector": ".tabs > label.tab", "required": true, "description": "Each label must be the immediate next sibling of its radio, and its for attribute must reference that radio's id." },
+        { "selector": ".tab-panes", "required": true, "description": "Wrapper whose element children are ONLY .tab-pane divs, in the same order as the radios (pane visibility is matched by :nth-child, so any extra child element breaks the correspondence)." },
+        { "selector": ".tab-panes > .tab-pane", "required": true, "description": "One pane per tab, direct children of .tab-panes, same count and order as the radios." }
+      ],
+      "aria": [],
+      "nesting": { "allowedIn": ["detail views", "cards", ".demo-main / main content"], "disallowed": [".tabset"] },
+      "a11yNotes": "Keyboard support comes from native radio groups (arrow keys switch, which also switches panes); the focused radio shows a focus ring on its label. Give the radio group a unique name per tabset on the page. Panes are display:none when inactive, so hidden content is correctly removed from the accessibility tree.",
+      "examples": [
+        "<div class=\"tabset\"><div class=\"tabs\"><input type=\"radio\" name=\"t\" id=\"t1\" checked><label class=\"tab\" for=\"t1\">Details</label><input type=\"radio\" name=\"t\" id=\"t2\"><label class=\"tab\" for=\"t2\">Comments</label></div><div class=\"tab-panes\"><div class=\"tab-pane\">Details…</div><div class=\"tab-pane\">Comments…</div></div></div>"
+      ]
+    }
+  ]
+}
