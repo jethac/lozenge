@@ -1,0 +1,23 @@
+{
+  "component": "timeline",
+  "version": "0.1.0",
+  "intent": "Roadmap / Gantt-lite timeline: a CSS grid with a 200px label column plus --lz-timeline-cols equal time periods (default 12). Each .timeline-row pairs a truncating epic label with a pill .timeline-bar placed via inline `--start` (1-based first period) and `--span` (period count) custom properties. Purely presentational and inline-style-driven: the generating app/agent computes the columns; there is no runtime.",
+  "root": { "selector": ".timeline", "element": ["div"], "requiredClasses": ["timeline"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".timeline-header", "required": false, "description": "Subgrid header row: first cell labels the left column, subsequent cells are h300-style period labels with separator borders — span multiple periods with inline style=\"grid-column: span N\"." },
+    { "selector": ".timeline-row", "required": true, "description": "One subgrid row per item; hover highlights the whole row. Cells align to the shared column grid." },
+    { "selector": ".timeline-row > .timeline-label", "required": true, "description": "Left-column cell: item name, truncates; lead with an .issue-type square (role=\"img\" + aria-label, e.g. the fixed-purple epic)." },
+    { "selector": ".timeline-row > .timeline-bar", "required": false, "description": "Pill bar placed with inline style=\"--start: S; --span: N\" (grid-column: calc(S + 1) / span N; S + N - 1 must not exceed --lz-timeline-cols). Default accent; .timeline-bar-done = success, .timeline-bar-risk = warning with dark on-bold text. Omit for rows with nothing scheduled." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["main content area", "cards", "roadmap views"],
+    "disallowed": [".timeline"]
+  },
+  "a11yNotes": "Bars are color/position-only: their placement is invisible to assistive tech. Convey the dates in text — put them in the bar's text content, a title/aria-label on the bar, or an adjacent table. Bar variant colors (done/risk) must also be stated in text somewhere (a lozenge in the label works). Header cells are plain divs, not table semantics; for data-dense roadmaps consider an accompanying real <table>.",
+  "examples": [
+    "<div class=\"timeline\" style=\"--lz-timeline-cols: 12\"><div class=\"timeline-header\"><div>Epics</div><div style=\"grid-column: span 4\">April</div><div style=\"grid-column: span 4\">May</div><div style=\"grid-column: span 4\">June</div></div><div class=\"timeline-row\"><div class=\"timeline-label\"><span class=\"issue-type issue-type-epic\" role=\"img\" aria-label=\"Epic\"></span> Runtime theme axes</div><div class=\"timeline-bar timeline-bar-done\" style=\"--start: 1; --span: 4\" title=\"April\"></div></div></div>"
+  ]
+}

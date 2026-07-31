@@ -1,0 +1,27 @@
+{
+  "component": "inline-edit",
+  "version": "0.1.0",
+  "intent": "In-place view/edit swap for a single field value. The zero-JS DEFAULT drives the swap with a visually-hidden checkbox: clicking the .inline-edit-view label checks it, and :has(:checked) on the wrapper hides the view and shows .inline-edit-editor (a .form-control plus compact Save/Cancel buttons). With a <form> root, Cancel is type=\"reset\" — it unchecks the toggle AND reverts the field, and Save is type=\"submit\": all platform behavior. Real apps will usually swap the two states with JS instead (render either the view or the editor); the classes work identically that way, and the checkbox may then be dropped.",
+  "root": { "selector": ".inline-edit", "element": ["form", "div"], "requiredClasses": ["inline-edit"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": "input[type=checkbox]", "required": true, "description": "The visually-hidden mode toggle, a DIRECT child placed BEFORE the view and editor (the focus-ring CSS uses the ~ sibling combinator). It stays keyboard-reachable: Space toggles edit mode. Omit only if you swap states with JS." },
+    { "selector": "label.inline-edit-view", "required": true, "description": "The read view, a <label for=\"(toggle id)\"> showing the current value with subtle-input hover chrome and a pencil ::after affordance. Clicking it opens the editor." },
+    { "selector": ".inline-edit-editor", "required": true, "description": "The edit row (hidden until the toggle is checked): a .form-control holding the value plus confirm/cancel buttons. DIRECT child of the wrapper." },
+    { "selector": ".inline-edit-editor .form-control", "required": true, "description": "The actual input/textarea. Give it a name attribute (form submission carries the value) and its own accessible name." },
+    { "selector": ".inline-edit-editor .btn", "required": false, "description": "Confirm and cancel as .btn.btn-compact (e.g. btn-primary type=\"submit\" to save, btn-subtle type=\"reset\" to cancel when the root is a <form>)." }
+  ],
+  "aria": [
+    { "on": ".inline-edit > input[type=checkbox]", "attr": "aria-label", "required": true },
+    { "on": ".inline-edit-editor .form-control", "attr": "aria-label", "required": false, "when": "Whenever the editor input has no visible associated <label> — name it after the field (e.g. aria-label=\"Summary\")." }
+  ],
+  "nesting": {
+    "allowedIn": ["detail views", "cards", "tables", ".form-group"],
+    "disallowed": [".inline-edit"]
+  },
+  "a11yNotes": "Name the toggle checkbox for what it edits (aria-label=\"Edit summary\") — it is the keyboard entry point (Tab to it, Space to open; its focus ring is drawn on the visible view/editor). Name the editor input after the field itself. The pencil glyph is a CSS ::after and invisible to AT — the checkbox label carries that meaning. For production consider the JS swap with focus moved into the input on open; the checkbox pattern does not manage focus for you.",
+  "examples": [
+    "<form class=\"inline-edit\" action=\"#\"><input type=\"checkbox\" id=\"edit-summary\" aria-label=\"Edit summary\"><label class=\"inline-edit-view\" for=\"edit-summary\">Fix redirect loop on expired session</label><div class=\"inline-edit-editor\"><input class=\"form-control\" type=\"text\" name=\"summary\" value=\"Fix redirect loop on expired session\" aria-label=\"Summary\"><button class=\"btn btn-primary btn-compact\" type=\"submit\">Save</button><button class=\"btn btn-subtle btn-compact\" type=\"reset\">Cancel</button></div></form>"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "component": "drawer",
+  "version": "0.1.0",
+  "intent": "Side panel on a native <dialog>: full-height glass surface anchored to the inline-end edge (inline-start with .drawer-start), sliding in over a blanket backdrop. Use for issue detail panes, filter panels, and secondary workflows that keep page context visible. Open it declaratively with <button commandfor=\"id\" command=\"show-modal\"> — the native dialog invoker — and close with command=\"close\" or a <form method=\"dialog\">; no JavaScript involved.",
+  "root": { "selector": ".drawer", "element": ["dialog"], "requiredClasses": ["drawer"] },
+  "variants": {},
+  "modifiers": ["drawer-start", "drawer-wide"],
+  "structure": [
+    { "selector": ".drawer-header", "required": false, "description": "Top strip: .drawer-title (h600 scale) plus a .drawer-close icon button, space-between." },
+    { "selector": ".drawer-body", "required": true, "description": "The scrolling content region (flex: 1, overflow-y: auto, 24px inline padding)." },
+    { "selector": ".drawer-footer", "required": false, "description": "Bottom action row, end-aligned with 8px gap. Usually a <form method=\"dialog\"> so buttons close the drawer natively." },
+    { "selector": "button.drawer-close", "required": false, "description": "Icon-only close button in the header (.btn .btn-subtle .btn-icon). Wire it with commandfor + command=\"close\" pointing at the drawer's id." }
+  ],
+  "aria": [
+    { "on": "button.drawer-close", "attr": "aria-label", "required": true },
+    { "on": ".drawer", "attr": "aria-labelledby", "required": true, "when": "The drawer has a visible .drawer-title — point aria-labelledby at its id; otherwise label the dialog directly with aria-label." }
+  ],
+  "nesting": {
+    "allowedIn": ["directly under <body> (the dialog renders in the top layer regardless of DOM position)"],
+    "disallowed": [".drawer", "dialog.modal", ".flag"]
+  },
+  "a11yNotes": "The native <dialog> supplies focus trapping, Esc-to-close, and top-layer stacking — never re-implement them. Give the dialog an accessible name (aria-labelledby → .drawer-title id, or aria-label). .drawer-close is icon-only and must carry aria-label. The drawer is a glass surface: never nest another glass modal surface (dialog.modal, .flag, another .drawer) inside it. Dropdown menus inside a drawer are legitimate and supported, but note the glass-layering caveat — a glass menu over a glass drawer compounds blur, so keep menus small and prefer solid-surface content behind them. Entrance slide uses motion tokens and is collapsed by the framework-wide prefers-reduced-motion rule.",
+  "examples": [
+    "<dialog class=\"drawer\" id=\"issue-drawer\" aria-labelledby=\"issue-drawer-title\"><div class=\"drawer-header\"><h4 class=\"drawer-title\" id=\"issue-drawer-title\">Issue details</h4><button class=\"btn btn-subtle btn-icon drawer-close\" commandfor=\"issue-drawer\" command=\"close\" aria-label=\"Close drawer\">×</button></div><div class=\"drawer-body\"><p>LOZ-14 — Login page throws a redirect loop on expired session.</p></div><form method=\"dialog\" class=\"drawer-footer\"><button class=\"btn btn-subtle\" value=\"cancel\">Cancel</button><button class=\"btn btn-primary\" value=\"save\">Save</button></form></dialog>",
+    "<dialog class=\"drawer drawer-start drawer-wide\" id=\"filters\" aria-label=\"Filters\"><div class=\"drawer-body\"><p>Filter controls…</p></div></dialog>"
+  ],
+  "subcomponents": []
+}

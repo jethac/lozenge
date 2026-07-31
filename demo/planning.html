@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lozenge — Navigation &amp; planning</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="./theme-panel.js"></script>
+</head>
+<body>
+<div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
+
+<h1>Navigation &amp; planning</h1>
+<p class="text-subtle">Pagination, wizard tracker, tree view, roadmap timeline, and
+sprint planning components. Compare <a href="/demo/">the main demo</a>.</p>
+
+<section class="demo-section mt-6">
+  <h2>Pagination</h2>
+  <nav class="pagination mt-3" aria-label="Pagination">
+    <a class="page-link disabled" href="#" aria-disabled="true" aria-label="Previous page">&lsaquo;</a>
+    <a class="page-link active" href="#" aria-current="page">1</a>
+    <a class="page-link" href="#">2</a>
+    <a class="page-link" href="#">3</a>
+    <a class="page-link" href="#">4</a>
+    <span class="page-ellipsis">&hellip;</span>
+    <a class="page-link" href="#">17</a>
+    <a class="page-link" href="#" aria-label="Next page">&rsaquo;</a>
+  </nav>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Progress tracker</h2>
+  <ol class="tracker mt-4" style="max-width: 640px">
+    <li class="tracker-step tracker-step-done">
+      <span class="tracker-marker">1</span>
+      <span class="tracker-label">Project details</span>
+    </li>
+    <li class="tracker-step tracker-step-current" aria-current="step">
+      <span class="tracker-marker">2</span>
+      <span class="tracker-label">Permissions</span>
+    </li>
+    <li class="tracker-step">
+      <span class="tracker-marker">3</span>
+      <span class="tracker-label">Board setup</span>
+    </li>
+    <li class="tracker-step">
+      <span class="tracker-marker">4</span>
+      <span class="tracker-label">Invite team</span>
+    </li>
+  </ol>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Tree view</h2>
+  <ul class="tree mt-3" style="max-width: 320px">
+    <li>
+      <details open>
+        <summary class="tree-item">lozenge</summary>
+        <ul>
+          <li>
+            <details open>
+              <summary class="tree-item">scss</summary>
+              <ul>
+                <li>
+                  <details>
+                    <summary class="tree-item">components</summary>
+                    <ul>
+                      <li><span class="tree-item">_board.scss</span></li>
+                      <li><span class="tree-item">_pagination.scss</span></li>
+                      <li><span class="tree-item">_timeline.scss</span></li>
+                    </ul>
+                  </details>
+                </li>
+                <li><span class="tree-item selected" aria-current="true">_tokens.scss</span></li>
+                <li><span class="tree-item">lozenge.scss</span></li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details>
+              <summary class="tree-item">specs</summary>
+              <ul>
+                <li><span class="tree-item">planning.json</span></li>
+                <li><span class="tree-item">tree.json</span></li>
+              </ul>
+            </details>
+          </li>
+          <li><span class="tree-item">package.json</span></li>
+          <li><span class="tree-item">README.md</span></li>
+        </ul>
+      </details>
+    </li>
+  </ul>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Timeline</h2>
+  <div class="timeline mt-3" style="--lz-timeline-cols: 12">
+    <div class="timeline-header">
+      <div>Epics</div>
+      <div style="grid-column: span 4">April</div>
+      <div style="grid-column: span 4">May</div>
+      <div style="grid-column: span 4">June</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-label"><span class="issue-type issue-type-epic" role="img" aria-label="Epic"></span> Runtime theme axes</div>
+      <div class="timeline-bar timeline-bar-done" style="--start: 1; --span: 4" title="Weeks 1–4 (done)"></div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-label"><span class="issue-type issue-type-epic" role="img" aria-label="Epic"></span> Component contracts</div>
+      <div class="timeline-bar" style="--start: 3; --span: 5" title="Weeks 3–7"></div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-label"><span class="issue-type issue-type-epic" role="img" aria-label="Epic"></span> lz-* authoring tags</div>
+      <div class="timeline-bar timeline-bar-risk" style="--start: 6; --span: 4" title="Weeks 6–9 (at risk)">At risk</div>
+    </div>
+    <div class="timeline-row">
+      <div class="timeline-label"><span class="issue-type issue-type-epic" role="img" aria-label="Epic"></span> Docs site</div>
+      <div class="timeline-bar" style="--start: 9; --span: 4" title="Weeks 9–12"></div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Sprint planning</h2>
+  <div class="sprint-header mt-3">
+    <h3 class="sprint-name">Sprint 14</h3>
+    <span class="sprint-dates">21 Jul &ndash; 1 Aug</span>
+    <div class="sprint-actions">
+      <span class="badge" aria-label="14 story points">14</span>
+      <button class="btn btn-compact">Complete sprint</button>
+    </div>
+  </div>
+  <div class="backlog">
+    <lz-backlog-item type="story" key="LOZ-31" points="3" status="inprogress" assignee="JC">
+      Theme panel: persist selected axes across reloads
+      <span slot="status">In progress</span>
+    </lz-backlog-item>
+    <lz-backlog-item type="bug" key="LOZ-34" points="1" status="default" assignee="DK">
+      Login page throws redirect loop on expired session
+      <span slot="status">To do</span>
+    </lz-backlog-item>
+    <lz-backlog-item type="task" key="LOZ-36" points="2">
+      Wire contrast checker into CI
+    </lz-backlog-item>
+    <lz-backlog-item type="story" key="LOZ-29" points="5" status="success" assignee="AT">
+      Dark mode token pass for settings screens
+      <span slot="status">Done</span>
+    </lz-backlog-item>
+    <lz-backlog-item type="epic" key="LOZ-21" points="3" assignee="JC">
+      Navigation &amp; planning component set
+    </lz-backlog-item>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,72 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Sprint planning bits: the sprint header strip and the backlog list.
+//
+// <div class="sprint-header">
+//   <h3 class="sprint-name">Sprint 14</h3>
+//   <span class="sprint-dates">21 Jul &ndash; 1 Aug</span>
+//   <div class="sprint-actions">
+//     <span class="badge" aria-label="23 story points">23</span>
+//     <button class="btn btn-compact">Complete sprint</button>
+//   </div>
+// </div>
+.sprint-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.sprint-name {
+  margin: 0;
+  @include heading(500);
+  @include truncate;
+}
+
+.sprint-dates {
+  font-size: $font-size-sm;
+  color: $text-subtlest;
+  white-space: nowrap;
+}
+
+.sprint-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-inline-start: auto;
+}
+
+// Backlog — a flat list of issue rows.
+// <div class="backlog">
+//   <div class="backlog-item">
+//     <span class="issue-type issue-type-story" role="img" aria-label="story"></span>
+//     <span class="issue-key">LOZ-1</span>
+//     <span class="backlog-summary">Summary text</span>
+//     <span class="lozenge lozenge-inprogress">In progress</span>
+//     <span class="badge">3</span>
+//     <span class="avatar avatar-sm">JC</span>
+//   </div>
+// </div>
+// Author rows with <lz-backlog-item> (templates/backlog-item.html).
+.backlog {
+  border-top: 1px solid $separator-color;
+}
+
+.backlog-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid $separator-color;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-bg);
+  }
+}
+
+.backlog-summary {
+  flex: 1;
+  min-width: 0;
+  @include truncate;
+}

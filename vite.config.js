@@ -22,8 +22,7 @@ export default defineConfig({
     rollupOptions: {
       input: [
         "index.html",
-        "demo/index.html",
-        "demo/tags.html",
+        ...globSync("demo/*.html", { cwd: import.meta.dirname }).sort(),
         ...globSync("docs/*.html", { cwd: import.meta.dirname }).sort(),
       ].map((p) => resolve(import.meta.dirname, p)),
     },

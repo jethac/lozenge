@@ -1,0 +1,25 @@
+{
+  "component": "empty-state",
+  "version": "0.1.0",
+  "intent": "Centered explanation for a region with nothing in it yet (empty backlog, no search results, no notifications): optional illustration circle, a title, subtle description text, and a row of next-step actions. Max 460px wide, centered in its container.",
+  "root": { "selector": ".empty-state", "element": ["div", "section"], "requiredClasses": ["empty-state"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".empty-state-media", "required": false, "description": "Optional leading illustration slot. Default look is a 96px sunken circle holding one large glyph span; an <img> or inline <svg> can replace the glyph." },
+    { "selector": ".empty-state-title", "required": true, "description": "The headline (h500 scale). Use a real heading element at the level that fits the page outline." },
+    { "selector": ".empty-state-description", "required": false, "description": "Subtle supporting copy under the title." },
+    { "selector": ".empty-state-actions", "required": false, "description": "Centered row (8px gap) of next-step actions — typically one .btn-primary plus a .btn-subtle." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["page content", ".card-body", ".board-column-cards", ".drawer-body", ".modal-body"],
+    "disallowed": [".empty-state"]
+  },
+  "a11yNotes": "Use a real heading element for .empty-state-title so the state participates in the page outline. The default media glyph is decorative — mark it aria-hidden=\"true\" (an <img> illustration should instead get alt=\"\" when purely decorative). Actions must be real buttons or links; lead with the primary next step.",
+  "examples": [
+    "<div class=\"empty-state\"><div class=\"empty-state-media\"><span aria-hidden=\"true\">∅</span></div><h3 class=\"empty-state-title\">The backlog is empty</h3><p class=\"empty-state-description\">Create issues to plan your next sprint.</p><div class=\"empty-state-actions\"><button class=\"btn btn-primary\">Create issue</button><button class=\"btn btn-subtle\">Import issues</button></div></div>",
+    "<div class=\"empty-state\"><h3 class=\"empty-state-title\">No results</h3><p class=\"empty-state-description\">Try a different search term.</p></div>"
+  ],
+  "subcomponents": []
+}

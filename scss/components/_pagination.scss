@@ -1,0 +1,65 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Pagination.
+// Usage:
+// <nav class="pagination" aria-label="Pagination">
+//   <a class="page-link disabled" href="#" aria-disabled="true" aria-label="Previous page">&lsaquo;</a>
+//   <a class="page-link" href="#">1</a>
+//   <a class="page-link active" href="#" aria-current="page">2</a>
+//   <span class="page-ellipsis">&hellip;</span>
+//   <a class="page-link" href="#">9</a>
+//   <a class="page-link" href="#" aria-label="Next page">&rsaquo;</a>
+// </nav>
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.page-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border-radius: $border-radius;
+  color: $text-color;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color var(--lz-motion-fast) var(--lz-ease-standard);
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: var(--lz-sys-interaction-pressed);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &.active {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+
+  &.disabled {
+    color: $text-disabled;
+    pointer-events: none;
+  }
+}
+
+// Elided-range marker; not interactive.
+.page-ellipsis {
+  min-width: 32px;
+  text-align: center;
+  color: $text-subtle;
+  user-select: none;
+}

@@ -1,0 +1,44 @@
+{
+  "component": "date-field",
+  "version": "0.1.0",
+  "intent": "Styled native date input: <input type=\"date\" class=\"form-control date-field\">. The native calendar picker IS the behavior layer (keyboard entry, locale formats, AT support) — the class only normalizes the WebKit picker-indicator (opacity, hover wash) and the intrinsic edit-field padding so the control lines up with text inputs. No custom calendar.",
+  "root": { "selector": "input.date-field", "element": ["input"], "requiredClasses": ["date-field"] },
+  "variants": {
+    "base-skin": { "classes": ["form-control"], "required": true, "exclusive": true }
+  },
+  "modifiers": ["is-invalid", "form-control-compact"],
+  "structure": [],
+  "aria": [
+    { "on": "input.date-field", "attr": "aria-label", "required": false, "when": "Whenever there is no visible <label> associated via for/id (e.g. the fields inside a .date-range)." }
+  ],
+  "nesting": {
+    "allowedIn": [".form-group", ".date-range", "toolbars"],
+    "disallowed": []
+  },
+  "a11yNotes": "Associate a label via for/id, or aria-label when the field sits in a composite like .date-range. Native date inputs announce and constrain values themselves; use min/max/required attributes rather than scripted validation where possible. Pair .is-invalid with aria-invalid=\"true\" and aria-describedby.",
+  "examples": [
+    "<input class=\"form-control date-field\" type=\"date\" id=\"due\" value=\"2026-08-14\">"
+  ],
+  "subcomponents": [
+    {
+      "component": "date-range",
+      "intent": "Row layout for a start/end pair: two .date-field inputs flexing equally around an en-dash separator. Constrain the pair with min/max attributes (set min on the end field to the start value in your app) — the layout itself imposes no logic.",
+      "root": { "selector": ".date-range", "element": ["div"], "requiredClasses": ["date-range"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".date-field", "required": true, "description": "Two <input class=\"form-control date-field\" type=\"date\"> DIRECT children (start, then end), each with its own accessible name (aria-label=\"Start date\" / \"End date\")." },
+        { "selector": ".date-range-separator", "required": false, "description": "The \"–\" between the fields; decorative, so it must carry aria-hidden=\"true\"." }
+      ],
+      "aria": [
+        { "on": ".date-range-separator", "attr": "aria-hidden", "required": true },
+        { "on": ".date-range", "attr": "role", "required": false, "when": "Recommended: role=\"group\" with aria-labelledby pointing at the visible caption, so AT announces the pair as one field (\"Sprint window\")." }
+      ],
+      "nesting": { "allowedIn": [".form-group", "filter rows", "toolbars"], "disallowed": [".date-range"] },
+      "a11yNotes": "Give the row role=\"group\" + aria-labelledby (or aria-label) naming the range, and each input its own aria-label (Start date / End date). The separator is visual only — keep aria-hidden=\"true\" on it.",
+      "examples": [
+        "<div class=\"date-range\" role=\"group\" aria-label=\"Sprint window\"><input class=\"form-control date-field\" type=\"date\" value=\"2026-08-03\" aria-label=\"Start date\"><span class=\"date-range-separator\" aria-hidden=\"true\">–</span><input class=\"form-control date-field\" type=\"date\" value=\"2026-08-17\" aria-label=\"End date\"></div>"
+      ]
+    }
+  ]
+}

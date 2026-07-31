@@ -1,0 +1,49 @@
+{
+  "component": "skeleton",
+  "version": "0.1.0",
+  "intent": "Loading placeholder: a sunken rounded rect with a shimmering gradient sweep, standing in for content that is still arriving. Shape variants mimic text lines, headings, avatars, and issue cards; compose several inside the region that is loading.",
+  "root": { "selector": ".skeleton", "element": ["div", "span"], "requiredClasses": ["skeleton"] },
+  "variants": {
+    "shape": {
+      "classes": ["skeleton-text", "skeleton-heading", "skeleton-avatar", "skeleton-card"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["skeleton-avatar-xs", "skeleton-avatar-sm", "skeleton-avatar-md", "skeleton-avatar-lg", "skeleton-avatar-xl"],
+  "structure": [],
+  "aria": [
+    { "on": ".skeleton", "attr": "aria-hidden", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["any region whose real content is loading (give that region aria-busy=\"true\")", ".skeleton-paragraph", ".board-column-cards", ".card-body", ".drawer-body"],
+    "disallowed": [".skeleton"]
+  },
+  "a11yNotes": "Skeletons are decorative — every .skeleton must carry aria-hidden=\"true\" so screen readers skip them, and the container being loaded should carry aria-busy=\"true\" (assistive tech then treats the region as changing). Never put text content inside a skeleton. The shimmer animation is already collapsed to a static block by the framework-wide prefers-reduced-motion rule; no per-component opt-out is needed.",
+  "examples": [
+    "<div class=\"skeleton skeleton-text\" aria-hidden=\"true\"></div>",
+    "<span class=\"skeleton skeleton-avatar skeleton-avatar-lg\" aria-hidden=\"true\"></span>",
+    "<div class=\"skeleton skeleton-card\" aria-hidden=\"true\"></div>"
+  ],
+  "subcomponents": [
+    {
+      "component": "skeleton-paragraph",
+      "intent": "Vertical stack of .skeleton-text lines with prose-like rhythm: 8px row gap, and the final line stops at 60% width so the block reads as a paragraph rather than a box.",
+      "root": { "selector": ".skeleton-paragraph", "element": ["div"], "requiredClasses": ["skeleton-paragraph"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".skeleton-text", "required": true, "description": "The stacked line placeholders; the last one is automatically shortened to 60% width." }
+      ],
+      "aria": [],
+      "nesting": {
+        "allowedIn": ["any loading region (aria-busy=\"true\")", ".card-body", ".drawer-body"],
+        "disallowed": [".skeleton-paragraph"]
+      },
+      "a11yNotes": "The wrapper itself is layout-only; the child .skeleton-text elements each carry aria-hidden=\"true\" per the skeleton contract.",
+      "examples": [
+        "<div class=\"skeleton-paragraph\"><div class=\"skeleton skeleton-text\" aria-hidden=\"true\"></div><div class=\"skeleton skeleton-text\" aria-hidden=\"true\"></div><div class=\"skeleton skeleton-text\" aria-hidden=\"true\"></div></div>"
+      ]
+    }
+  ]
+}

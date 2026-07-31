@@ -1,0 +1,97 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Inline edit — read view that swaps to an editor in place. The zero-JS
+// default drives the swap with a visually-hidden checkbox and :has():
+//
+// <form class="inline-edit" action="#">
+//   <input type="checkbox" id="edit-summary" aria-label="Edit summary">
+//   <label class="inline-edit-view" for="edit-summary">Current value</label>
+//   <div class="inline-edit-editor">
+//     <input class="form-control" type="text" name="summary" value="Current value" aria-label="Summary">
+//     <button class="btn btn-primary btn-compact" type="submit">Save</button>
+//     <button class="btn btn-subtle btn-compact" type="reset">Cancel</button>
+//   </div>
+// </form>
+//
+// With a <form> root, Cancel is type="reset": it unchecks the toggle
+// (closing the editor) AND reverts the field to its default value — all
+// platform behavior. Real apps usually swap view/editor with JS instead;
+// the classes work the same either way.
+.inline-edit {
+  position: relative;
+
+  > input[type="checkbox"] {
+    @include visually-hidden;
+  }
+
+  > input[type="checkbox"]:focus-visible ~ .inline-edit-view {
+    @include focus-ring;
+  }
+
+  > input[type="checkbox"]:focus-visible ~ .inline-edit-editor {
+    border-radius: $border-radius;
+    @include focus-ring;
+  }
+
+  &:has(> input[type="checkbox"]:checked) {
+    > .inline-edit-view {
+      display: none;
+    }
+
+    > .inline-edit-editor {
+      display: flex;
+    }
+  }
+}
+
+// Read view — mirrors .form-control-subtle: invisible chrome until hovered,
+// with a pencil affordance revealing that the value is editable.
+.inline-edit-view {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: $input-height;
+  padding: 8px 8px;
+  border: $input-border-width solid transparent;
+  border-radius: $border-radius;
+  color: $text-color;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+
+  &::after {
+    content: "✎";
+    flex: none;
+    color: $text-subtlest;
+    font-size: $font-size-sm;
+    line-height: 16px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &:hover {
+    background-color: var(--lz-sys-surface-sunken);
+
+    &::after {
+      opacity: 1;
+    }
+  }
+}
+
+// Editor row — hidden until the toggle is checked.
+.inline-edit-editor {
+  display: none;
+  align-items: center;
+  gap: 4px;
+
+  > .form-control {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  > .btn {
+    flex: none;
+  }
+}

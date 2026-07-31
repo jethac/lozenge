@@ -1,0 +1,24 @@
+{
+  "component": "tracker",
+  "version": "0.1.0",
+  "intent": "Progress tracker / stepper for multi-step flows (wizards, onboarding): an ordered list of steps with numbered circle markers joined by connector lines. Steps default to upcoming; add .tracker-step-done to completed steps (marker shows a check, connectors turn green) and .tracker-step-current to the active one. Purely presentational — the wizard's pages do the actual navigation.",
+  "root": { "selector": ".tracker", "element": ["ol"], "requiredClasses": ["tracker"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".tracker-step", "required": true, "description": "One <li> per step, in order. State classes: none (upcoming), .tracker-step-done, .tracker-step-current — at most one current step. Connector halves are ::before/::after on the li; a done step colors both halves and the current step's incoming half is colored too (linear-wizard assumption)." },
+    { "selector": ".tracker-step > .tracker-marker", "required": true, "description": "24px circle containing the step number. Done steps visually swap the number for a check via CSS — keep the number in the markup." },
+    { "selector": ".tracker-step > .tracker-label", "required": false, "description": "Step name under the marker (fs-sm, subtle; the current step's label is semibold default-text). Truncates." }
+  ],
+  "aria": [
+    { "on": ".tracker-step-current", "attr": "aria-current", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["modal bodies", "wizard page headers", "cards"],
+    "disallowed": [".tracker"]
+  },
+  "a11yNotes": "Use a real <ol> so step count and position are announced. Put aria-current=\"step\" on the current <li>. The done-state check mark is decorative CSS; the accessible content stays the number + label — consider visually-hidden \"(completed)\" text on done steps if completion matters to screen-reader users.",
+  "examples": [
+    "<ol class=\"tracker\"><li class=\"tracker-step tracker-step-done\"><span class=\"tracker-marker\">1</span><span class=\"tracker-label\">Project details</span></li><li class=\"tracker-step tracker-step-current\" aria-current=\"step\"><span class=\"tracker-marker\">2</span><span class=\"tracker-label\">Permissions</span></li><li class=\"tracker-step\"><span class=\"tracker-marker\">3</span><span class=\"tracker-label\">Invite team</span></li></ol>"
+  ]
+}

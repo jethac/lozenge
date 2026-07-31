@@ -1,0 +1,9 @@
+<div class="comment">
+  <div class="comment-avatar" data-lz-if="avatar"><span class="avatar avatar-md">{avatar}</span></div>
+  <div class="comment-content">
+    <div class="comment-meta"><span class="comment-author">{author}</span><span class="comment-time">{time}</span></div>
+    <div class="comment-body"><slot></slot></div>
+    <div class="comment-actions" data-lz-if="actions"><slot name="actions"></slot></div>
+    <div class="comment-replies" data-lz-if="replies"><slot name="replies"></slot></div>
+  </div>
+</div>

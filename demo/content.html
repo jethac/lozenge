@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lozenge — content &amp; feedback</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="./theme-panel.js"></script>
+</head>
+<body>
+<div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
+
+<h1>Content &amp; feedback</h1>
+<p class="text-subtle">Skeletons, empty states, drawers, and comment threads.
+Compare <a href="/demo/">the demo index</a>.</p>
+
+<section class="demo-section mt-6">
+  <h2>Skeleton</h2>
+  <p class="text-subtle">A board row and an issue description still loading. The
+  shimmer runs off motion tokens and collapses under prefers-reduced-motion.</p>
+  <div class="d-flex gap-4 mt-3" aria-busy="true">
+    <div class="skeleton skeleton-card" aria-hidden="true" style="flex: 1"></div>
+    <div class="skeleton skeleton-card" aria-hidden="true" style="flex: 1"></div>
+    <div class="skeleton skeleton-card" aria-hidden="true" style="flex: 1"></div>
+  </div>
+  <div class="d-flex gap-3 mt-4" aria-busy="true">
+    <span class="skeleton skeleton-avatar skeleton-avatar-lg" aria-hidden="true"></span>
+    <div class="skeleton-paragraph" style="flex: 1">
+      <div class="skeleton skeleton-heading" aria-hidden="true"></div>
+      <div class="skeleton skeleton-text" aria-hidden="true"></div>
+      <div class="skeleton skeleton-text" aria-hidden="true"></div>
+      <div class="skeleton skeleton-text" aria-hidden="true"></div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Empty state</h2>
+  <lz-empty-state title="The backlog is empty" glyph="∅" actions="true">
+    Plan your next sprint by creating issues, or bring them in from another tracker.
+    <button slot="actions" class="btn btn-primary">Create issue</button>
+    <button slot="actions" class="btn btn-subtle">Import issues</button>
+  </lz-empty-state>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Drawer</h2>
+  <button class="btn btn-primary" commandfor="d1" command="show-modal">Open drawer</button>
+  <dialog class="drawer" id="d1" aria-labelledby="d1-title">
+    <div class="drawer-header">
+      <h4 class="drawer-title" id="d1-title">Issue details</h4>
+      <button class="btn btn-subtle btn-icon drawer-close" commandfor="d1" command="close" aria-label="Close drawer">×</button>
+    </div>
+    <div class="drawer-body">
+      <p><span class="issue-key">LOZ-14</span> — Login page throws a redirect loop
+      on expired session.</p>
+      <div class="message message-info mt-3">
+        <div class="message-title">Linked incident</div>
+        <p>INC-77 tracks the production impact of this bug.</p>
+      </div>
+      <p class="text-subtle mt-3">Drawers ride the native dialog element: focus
+      trapping, Esc, the backdrop, and the invoker button are all platform
+      behavior — no JavaScript.</p>
+    </div>
+    <form method="dialog" class="drawer-footer">
+      <button class="btn btn-subtle" value="cancel">Cancel</button>
+      <button class="btn btn-primary" value="save">Save</button>
+    </form>
+  </dialog>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Comments</h2>
+  <div class="comment-thread mt-3">
+    <lz-comment author="Dana Kim" avatar="DK" time="2 hours ago" actions="true" replies="true">
+      <p>The redirect loop only reproduces when the session cookie has expired
+      but the refresh token is still valid — the login page bounces straight
+      back to itself.</p>
+      <a slot="actions" href="#">Reply</a>
+      <a slot="actions" href="#">Edit</a>
+      <lz-comment slot="replies" author="Jetha Chan" avatar="JC" time="1 hour ago" actions="true">
+        <p>Confirmed. Clearing the refresh token on logout fixes it locally —
+        PR incoming.</p>
+        <a slot="actions" href="#">Reply</a>
+      </lz-comment>
+    </lz-comment>
+    <div class="comment-editor">
+      <span class="avatar avatar-md">JC</span>
+      <textarea class="form-control" aria-label="Add a comment" placeholder="Add a comment…"></textarea>
+    </div>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

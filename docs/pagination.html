@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Navbar — Lozenge</title>
+<title>Pagination — Lozenge</title>
 <script type="module">import "../scss/lozenge.scss";</script>
 <script type="module" src="../demo/theme-panel.js"></script>
 <style>
@@ -60,8 +60,8 @@
       <a class="sidebar-item" href="select.html">Select</a>
       <a class="sidebar-item" href="lozenge.html">Lozenge</a>
       <a class="sidebar-item" href="message.html">Message</a>
-      <a class="sidebar-item active" href="navbar.html" aria-current="page">Navbar</a>
-      <a class="sidebar-item" href="pagination.html">Pagination</a>
+      <a class="sidebar-item" href="navbar.html">Navbar</a>
+      <a class="sidebar-item active" href="pagination.html" aria-current="page">Pagination</a>
       <a class="sidebar-item" href="backlog.html">Backlog</a>
       <a class="sidebar-item" href="search-field.html">Search-field</a>
       <a class="sidebar-item" href="sidebar.html">Sidebar</a>
@@ -74,50 +74,44 @@
     </nav>
   </aside>
   <main class="docs-main">
-<h1>Navbar</h1>
-<p class="text-subtle">Sticky top navigation bar: brand, horizontal nav links, and a right-aligned actions cluster. It is a frosted-glass surface when materials are enabled (--lz-glass). Use exactly one per page as the global app header; .navbar-primary gives the bold accent-colored version.</p>
-  <p class="text-subtlest">Root: <code>.navbar</code> on <code>&lt;nav&gt;</code></p>
+<h1>Pagination</h1>
+<p class="text-subtle">Page navigation for long result sets: a flex row of 32px .page-link buttons with previous/next arrows and an optional .page-ellipsis marking elided ranges. Use under tables and search results; mark the current page with .active.</p>
+  <p class="text-subtlest">Root: <code>.pagination</code> on <code>&lt;nav&gt;</code></p>
 <section>
 <h2>Example</h2>
 <div class="card doc-example">
   <div class="card-header">Example</div>
   <div class="card-body">
-    <div class="doc-live"><nav class="navbar"><a class="navbar-brand" href="/">Lozenge</a><ul class="navbar-nav"><li><a class="nav-link active" href="#" aria-current="page">Your work</a></li><li><a class="nav-link" href="#">Projects</a></li></ul><div class="navbar-actions"><button class="btn btn-primary">Create</button><span class="avatar avatar-md">JC</span></div></nav></div>
-<pre><code>&lt;nav class=&quot;navbar&quot;&gt;&lt;a class=&quot;navbar-brand&quot; href=&quot;/&quot;&gt;Lozenge&lt;/a&gt;&lt;ul class=&quot;navbar-nav&quot;&gt;&lt;li&gt;&lt;a class=&quot;nav-link active&quot; href=&quot;#&quot; aria-current=&quot;page&quot;&gt;Your work&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a class=&quot;nav-link&quot; href=&quot;#&quot;&gt;Projects&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;div class=&quot;navbar-actions&quot;&gt;&lt;button class=&quot;btn btn-primary&quot;&gt;Create&lt;/button&gt;&lt;span class=&quot;avatar avatar-md&quot;&gt;JC&lt;/span&gt;&lt;/div&gt;&lt;/nav&gt;</code></pre>
+    <div class="doc-live"><nav class="pagination" aria-label="Pagination"><a class="page-link disabled" href="#" aria-disabled="true" aria-label="Previous page">&lsaquo;</a><a class="page-link" href="#">1</a><a class="page-link active" href="#" aria-current="page">2</a><span class="page-ellipsis">&hellip;</span><a class="page-link" href="#">9</a><a class="page-link" href="#" aria-label="Next page">&rsaquo;</a></nav></div>
+<pre><code>&lt;nav class=&quot;pagination&quot; aria-label=&quot;Pagination&quot;&gt;&lt;a class=&quot;page-link disabled&quot; href=&quot;#&quot; aria-disabled=&quot;true&quot; aria-label=&quot;Previous page&quot;&gt;&amp;lsaquo;&lt;/a&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot;&gt;1&lt;/a&gt;&lt;a class=&quot;page-link active&quot; href=&quot;#&quot; aria-current=&quot;page&quot;&gt;2&lt;/a&gt;&lt;span class=&quot;page-ellipsis&quot;&gt;&amp;hellip;&lt;/span&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot;&gt;9&lt;/a&gt;&lt;a class=&quot;page-link&quot; href=&quot;#&quot; aria-label=&quot;Next page&quot;&gt;&amp;rsaquo;&lt;/a&gt;&lt;/nav&gt;</code></pre>
   </div>
 </div>
 </section>
 <section>
 <h2>Contract</h2>
-  <h3>Variants &amp; modifiers</h3>
-  <div class="doc-table-wrap"><table class="table table-compact">
-    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
-    <tbody>
-      <tr><td><code>navbar-primary</code></td><td>modifier</td><td>optional</td></tr>
-    </tbody>
-  </table></div>
   <h3>Structure</h3>
   <div class="doc-table-wrap"><table class="table table-compact">
     <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>.navbar-brand</code></td><td>optional</td><td>Logo/product link, typically first child.</td></tr>
-      <tr><td><code>.navbar-nav</code></td><td>optional</td><td>A &lt;ul&gt; of &lt;li&gt; items each containing an &lt;a class=&quot;nav-link&quot;&gt;; mark the current page's link with .active.</td></tr>
-      <tr><td><code>.navbar-actions</code></td><td>optional</td><td>Right-aligned cluster (margin-left:auto) for buttons, search, and the user avatar.</td></tr>
+      <tr><td><code>.page-link</code></td><td>required</td><td>The page buttons — usually &lt;a href&gt;. First/last children are the previous/next arrows (give them aria-label). Mark the current page .active, unavailable ones .disabled (pair with aria-disabled=&quot;true&quot;).</td></tr>
+      <tr><td><code>.page-ellipsis</code></td><td>optional</td><td>Non-interactive &lt;span&gt;&amp;hellip;&lt;/span&gt; standing in for an elided page range. Never a .page-link.</td></tr>
     </tbody>
   </table></div>
   <h3>Accessibility</h3>
   <div class="doc-table-wrap"><table class="table table-compact">
     <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
     <tbody>
-      <tr><td><code>.navbar</code></td><td><code>aria-label</code></td><td>recommended</td><td>The page contains more than one &lt;nav&gt; landmark (e.g. navbar + breadcrumbs + sidebar nav) — label each to distinguish them.</td></tr>
+      <tr><td><code>.pagination</code></td><td><code>aria-label</code></td><td>required</td><td></td></tr>
+      <tr><td><code>.page-link.active</code></td><td><code>aria-current</code></td><td>required</td><td></td></tr>
+      <tr><td><code>.page-link.disabled</code></td><td><code>aria-disabled</code></td><td>recommended</td><td>Recommended on disabled prev/next links so assistive tech announces them as unavailable (CSS pointer-events alone conveys nothing).</td></tr>
     </tbody>
   </table></div>
-  <p class="text-subtle">Use a real &lt;nav&gt; element. Mark the current page with .active and aria-current=&quot;page&quot; on the nav-link. The navbar is a glass surface: never nest another glass surface (dropdown-menu, flag, modal) in its subtree — glass-on-glass compounds blur and breaks contrast guarantees; dropdowns opened from the navbar should use the popover recipe, which renders in the top layer.</p>
+  <p class="text-subtle">Use a &lt;nav aria-label=&quot;Pagination&quot;&gt; landmark. The current page carries aria-current=&quot;page&quot; plus .active. Arrow-only links need aria-label (&quot;Previous page&quot; / &quot;Next page&quot;). Keep .page-ellipsis a plain span so it is skipped in tab order.</p>
   <h3>Nesting</h3>
   <p>Allowed in:</p>
-  <ul><li><code>directly under &lt;body&gt;, above the app shell</code></li></ul>
+  <ul><li><code>below tables</code></li> <li><code>below search results</code></li> <li><code>card footers</code></li></ul>
   <p>Never inside (or containing):</p>
-  <ul><li><code>.navbar</code></li> <li><code>.dropdown-menu</code></li> <li><code>.flag</code></li> <li><code>dialog.modal</code></li></ul>
+  <ul><li><code>.pagination</code></li></ul>
 </section>
   </main>
 </div>

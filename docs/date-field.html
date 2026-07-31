@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sidebar — Lozenge</title>
+<title>Date-field — Lozenge</title>
 <script type="module">import "../scss/lozenge.scss";</script>
 <script type="module" src="../demo/theme-panel.js"></script>
 <style>
@@ -52,7 +52,7 @@
       <a class="sidebar-item" href="button.html">Button</a>
       <a class="sidebar-item" href="card.html">Card</a>
       <a class="sidebar-item" href="comment-thread.html">Comment-thread</a>
-      <a class="sidebar-item" href="date-field.html">Date-field</a>
+      <a class="sidebar-item active" href="date-field.html" aria-current="page">Date-field</a>
       <a class="sidebar-item" href="drawer.html">Drawer</a>
       <a class="sidebar-item" href="empty-state.html">Empty-state</a>
       <a class="sidebar-item" href="forms.html">Forms</a>
@@ -64,7 +64,7 @@
       <a class="sidebar-item" href="pagination.html">Pagination</a>
       <a class="sidebar-item" href="backlog.html">Backlog</a>
       <a class="sidebar-item" href="search-field.html">Search-field</a>
-      <a class="sidebar-item active" href="sidebar.html" aria-current="page">Sidebar</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
       <a class="sidebar-item" href="skeleton.html">Skeleton</a>
       <a class="sidebar-item" href="tabs.html">Tabs</a>
       <a class="sidebar-item" href="tag.html">Tag</a>
@@ -74,73 +74,78 @@
     </nav>
   </aside>
   <main class="docs-main">
-<h1>Sidebar</h1>
-<p class="text-subtle">Project sidebar navigation: a fixed-width vertical column with a project header, section labels, and .sidebar-item links. Use .sidebar-group (&lt;details name=&quot;sidebar&quot;&gt;) for collapsible sections with zero-JS exclusive-accordion behavior.</p>
-  <p class="text-subtlest">Root: <code>.sidebar</code> on <code>&lt;aside&gt;</code></p>
+<h1>Date-field</h1>
+<p class="text-subtle">Styled native date input: &lt;input type=&quot;date&quot; class=&quot;form-control date-field&quot;&gt;. The native calendar picker IS the behavior layer (keyboard entry, locale formats, AT support) — the class only normalizes the WebKit picker-indicator (opacity, hover wash) and the intrinsic edit-field padding so the control lines up with text inputs. No custom calendar.</p>
+  <p class="text-subtlest">Root: <code>input.date-field</code> on <code>&lt;input&gt;</code></p>
 <section>
 <h2>Example</h2>
 <div class="card doc-example">
   <div class="card-header">Example</div>
   <div class="card-body">
-    <div class="doc-live"><aside class="sidebar"><div class="sidebar-header"><span class="avatar avatar-sm avatar-square">P</span><div><div class="sidebar-title">Project</div><div class="sidebar-subtitle">Software project</div></div></div><details class="sidebar-group" name="sidebar" open><summary class="sidebar-section">Planning</summary><a class="sidebar-item active" href="#">Board</a><a class="sidebar-item" href="#">Backlog</a></details></aside></div>
-<pre><code>&lt;aside class=&quot;sidebar&quot;&gt;&lt;div class=&quot;sidebar-header&quot;&gt;&lt;span class=&quot;avatar avatar-sm avatar-square&quot;&gt;P&lt;/span&gt;&lt;div&gt;&lt;div class=&quot;sidebar-title&quot;&gt;Project&lt;/div&gt;&lt;div class=&quot;sidebar-subtitle&quot;&gt;Software project&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;details class=&quot;sidebar-group&quot; name=&quot;sidebar&quot; open&gt;&lt;summary class=&quot;sidebar-section&quot;&gt;Planning&lt;/summary&gt;&lt;a class=&quot;sidebar-item active&quot; href=&quot;#&quot;&gt;Board&lt;/a&gt;&lt;a class=&quot;sidebar-item&quot; href=&quot;#&quot;&gt;Backlog&lt;/a&gt;&lt;/details&gt;&lt;/aside&gt;</code></pre>
+    <div class="doc-live"><input class="form-control date-field" type="date" id="due" value="2026-08-14"></div>
+<pre><code>&lt;input class=&quot;form-control date-field&quot; type=&quot;date&quot; id=&quot;due&quot; value=&quot;2026-08-14&quot;&gt;</code></pre>
   </div>
 </div>
 </section>
 <section>
 <h2>Contract</h2>
-  <h3>Structure</h3>
+  <h3>Variants &amp; modifiers</h3>
   <div class="doc-table-wrap"><table class="table table-compact">
-    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
     <tbody>
-      <tr><td><code>.sidebar-header</code></td><td>optional</td><td>Project identity row: square avatar plus a min-width:0 wrapper holding .sidebar-title and .sidebar-subtitle (both truncate).</td></tr>
-      <tr><td><code>.sidebar-item</code></td><td>optional</td><td>Navigation links; mark the current view with .active (selected background).</td></tr>
-      <tr><td><code>.sidebar-section</code></td><td>optional</td><td>Uppercase section label — either a plain div, or the &lt;summary&gt; of a .sidebar-group.</td></tr>
+      <tr><td><code>form-control</code></td><td>base-skin</td><td>one required · exclusive</td></tr>
+      <tr><td><code>is-invalid</code></td><td>modifier</td><td>optional</td></tr>
+      <tr><td><code>form-control-compact</code></td><td>modifier</td><td>optional</td></tr>
     </tbody>
   </table></div>
   <h3>Accessibility</h3>
   <div class="doc-table-wrap"><table class="table table-compact">
     <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
     <tbody>
-      <tr><td><code>.sidebar-item.active</code></td><td><code>aria-current</code></td><td>recommended</td><td>Recommended on the active item so assistive tech announces the current view (aria-current=&quot;page&quot;).</td></tr>
+      <tr><td><code>input.date-field</code></td><td><code>aria-label</code></td><td>recommended</td><td>Whenever there is no visible &lt;label&gt; associated via for/id (e.g. the fields inside a .date-range).</td></tr>
     </tbody>
   </table></div>
-  <p class="text-subtle">Wrap link runs in &lt;nav&gt; or use &lt;aside&gt; + labelled nav for landmark navigation. In .sidebar-group the &lt;summary&gt; is the toggle and is keyboard-operable for free; keep .sidebar-section on the summary so the disclosure triangle renders. Pair .active with aria-current=&quot;page&quot;.</p>
+  <p class="text-subtle">Associate a label via for/id, or aria-label when the field sits in a composite like .date-range. Native date inputs announce and constrain values themselves; use min/max/required attributes rather than scripted validation where possible. Pair .is-invalid with aria-invalid=&quot;true&quot; and aria-describedby.</p>
   <h3>Nesting</h3>
   <p>Allowed in:</p>
-  <ul><li><code>app shell, alongside the main content area, below the navbar</code></li></ul>
-  <p>Never inside (or containing):</p>
-  <ul><li><code>.sidebar</code></li></ul>
+  <ul><li><code>.form-group</code></li> <li><code>.date-range</code></li> <li><code>toolbars</code></li></ul>
 </section>
 <section>
 <h2>Subcomponents</h2>
-<section id="sidebar-group">
-<h3>Sidebar-group</h3>
-<p class="text-subtle">Collapsible sidebar section built on native &lt;details&gt;/&lt;summary&gt;. Giving every group the same name attribute (name=&quot;sidebar&quot;) makes them an exclusive accordion with zero JS.</p>
-  <p class="text-subtlest">Root: <code>.sidebar-group</code> on <code>&lt;details&gt;</code></p>
+<section id="date-range">
+<h3>Date-range</h3>
+<p class="text-subtle">Row layout for a start/end pair: two .date-field inputs flexing equally around an en-dash separator. Constrain the pair with min/max attributes (set min on the end field to the start value in your app) — the layout itself imposes no logic.</p>
+  <p class="text-subtlest">Root: <code>.date-range</code> on <code>&lt;div&gt;</code></p>
   <h4>Example</h4>
 <div class="card doc-example">
   <div class="card-header">Example</div>
   <div class="card-body">
-    <div class="doc-live"><details class="sidebar-group" name="sidebar" open><summary class="sidebar-section">Planning</summary><a class="sidebar-item" href="#">Board</a></details></div>
-<pre><code>&lt;details class=&quot;sidebar-group&quot; name=&quot;sidebar&quot; open&gt;&lt;summary class=&quot;sidebar-section&quot;&gt;Planning&lt;/summary&gt;&lt;a class=&quot;sidebar-item&quot; href=&quot;#&quot;&gt;Board&lt;/a&gt;&lt;/details&gt;</code></pre>
+    <div class="doc-live"><div class="date-range" role="group" aria-label="Sprint window"><input class="form-control date-field" type="date" value="2026-08-03" aria-label="Start date"><span class="date-range-separator" aria-hidden="true">–</span><input class="form-control date-field" type="date" value="2026-08-17" aria-label="End date"></div></div>
+<pre><code>&lt;div class=&quot;date-range&quot; role=&quot;group&quot; aria-label=&quot;Sprint window&quot;&gt;&lt;input class=&quot;form-control date-field&quot; type=&quot;date&quot; value=&quot;2026-08-03&quot; aria-label=&quot;Start date&quot;&gt;&lt;span class=&quot;date-range-separator&quot; aria-hidden=&quot;true&quot;&gt;–&lt;/span&gt;&lt;input class=&quot;form-control date-field&quot; type=&quot;date&quot; value=&quot;2026-08-17&quot; aria-label=&quot;End date&quot;&gt;&lt;/div&gt;</code></pre>
   </div>
 </div>
   <h4>Structure</h4>
   <div class="doc-table-wrap"><table class="table table-compact">
     <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>summary.sidebar-section</code></td><td>required</td><td>Must be the first child; styled with a rotating disclosure triangle (rotates when [open]).</td></tr>
-      <tr><td><code>.sidebar-item</code></td><td>optional</td><td>The section's links, as following siblings of the summary inside the details.</td></tr>
+      <tr><td><code>.date-field</code></td><td>required</td><td>Two &lt;input class=&quot;form-control date-field&quot; type=&quot;date&quot;&gt; DIRECT children (start, then end), each with its own accessible name (aria-label=&quot;Start date&quot; / &quot;End date&quot;).</td></tr>
+      <tr><td><code>.date-range-separator</code></td><td>optional</td><td>The &quot;–&quot; between the fields; decorative, so it must carry aria-hidden=&quot;true&quot;.</td></tr>
     </tbody>
   </table></div>
   <h4>Accessibility</h4>
-  <p class="text-subtle">Native details/summary supplies expand/collapse semantics and keyboard support. Use the same name=&quot;...&quot; on sibling groups for exclusive-open behavior; omit name to allow multiple open sections. Add `open` to the group that contains the current page.</p>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><code>.date-range-separator</code></td><td><code>aria-hidden</code></td><td>required</td><td></td></tr>
+      <tr><td><code>.date-range</code></td><td><code>role</code></td><td>recommended</td><td>Recommended: role=&quot;group&quot; with aria-labelledby pointing at the visible caption, so AT announces the pair as one field (&quot;Sprint window&quot;).</td></tr>
+    </tbody>
+  </table></div>
+  <p class="text-subtle">Give the row role=&quot;group&quot; + aria-labelledby (or aria-label) naming the range, and each input its own aria-label (Start date / End date). The separator is visual only — keep aria-hidden=&quot;true&quot; on it.</p>
   <h4>Nesting</h4>
   <p>Allowed in:</p>
-  <ul><li><code>.sidebar</code></li></ul>
+  <ul><li><code>.form-group</code></li> <li><code>filter rows</code></li> <li><code>toolbars</code></li></ul>
   <p>Never inside (or containing):</p>
-  <ul><li><code>.sidebar-group</code></li></ul>
+  <ul><li><code>.date-range</code></li></ul>
 </section>
 </section>
   </main>

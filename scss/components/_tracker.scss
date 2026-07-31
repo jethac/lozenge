@@ -1,0 +1,114 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Progress tracker / wizard stepper.
+// Usage:
+// <ol class="tracker">
+//   <li class="tracker-step tracker-step-done">
+//     <span class="tracker-marker">1</span>
+//     <span class="tracker-label">Project details</span>
+//   </li>
+//   <li class="tracker-step tracker-step-current" aria-current="step">
+//     <span class="tracker-marker">2</span>
+//     <span class="tracker-label">Permissions</span>
+//   </li>
+//   <li class="tracker-step"> ... </li>
+// </ol>
+// Steps default to "upcoming"; mark progress with .tracker-step-done and
+// .tracker-step-current. Done markers swap their number for a check via CSS.
+.tracker {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tracker-step {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  text-align: center;
+
+  // Connector halves: ::before reaches toward the previous step,
+  // ::after toward the next.
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 11px; // centers the 2px line on the 24px marker
+    width: calc(50% - 16px);
+    height: 2px;
+    background-color: var(--lz-sys-track);
+  }
+
+  &::before {
+    left: 0;
+  }
+
+  &::after {
+    right: 0;
+  }
+
+  &:first-child::before,
+  &:last-child::after {
+    content: none;
+  }
+}
+
+// Completed segments. The current step's incoming half is also colored,
+// since in a linear wizard the step before the current one is done.
+.tracker-step-done::before,
+.tracker-step-done::after,
+.tracker-step-current::before {
+  background-color: var(--lz-sys-status-success-bold-bg);
+}
+
+.tracker-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--lz-sys-surface-sunken);
+  color: $text-subtle;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-semibold;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.tracker-step-current .tracker-marker {
+  background-color: var(--lz-sys-accent-bold);
+  color: var(--lz-sys-text-on-bold);
+}
+
+.tracker-step-done .tracker-marker {
+  background-color: var(--lz-sys-status-success-bold-bg);
+  color: var(--lz-sys-status-success-on-bold);
+
+  // Visually replace the step number with a check; the number stays in the
+  // DOM (and the accessibility tree) as the step's position.
+  font-size: 0;
+
+  &::before {
+    content: "\2713";
+    font-size: $font-size-sm;
+  }
+}
+
+.tracker-label {
+  max-width: 100%;
+  font-size: $font-size-sm;
+  color: $text-subtle;
+  @include truncate;
+}
+
+.tracker-step-current .tracker-label {
+  color: $text-color;
+  font-weight: $font-weight-semibold;
+}

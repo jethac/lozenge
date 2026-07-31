@@ -1,0 +1,109 @@
+@use "../tokens" as *;
+
+// Comment thread — Jira issue comments.
+//
+// <div class="comment-thread">
+//   <div class="comment">
+//     <div class="comment-avatar"><span class="avatar avatar-md">DK</span></div>
+//     <div class="comment-content">
+//       <div class="comment-meta">
+//         <span class="comment-author">Dana Kim</span>
+//         <span class="comment-time">2 hours ago</span>
+//       </div>
+//       <div class="comment-body"><p>…</p></div>
+//       <div class="comment-actions"><a href="#">Reply</a><a href="#">Edit</a></div>
+//       <div class="comment-replies"><!-- nested .comment --></div>
+//     </div>
+//   </div>
+//   <div class="comment-editor">
+//     <span class="avatar avatar-md">JC</span>
+//     <textarea class="form-control" aria-label="Add a comment"></textarea>
+//   </div>
+// </div>
+.comment-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.comment-avatar {
+  flex-shrink: 0;
+}
+
+.comment-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.comment-author {
+  font-weight: $font-weight-medium;
+  color: $text-color;
+}
+
+.comment-time {
+  font-size: $font-size-sm;
+  color: $text-subtlest;
+}
+
+.comment-body {
+  margin-top: 4px;
+  color: $text-color;
+  word-break: break-word;
+
+  p {
+    margin: 0 0 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.comment-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+
+  a {
+    font-size: $font-size-sm;
+    color: $text-subtle;
+
+    &:hover {
+      color: $link-color;
+    }
+  }
+}
+
+// Nested replies: indented rail with a separator edge.
+.comment-replies {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 16px;
+  margin-inline-start: 2px;
+  padding-inline-start: 20px;
+  border-inline-start: 2px solid $separator-color;
+}
+
+// Reply box: avatar + textarea row.
+.comment-editor {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  .form-control {
+    flex: 1;
+  }
+}

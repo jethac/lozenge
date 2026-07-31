@@ -1,0 +1,65 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Date field — a styled native date input. The native picker IS the
+// behavior layer (keyboard, locale, AT support); we only normalize the
+// field chrome to match .form-control.
+//
+// <input class="form-control date-field" type="date">
+.date-field {
+  // .form-control supplies the box skin; keep the intrinsic parts from
+  // adding their own padding so heights line up with text inputs.
+  &::-webkit-datetime-edit {
+    padding: 0;
+  }
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-date-and-time-value {
+    text-align: left;
+  }
+
+  &::-webkit-calendar-picker-indicator {
+    padding: 2px;
+    border-radius: $border-radius-sm;
+    opacity: 0.55;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out, background-color 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.85;
+      background-color: var(--lz-sys-interaction-hovered);
+    }
+  }
+
+  &:disabled::-webkit-calendar-picker-indicator {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+// Range row: two date fields separated by an en dash.
+// <div class="date-range" role="group" aria-labelledby="…">
+//   <input class="form-control date-field" type="date" aria-label="Start date">
+//   <span class="date-range-separator" aria-hidden="true">–</span>
+//   <input class="form-control date-field" type="date" aria-label="End date">
+// </div>
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  > .date-field {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+.date-range-separator {
+  flex: none;
+  color: $text-subtle;
+  user-select: none;
+}

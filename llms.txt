@@ -115,6 +115,84 @@ A single issue on a Kanban board: summary text plus a meta row of issue-type ico
 <span class="issue-type issue-type-story" aria-label="Story"></span>
 ```
 
+### comment-thread
+
+Issue comment stream: a vertical stack (16px gaps) of .comment rows and, typically, a trailing .comment-editor reply box. Replies nest one level via .comment-replies inside the parent comment's content.
+
+- Root: `.comment-thread` (element: div | section)
+
+```html
+<div class="comment-thread"><div class="comment"><div class="comment-avatar"><span class="avatar avatar-md">DK</span></div><div class="comment-content"><div class="comment-meta"><span class="comment-author">Dana Kim</span><span class="comment-time">2 hours ago</span></div><div class="comment-body"><p>Looks good to me.</p></div></div></div><div class="comment-editor"><span class="avatar avatar-md">JC</span><textarea class="form-control" aria-label="Add a comment" placeholder="Add a comment…"></textarea></div></div>
+```
+
+### comment
+
+One comment: avatar column plus content column holding a meta line (author, timestamp), the body, an actions row (Reply/Edit links), and optionally a .comment-replies rail of nested reply comments.
+
+- Root: `.comment` (element: div | article | li)
+- Required structure: `.comment-content`, `.comment-body`
+
+```html
+<div class="comment"><div class="comment-avatar"><span class="avatar avatar-md">DK</span></div><div class="comment-content"><div class="comment-meta"><span class="comment-author">Dana Kim</span><span class="comment-time">2 hours ago</span></div><div class="comment-body"><p>Confirmed on staging.</p></div><div class="comment-actions"><a href="#">Reply</a><a href="#">Edit</a></div></div></div>
+```
+
+### comment-editor
+
+Reply box: the current user's avatar beside a .form-control textarea. Usually the last row of a .comment-thread; also usable inside .comment-replies for inline replying.
+
+- Root: `.comment-editor` (element: div | form)
+- Required structure: `textarea.form-control`
+
+```html
+<div class="comment-editor"><span class="avatar avatar-md">JC</span><textarea class="form-control" aria-label="Add a comment" placeholder="Add a comment…"></textarea></div>
+```
+
+### date-field
+
+Styled native date input: <input type="date" class="form-control date-field">. The native calendar picker IS the behavior layer (keyboard entry, locale formats, AT support) — the class only normalizes the WebKit picker-indicator (opacity, hover wash) and the intrinsic edit-field padding so the control lines up with text inputs. No custom calendar.
+
+- Root: `input.date-field` (element: input)
+- Variants (base-skin; required, pick one): `form-control`
+- Modifiers: `is-invalid`, `form-control-compact`
+
+```html
+<input class="form-control date-field" type="date" id="due" value="2026-08-14">
+```
+
+### date-range
+
+Row layout for a start/end pair: two .date-field inputs flexing equally around an en-dash separator. Constrain the pair with min/max attributes (set min on the end field to the start value in your app) — the layout itself imposes no logic.
+
+- Root: `.date-range` (element: div)
+- Required structure: `.date-field`
+
+```html
+<div class="date-range" role="group" aria-label="Sprint window"><input class="form-control date-field" type="date" value="2026-08-03" aria-label="Start date"><span class="date-range-separator" aria-hidden="true">–</span><input class="form-control date-field" type="date" value="2026-08-17" aria-label="End date"></div>
+```
+
+### drawer
+
+Side panel on a native <dialog>: full-height glass surface anchored to the inline-end edge (inline-start with .drawer-start), sliding in over a blanket backdrop. Use for issue detail panes, filter panels, and secondary workflows that keep page context visible. Open it declaratively with <button commandfor="id" command="show-modal"> — the native dialog invoker — and close with command="close" or a <form method="dialog">; no JavaScript involved.
+
+- Root: `.drawer` (element: dialog)
+- Modifiers: `drawer-start`, `drawer-wide`
+- Required structure: `.drawer-body`
+
+```html
+<dialog class="drawer" id="issue-drawer" aria-labelledby="issue-drawer-title"><div class="drawer-header"><h4 class="drawer-title" id="issue-drawer-title">Issue details</h4><button class="btn btn-subtle btn-icon drawer-close" commandfor="issue-drawer" command="close" aria-label="Close drawer">×</button></div><div class="drawer-body"><p>LOZ-14 — Login page throws a redirect loop on expired session.</p></div><form method="dialog" class="drawer-footer"><button class="btn btn-subtle" value="cancel">Cancel</button><button class="btn btn-primary" value="save">Save</button></form></dialog>
+```
+
+### empty-state
+
+Centered explanation for a region with nothing in it yet (empty backlog, no search results, no notifications): optional illustration circle, a title, subtle description text, and a row of next-step actions. Max 460px wide, centered in its container.
+
+- Root: `.empty-state` (element: div | section)
+- Required structure: `.empty-state-title`
+
+```html
+<div class="empty-state"><div class="empty-state-media"><span aria-hidden="true">∅</span></div><h3 class="empty-state-title">The backlog is empty</h3><p class="empty-state-description">Create issues to plan your next sprint.</p><div class="empty-state-actions"><button class="btn btn-primary">Create issue</button><button class="btn btn-subtle">Import issues</button></div></div>
+```
+
 ### forms
 
 Form field stack: .form-group wraps one field (label + control + help/error text) and provides vertical rhythm. Controls are subcomponents with their own roots: .form-control (inputs/textareas), .form-select, .form-check (checkbox/radio rows), and .toggle switches.
@@ -167,6 +245,41 @@ iOS-style switch: a <label class="toggle"> wrapping a visually-hidden checkbox a
 
 ```html
 <label class="toggle"><input type="checkbox" aria-label="Send me updates" checked><span class="toggle-slider"></span></label>
+```
+
+### inline-edit
+
+In-place view/edit swap for a single field value. The zero-JS DEFAULT drives the swap with a visually-hidden checkbox: clicking the .inline-edit-view label checks it, and :has(:checked) on the wrapper hides the view and shows .inline-edit-editor (a .form-control plus compact Save/Cancel buttons). With a <form> root, Cancel is type="reset" — it unchecks the toggle AND reverts the field, and Save is type="submit": all platform behavior. Real apps will usually swap the two states with JS instead (render either the view or the editor); the classes work identically that way, and the checkbox may then be dropped.
+
+- Root: `.inline-edit` (element: form | div)
+- Required structure: `input[type=checkbox]`, `label.inline-edit-view`, `.inline-edit-editor`, `.inline-edit-editor .form-control`
+
+```html
+<form class="inline-edit" action="#"><input type="checkbox" id="edit-summary" aria-label="Edit summary"><label class="inline-edit-view" for="edit-summary">Fix redirect loop on expired session</label><div class="inline-edit-editor"><input class="form-control" type="text" name="summary" value="Fix redirect loop on expired session" aria-label="Summary"><button class="btn btn-primary btn-compact" type="submit">Save</button><button class="btn btn-subtle btn-compact" type="reset">Cancel</button></div></form>
+```
+
+### select
+
+Customizable select: a native <select class="form-select select"> progressively enhanced with `appearance: base-select`. Supporting browsers render the picker as a styled overlay panel (dropdown-menu skin, styled options and checkmark); other browsers keep the fully native picker with the .form-select field skin. No extra markup and no JavaScript — semantics, keyboard, and AT behavior stay native in both modes.
+
+- Root: `select.select` (element: select)
+- Variants (base-skin; required, pick one): `form-select`
+- Modifiers: `is-invalid`
+- Required structure: `option`
+
+```html
+<select class="form-select select" id="status" aria-label="Status"><option>To do</option><option selected>In progress</option><option>Done</option></select>
+```
+
+### listbox
+
+Always-open listbox: a static ul/li list styled like an open picker panel, for pick-lists that stay visible (sidebars, transfer lists, command palettes). Selection is conveyed twice: the .selected class (or aria-selected="true") for styling, and aria-selected for AT. Purely presentational + ARIA — it ships no keyboard behavior of its own.
+
+- Root: `.listbox` (element: ul)
+- Required structure: `li.listbox-option`
+
+```html
+<ul class="listbox" role="listbox" aria-label="Labels"><li class="listbox-option" role="option" aria-selected="false">accessibility</li><li class="listbox-option selected" role="option" aria-selected="true">design-system</li><li class="listbox-option disabled" role="option" aria-disabled="true" aria-selected="false">legacy</li></ul>
 ```
 
 ### lozenge
@@ -227,6 +340,61 @@ Sticky top navigation bar: brand, horizontal nav links, and a right-aligned acti
 <nav class="navbar"><a class="navbar-brand" href="/">Lozenge</a><ul class="navbar-nav"><li><a class="nav-link active" href="#" aria-current="page">Your work</a></li><li><a class="nav-link" href="#">Projects</a></li></ul><div class="navbar-actions"><button class="btn btn-primary">Create</button><span class="avatar avatar-md">JC</span></div></nav>
 ```
 
+### pagination
+
+Page navigation for long result sets: a flex row of 32px .page-link buttons with previous/next arrows and an optional .page-ellipsis marking elided ranges. Use under tables and search results; mark the current page with .active.
+
+- Root: `.pagination` (element: nav)
+- Required structure: `.page-link`
+
+```html
+<nav class="pagination" aria-label="Pagination"><a class="page-link disabled" href="#" aria-disabled="true" aria-label="Previous page">&lsaquo;</a><a class="page-link" href="#">1</a><a class="page-link active" href="#" aria-current="page">2</a><span class="page-ellipsis">&hellip;</span><a class="page-link" href="#">9</a><a class="page-link" href="#" aria-label="Next page">&rsaquo;</a></nav>
+```
+
+### backlog
+
+Sprint planning backlog: a flat list of separator-divided issue rows (.backlog-item), each showing type square, key, truncating summary, and optional status lozenge / story-point badge / assignee avatar. Pair with a .sprint-header strip above it. Author rows with the <lz-backlog-item> tag (templates/backlog-item.html).
+
+- Root: `.backlog` (element: div)
+- Required structure: `.backlog-item`
+
+```html
+<div class="backlog"><div class="backlog-item"><span class="issue-type issue-type-story" role="img" aria-label="story"></span><span class="issue-key">LOZ-1</span><span class="backlog-summary">Set up runtime theme axes</span><span class="lozenge lozenge-inprogress">In progress</span><span class="badge">3</span><span class="avatar avatar-sm">JC</span></div></div>
+```
+
+### sprint-header
+
+Sprint title strip above a backlog or board: sprint name (h500), date range, and a right-aligned actions cluster (total story-point badge + Start/Complete sprint compact button).
+
+- Root: `.sprint-header` (element: div | header)
+- Required structure: `.sprint-name`
+
+```html
+<div class="sprint-header"><h3 class="sprint-name">Sprint 14</h3><span class="sprint-dates">21 Jul &ndash; 1 Aug</span><div class="sprint-actions"><span class="badge" aria-label="23 story points">23</span><button class="btn btn-compact">Complete sprint</button></div></div>
+```
+
+### backlog-item
+
+One backlog row: issue-type square, key, flexible truncating summary, then optional status lozenge, story-point badge, and assignee avatar. Authored via <lz-backlog-item type key points status assignee> — points/status/assignee render only when the attribute is present; status maps to .lozenge.lozenge-{status}.
+
+- Root: `.backlog-item` (element: div)
+- Required structure: `.issue-type`, `.issue-key`, `.backlog-summary`
+
+```html
+<div class="backlog-item"><span class="issue-type issue-type-bug" role="img" aria-label="bug"></span><span class="issue-key">LOZ-34</span><span class="backlog-summary">Login page redirect loop</span><span class="badge" aria-label="1 story points">1</span><span class="avatar avatar-sm">DK</span></div>
+```
+
+### search-field
+
+Compact search input with a leading magnifier icon and an optional keyboard-shortcut hint chip. The icon is a currentColor mask (themes with scheme/contrast); the chip is decorative fine print. Authorable via <lz-search> (templates/search.html). The wiring of the shortcut itself is up to the app — the chip is only a hint.
+
+- Root: `.search-field` (element: div)
+- Required structure: `input.form-control`
+
+```html
+<div class="search-field"><input class="form-control" type="search" placeholder="Search issues" aria-label="Search issues"></div>
+```
+
 ### sidebar
 
 Project sidebar navigation: a fixed-width vertical column with a project header, section labels, and .sidebar-item links. Use .sidebar-group (<details name="sidebar">) for collapsible sections with zero-JS exclusive-accordion behavior.
@@ -246,6 +414,29 @@ Collapsible sidebar section built on native <details>/<summary>. Giving every gr
 
 ```html
 <details class="sidebar-group" name="sidebar" open><summary class="sidebar-section">Planning</summary><a class="sidebar-item" href="#">Board</a></details>
+```
+
+### skeleton
+
+Loading placeholder: a sunken rounded rect with a shimmering gradient sweep, standing in for content that is still arriving. Shape variants mimic text lines, headings, avatars, and issue cards; compose several inside the region that is loading.
+
+- Root: `.skeleton` (element: div | span)
+- Variants (shape; optional, pick one): `skeleton-text`, `skeleton-heading`, `skeleton-avatar`, `skeleton-card`
+- Modifiers: `skeleton-avatar-xs`, `skeleton-avatar-sm`, `skeleton-avatar-md`, `skeleton-avatar-lg`, `skeleton-avatar-xl`
+
+```html
+<div class="skeleton skeleton-text" aria-hidden="true"></div>
+```
+
+### skeleton-paragraph
+
+Vertical stack of .skeleton-text lines with prose-like rhythm: 8px row gap, and the final line stops at 60% width so the block reads as a paragraph rather than a box.
+
+- Root: `.skeleton-paragraph` (element: div)
+- Required structure: `.skeleton-text`
+
+```html
+<div class="skeleton-paragraph"><div class="skeleton skeleton-text" aria-hidden="true"></div><div class="skeleton skeleton-text" aria-hidden="true"></div><div class="skeleton skeleton-text" aria-hidden="true"></div></div>
 ```
 
 ### tabs
@@ -279,6 +470,39 @@ A label/keyword chip, optionally linked and optionally removable. Use for labels
 
 ```html
 <span class="tag">design</span>
+```
+
+### timeline
+
+Roadmap / Gantt-lite timeline: a CSS grid with a 200px label column plus --lz-timeline-cols equal time periods (default 12). Each .timeline-row pairs a truncating epic label with a pill .timeline-bar placed via inline `--start` (1-based first period) and `--span` (period count) custom properties. Purely presentational and inline-style-driven: the generating app/agent computes the columns; there is no runtime.
+
+- Root: `.timeline` (element: div)
+- Required structure: `.timeline-row`, `.timeline-row > .timeline-label`
+
+```html
+<div class="timeline" style="--lz-timeline-cols: 12"><div class="timeline-header"><div>Epics</div><div style="grid-column: span 4">April</div><div style="grid-column: span 4">May</div><div style="grid-column: span 4">June</div></div><div class="timeline-row"><div class="timeline-label"><span class="issue-type issue-type-epic" role="img" aria-label="Epic"></span> Runtime theme axes</div><div class="timeline-bar timeline-bar-done" style="--start: 1; --span: 4" title="April"></div></div></div>
+```
+
+### tracker
+
+Progress tracker / stepper for multi-step flows (wizards, onboarding): an ordered list of steps with numbered circle markers joined by connector lines. Steps default to upcoming; add .tracker-step-done to completed steps (marker shows a check, connectors turn green) and .tracker-step-current to the active one. Purely presentational — the wizard's pages do the actual navigation.
+
+- Root: `.tracker` (element: ol)
+- Required structure: `.tracker-step`, `.tracker-step > .tracker-marker`
+
+```html
+<ol class="tracker"><li class="tracker-step tracker-step-done"><span class="tracker-marker">1</span><span class="tracker-label">Project details</span></li><li class="tracker-step tracker-step-current" aria-current="step"><span class="tracker-marker">2</span><span class="tracker-label">Permissions</span></li><li class="tracker-step"><span class="tracker-marker">3</span><span class="tracker-label">Invite team</span></li></ol>
+```
+
+### tree
+
+Tree view for file/hierarchy browsing built on nested <details>: branch nodes are <details><summary class="tree-item"> with a rotating disclosure triangle, leaf nodes are plain .tree-item elements whose indent aligns with branch labels. Branches expand independently (no name attribute — for an exclusive accordion use .sidebar-group instead). Zero JS.
+
+- Root: `.tree` (element: ul)
+- Required structure: `.tree-item`
+
+```html
+<ul class="tree"><li><details open><summary class="tree-item">scss</summary><ul><li><span class="tree-item selected" aria-current="true">_tokens.scss</span></li><li><span class="tree-item">lozenge.scss</span></li></ul></details></li><li><span class="tree-item">package.json</span></li></ul>
 ```
 
 ## System tokens (--lz-sys-*)

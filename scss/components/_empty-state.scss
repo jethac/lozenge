@@ -1,0 +1,65 @@
+@use "sass:map";
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Empty state — centered explanation for a region with nothing in it yet
+// (empty backlog, no search results, no notifications).
+//
+// <div class="empty-state">
+//   <div class="empty-state-media"><span aria-hidden="true">∅</span></div>
+//   <h3 class="empty-state-title">The backlog is empty</h3>
+//   <p class="empty-state-description">Create issues to plan your next sprint.</p>
+//   <div class="empty-state-actions">
+//     <button class="btn btn-primary">Create issue</button>
+//     <button class="btn btn-subtle">Import issues</button>
+//   </div>
+// </div>
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 460px;
+  margin-inline: auto;
+  padding-block: map.get($spacers, 8);
+  text-align: center;
+}
+
+// Illustration / icon slot. The default look is a sunken circle holding a
+// single large glyph; drop an <img>/<svg> in instead for real illustrations.
+.empty-state-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 96px;
+  height: 96px;
+  margin-bottom: 16px;
+  border-radius: 50%;
+  background-color: var(--lz-sys-surface-sunken);
+  color: $text-subtlest;
+  font-size: 40px;
+  line-height: 1;
+
+  img,
+  svg {
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+
+.empty-state-title {
+  margin: 0;
+  @include heading(500);
+}
+
+.empty-state-description {
+  margin: 8px 0 0;
+  color: $text-subtle;
+}
+
+.empty-state-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}

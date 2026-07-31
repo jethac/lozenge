@@ -1,0 +1,48 @@
+{
+  "component": "select",
+  "version": "0.1.0",
+  "intent": "Customizable select: a native <select class=\"form-select select\"> progressively enhanced with `appearance: base-select`. Supporting browsers render the picker as a styled overlay panel (dropdown-menu skin, styled options and checkmark); other browsers keep the fully native picker with the .form-select field skin. No extra markup and no JavaScript — semantics, keyboard, and AT behavior stay native in both modes.",
+  "root": { "selector": "select.select", "element": ["select"], "requiredClasses": ["select"] },
+  "variants": {
+    "base-skin": { "classes": ["form-select"], "required": true, "exclusive": true }
+  },
+  "modifiers": ["is-invalid"],
+  "structure": [
+    { "selector": "option", "required": true, "description": "Native <option> children (optionally inside <optgroup>). In base-select mode each option renders as a menu row with hover/checked/disabled states and a trailing ::checkmark on the checked one." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": [".form-group", "toolbars", "filter rows"],
+    "disallowed": []
+  },
+  "a11yNotes": "Must have an associated <label> (for/id) or aria-label. Because the control stays a real <select>, no ARIA is needed — roles, keyboard, and screen-reader behavior are native in both the enhanced and fallback rendering. Do not replace this with a scripted .dropdown for form input.",
+  "examples": [
+    "<select class=\"form-select select\" id=\"status\" aria-label=\"Status\"><option>To do</option><option selected>In progress</option><option>Done</option></select>"
+  ],
+  "subcomponents": [
+    {
+      "component": "listbox",
+      "intent": "Always-open listbox: a static ul/li list styled like an open picker panel, for pick-lists that stay visible (sidebars, transfer lists, command palettes). Selection is conveyed twice: the .selected class (or aria-selected=\"true\") for styling, and aria-selected for AT. Purely presentational + ARIA — it ships no keyboard behavior of its own.",
+      "root": { "selector": ".listbox", "element": ["ul"], "requiredClasses": ["listbox"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": "li.listbox-option", "required": true, "description": "Option rows. States: .selected (or aria-selected=\"true\") for the chosen row, .disabled (or aria-disabled=\"true\") for inert rows — the CSS matches both the class and the ARIA attribute, so keeping them in sync styles for free." }
+      ],
+      "aria": [
+        { "on": ".listbox", "attr": "role", "required": true },
+        { "on": ".listbox-option", "attr": "role", "required": true },
+        { "on": ".listbox", "attr": "aria-label", "required": false, "when": "Always name the listbox: aria-label or aria-labelledby pointing at a visible caption." },
+        { "on": ".listbox-option", "attr": "aria-selected", "required": false, "when": "Set aria-selected on every option (true/false) whenever the listbox represents a selection, and keep it in sync with the .selected class." }
+      ],
+      "nesting": {
+        "allowedIn": [".form-group", "sidebars", "cards", "filter panels"],
+        "disallowed": [".listbox"]
+      },
+      "a11yNotes": "role=\"listbox\" on the <ul> and role=\"option\" on each <li> are required. If users are meant to change the selection, you must script focus management (tabindex, arrow keys) and aria-selected updates yourself — for plain form input prefer the native <select> (or <select multiple>) above, which gets all of that for free. Without scripting, treat this as a read-only representation of a selection.",
+      "examples": [
+        "<ul class=\"listbox\" role=\"listbox\" aria-label=\"Labels\"><li class=\"listbox-option\" role=\"option\" aria-selected=\"false\">accessibility</li><li class=\"listbox-option selected\" role=\"option\" aria-selected=\"true\">design-system</li><li class=\"listbox-option disabled\" role=\"option\" aria-disabled=\"true\" aria-selected=\"false\">legacy</li></ul>"
+      ]
+    }
+  ]
+}

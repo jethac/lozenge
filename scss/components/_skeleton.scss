@@ -1,0 +1,96 @@
+@use "sass:map";
+@use "../tokens" as *;
+@use "avatar";
+
+// Skeleton — loading placeholders.
+// Purely decorative: every .skeleton carries aria-hidden="true", and the
+// region whose content is loading carries aria-busy="true".
+//
+// <div class="d-flex gap-3" aria-busy="true">
+//   <span class="skeleton skeleton-avatar skeleton-avatar-lg" aria-hidden="true"></span>
+//   <div class="skeleton-paragraph" style="flex: 1">
+//     <div class="skeleton skeleton-heading" aria-hidden="true"></div>
+//     <div class="skeleton skeleton-text" aria-hidden="true"></div>
+//     <div class="skeleton skeleton-text" aria-hidden="true"></div>
+//   </div>
+// </div>
+.skeleton {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-surface-sunken);
+
+  // Shimmer: a translucent sweep of the base surface color across the
+  // sunken placeholder. Runs off motion tokens; the global
+  // prefers-reduced-motion rule in _a11y collapses it to a static block.
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      color-mix(in oklab, var(--lz-sys-surface) 65%, transparent),
+      transparent
+    );
+    transform: translateX(-100%);
+    animation: lz-skeleton-sweep calc(var(--lz-motion-deliberate) * 2)
+      var(--lz-ease-standard) infinite;
+  }
+}
+
+@keyframes lz-skeleton-sweep {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+// One line of body text.
+.skeleton-text {
+  height: 1em;
+  border-radius: $border-radius-sm;
+}
+
+// A heading-sized bar (h500 scale), stops short like a real title.
+.skeleton-heading {
+  width: 40%;
+  height: map.get(map.get($headings, 500), line-height);
+  border-radius: $border-radius-sm;
+}
+
+// Stack of text lines; the last line stops short like real prose.
+.skeleton-paragraph {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  > .skeleton-text:last-child {
+    width: 60%;
+  }
+}
+
+// Circular avatar placeholder in the standard avatar sizes (defaults to md).
+.skeleton-avatar {
+  width: map.get(avatar.$avatar-sizes, md);
+  height: map.get(avatar.$avatar-sizes, md);
+  flex-shrink: 0;
+  border-radius: 50%;
+
+  &::after {
+    border-radius: 50%;
+  }
+}
+
+@each $key, $size in avatar.$avatar-sizes {
+  .skeleton-avatar-#{$key} {
+    width: $size;
+    height: $size;
+  }
+}
+
+// Issue-card-shaped block for board columns and card lists.
+.skeleton-card {
+  height: 84px;
+  border-radius: $border-radius-sm;
+}

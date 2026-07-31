@@ -1,0 +1,63 @@
+{
+  "component": "backlog",
+  "version": "0.1.0",
+  "intent": "Sprint planning backlog: a flat list of separator-divided issue rows (.backlog-item), each showing type square, key, truncating summary, and optional status lozenge / story-point badge / assignee avatar. Pair with a .sprint-header strip above it. Author rows with the <lz-backlog-item> tag (templates/backlog-item.html).",
+  "root": { "selector": ".backlog", "element": ["div"], "requiredClasses": ["backlog"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".backlog-item", "required": true, "description": "The issue rows, direct children. Rows highlight on hover; each is separated by a border-bottom (the list carries a matching border-top)." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["main content area, under a .sprint-header", "cards"],
+    "disallowed": [".backlog"]
+  },
+  "a11yNotes": "Rows are plain divs; if clicking a row opens the issue, make the .issue-key or summary a real link rather than scripting the div. For very long backlogs consider a real list (ul/li) or table for structure announcement.",
+  "examples": [
+    "<div class=\"backlog\"><div class=\"backlog-item\"><span class=\"issue-type issue-type-story\" role=\"img\" aria-label=\"story\"></span><span class=\"issue-key\">LOZ-1</span><span class=\"backlog-summary\">Set up runtime theme axes</span><span class=\"lozenge lozenge-inprogress\">In progress</span><span class=\"badge\">3</span><span class=\"avatar avatar-sm\">JC</span></div></div>"
+  ],
+  "subcomponents": [
+    {
+      "component": "sprint-header",
+      "intent": "Sprint title strip above a backlog or board: sprint name (h500), date range, and a right-aligned actions cluster (total story-point badge + Start/Complete sprint compact button).",
+      "root": { "selector": ".sprint-header", "element": ["div", "header"], "requiredClasses": ["sprint-header"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".sprint-name", "required": true, "description": "The sprint title — use a real heading element (h500-style, truncates)." },
+        { "selector": ".sprint-dates", "required": false, "description": "Date range next to the name; fs-sm, subtlest text, no wrap." },
+        { "selector": ".sprint-actions", "required": false, "description": "Right-aligned cluster (margin-inline-start auto): total story-point .badge, then .btn.btn-compact actions like Start sprint / Complete sprint." }
+      ],
+      "aria": [],
+      "nesting": { "allowedIn": ["above a .backlog", "above a .board"], "disallowed": [".sprint-header"] },
+      "a11yNotes": "Make .sprint-name a real heading at the right level for the page outline. Give the bare point-total badge an aria-label (e.g. \"23 story points\").",
+      "examples": [
+        "<div class=\"sprint-header\"><h3 class=\"sprint-name\">Sprint 14</h3><span class=\"sprint-dates\">21 Jul &ndash; 1 Aug</span><div class=\"sprint-actions\"><span class=\"badge\" aria-label=\"23 story points\">23</span><button class=\"btn btn-compact\">Complete sprint</button></div></div>"
+      ]
+    },
+    {
+      "component": "backlog-item",
+      "intent": "One backlog row: issue-type square, key, flexible truncating summary, then optional status lozenge, story-point badge, and assignee avatar. Authored via <lz-backlog-item type key points status assignee> — points/status/assignee render only when the attribute is present; status maps to .lozenge.lozenge-{status}.",
+      "root": { "selector": ".backlog-item", "element": ["div"], "requiredClasses": ["backlog-item"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".issue-type", "required": true, "description": "Fixed-color 16px type square, first in the row; needs its type variant class and role=\"img\" + aria-label." },
+        { "selector": ".issue-key", "required": true, "description": "The issue identifier (e.g. LOZ-31); subtle, truncates." },
+        { "selector": ".backlog-summary", "required": true, "description": "The issue title; takes the remaining width (flex: 1) and truncates to one line." },
+        { "selector": ".lozenge", "required": false, "description": "Optional status pill after the summary. Via the template: status=\"inprogress\" etc. sets the variant class; provide nicer label text with <span slot=\"status\">In progress</span> (falls back to the raw status token)." },
+        { "selector": ".badge", "required": false, "description": "Optional story-point estimate." },
+        { "selector": ".avatar", "required": false, "description": "Optional assignee avatar (avatar-sm), last in the row." }
+      ],
+      "aria": [
+        { "on": ".issue-type", "attr": "aria-label", "required": true }
+      ],
+      "nesting": { "allowedIn": [".backlog"], "disallowed": [".backlog-item"] },
+      "a11yNotes": "The template emits role=\"img\" + aria-label on the type square so the issue type is announced. Point badges are bare numbers — the template labels them \"N story points\". Avatar initials alone don't identify the assignee; use full names in aria-label where it matters.",
+      "examples": [
+        "<div class=\"backlog-item\"><span class=\"issue-type issue-type-bug\" role=\"img\" aria-label=\"bug\"></span><span class=\"issue-key\">LOZ-34</span><span class=\"backlog-summary\">Login page redirect loop</span><span class=\"badge\" aria-label=\"1 story points\">1</span><span class=\"avatar avatar-sm\">DK</span></div>"
+      ]
+    }
+  ]
+}

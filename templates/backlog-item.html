@@ -1,0 +1,8 @@
+<div class="backlog-item" data-lz-defaults='{"type":"story"}'>
+  <span class="issue-type issue-type-{type}" role="img" aria-label="{type}"></span>
+  <span class="issue-key">{key}</span>
+  <span class="backlog-summary"><slot></slot></span>
+  <span class="lozenge lozenge-{status}" data-lz-if="status"><slot name="status">{status}</slot></span>
+  <span class="badge" data-lz-if="points" aria-label="{points} story points">{points}</span>
+  <span class="avatar avatar-sm" data-lz-if="assignee">{assignee}</span>
+</div>

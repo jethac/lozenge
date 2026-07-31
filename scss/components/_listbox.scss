@@ -1,0 +1,132 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Customizable select — progressive enhancement over the native control.
+//
+// <select class="form-select select">
+//   <option>To do</option>
+//   <option selected>In progress</option>
+// </select>
+//
+// Browsers with `appearance: base-select` promote the picker to a styleable
+// top-layer panel skinned like .dropdown-menu; everything else keeps the
+// native picker with the plain .form-select field skin. Zero JavaScript and
+// native semantics either way.
+@supports (appearance: base-select) {
+  select.select {
+    appearance: base-select;
+
+    // The .form-select chevron (background-image) already draws the affordance;
+    // drop the UA's base-select picker icon so they don't double up.
+    &::picker-icon {
+      display: none;
+    }
+
+    // Author-supplied <button><selectedcontent> reflection of the checked
+    // option inherits the field's type styles; just keep it on one line.
+    selectedcontent {
+      display: block;
+      @include truncate;
+    }
+
+    &::picker(select) {
+      appearance: base-select;
+      margin: 4px 0;
+      padding: 4px 0;
+      border: none;
+      border-radius: $border-radius;
+      background-color: var(--lz-sys-surface-overlay);
+      box-shadow: $shadow-overlay;
+      color: $text-color;
+    }
+
+    option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: none;
+      color: $text-color;
+      font-size: $font-size-base;
+      line-height: $line-height-base;
+      cursor: pointer;
+
+      &:hover,
+      &:focus-visible {
+        outline: none;
+        background-color: var(--lz-sys-interaction-hovered);
+      }
+
+      &:checked {
+        background-color: var(--lz-sys-selected-bg);
+        color: var(--lz-sys-selected-text);
+      }
+
+      &:disabled {
+        background: none;
+        color: $text-disabled;
+        cursor: not-allowed;
+      }
+
+      // Checked marker rides at the row's trailing edge, Jira-style.
+      &::checkmark {
+        order: 1;
+        margin-left: auto;
+        color: var(--lz-sys-selected-text);
+      }
+    }
+  }
+}
+
+// Always-open listbox (static ul/li recipe).
+// <ul class="listbox" role="listbox" aria-label="Labels">
+//   <li class="listbox-option selected" role="option" aria-selected="true">…</li>
+// </ul>
+.listbox {
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  border: $input-border-width solid $input-border-color;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-surface);
+  overflow-y: auto;
+}
+
+.listbox-option {
+  display: block;
+  padding: 8px 16px;
+  color: $text-color;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  cursor: pointer;
+  @include truncate;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+  }
+
+  &.selected,
+  &[aria-selected="true"] {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+
+  &.disabled,
+  &[aria-disabled="true"] {
+    color: $text-disabled;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// Forced colors: selection can't ride on subtle fills — repaint with the
+// system highlight pair, matching the .dropdown-item.selected treatment.
+@media (forced-colors: active) {
+  select.select option:checked,
+  .listbox-option.selected,
+  .listbox-option[aria-selected="true"] {
+    forced-color-adjust: none;
+    background-color: Highlight;
+    color: HighlightText;
+  }
+}

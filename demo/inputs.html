@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lozenge — input components</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="./theme-panel.js"></script>
+</head>
+<body>
+<div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
+
+<h1>Input components</h1>
+<p class="text-subtle">Listbox/select, search, date, and inline-edit fields —
+zero JavaScript, riding on platform primitives. Back to
+<a href="/demo/">the kitchen sink</a>.</p>
+
+<section class="demo-section mt-6">
+  <h2>Listbox &amp; select</h2>
+  <p class="text-subtle mt-2">The select is a native control enhanced with
+  <code>appearance: base-select</code> where supported — open it to see the
+  styled panel; other browsers get the plain <code>.form-select</code> look.</p>
+  <div class="mt-3" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0 32px;align-items:start">
+    <div>
+      <div class="form-group">
+        <label class="form-label" for="in-status">Status</label>
+        <select class="form-select select" id="in-status">
+          <option>To do</option>
+          <option selected>In progress</option>
+          <option>In review</option>
+          <option disabled>Blocked (locked)</option>
+          <option>Done</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="in-status-off">Status (disabled)</label>
+        <select class="form-select select" id="in-status-off" disabled>
+          <option selected>In progress</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <span class="form-label" id="in-labels-cap">Labels (always-open listbox)</span>
+      <ul class="listbox" role="listbox" aria-labelledby="in-labels-cap">
+        <li class="listbox-option" role="option" aria-selected="false">accessibility</li>
+        <li class="listbox-option selected" role="option" aria-selected="true">design-system</li>
+        <li class="listbox-option" role="option" aria-selected="false">frontend</li>
+        <li class="listbox-option disabled" role="option" aria-disabled="true" aria-selected="false">legacy (locked)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Search field</h2>
+  <div class="mt-3" style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start">
+    <div class="search-field" style="width:260px">
+      <input class="form-control" type="search" placeholder="Search issues" aria-label="Search issues">
+    </div>
+    <div class="search-field" style="width:260px">
+      <input class="form-control" type="search" placeholder="Search boards" aria-label="Search boards">
+      <kbd class="search-kbd">/</kbd>
+    </div>
+    <div class="search-field" style="width:260px">
+      <input class="form-control" type="search" placeholder="Search everything" aria-label="Search everything">
+      <kbd class="search-kbd">⌘K</kbd>
+    </div>
+    <div class="search-field" style="width:260px">
+      <input class="form-control" type="search" placeholder="Search (disabled)" aria-label="Search, disabled example" disabled>
+    </div>
+  </div>
+  <p class="form-text">Authoring shorthand: <code>&lt;lz-search placeholder="Search boards" shortcut="/"&gt;&lt;/lz-search&gt;</code> (templates/search.html).</p>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Date field</h2>
+  <div style="max-width:480px">
+    <div class="form-group">
+      <label class="form-label" for="in-due">Due date</label>
+      <input class="form-control date-field" type="date" id="in-due" value="2026-08-14">
+    </div>
+    <div class="form-group">
+      <span class="form-label" id="in-sprint-cap">Sprint window</span>
+      <div class="date-range" role="group" aria-labelledby="in-sprint-cap">
+        <input class="form-control date-field" type="date" value="2026-08-03" aria-label="Start date">
+        <span class="date-range-separator" aria-hidden="true">–</span>
+        <input class="form-control date-field" type="date" value="2026-08-17" min="2026-08-03" aria-label="End date">
+      </div>
+      <span class="form-text">Native pickers do the behavior; constrain with min/max.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="in-frozen">Due date (disabled)</label>
+      <input class="form-control date-field" type="date" id="in-frozen" value="2026-08-14" disabled>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="in-overdue">Due date (invalid)</label>
+      <input class="form-control date-field is-invalid" type="date" id="in-overdue" required aria-invalid="true" aria-describedby="in-overdue-err">
+      <span class="invalid-feedback" id="in-overdue-err">Due date is required.</span>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Inline edit</h2>
+  <p class="text-subtle mt-2">Zero-JS default: a hidden checkbox swaps view and
+  editor. Click the value (or Tab to the toggle and press Space) to edit.
+  Cancel is <code>type="reset"</code> — it closes the editor and reverts the
+  field; Save submits the form.</p>
+  <div class="mt-3" style="max-width:480px">
+    <form class="inline-edit" action="#" method="get">
+      <input type="checkbox" id="in-edit-summary" aria-label="Edit summary">
+      <label class="inline-edit-view" for="in-edit-summary">Login page throws redirect loop on expired session</label>
+      <div class="inline-edit-editor">
+        <input class="form-control" type="text" name="summary" value="Login page throws redirect loop on expired session" aria-label="Summary">
+        <button class="btn btn-primary btn-compact" type="submit">Save</button>
+        <button class="btn btn-subtle btn-compact" type="reset">Cancel</button>
+      </div>
+    </form>
+    <form class="inline-edit mt-3" action="#" method="get">
+      <input type="checkbox" id="in-edit-points" aria-label="Edit story points">
+      <label class="inline-edit-view" for="in-edit-points">5 story points</label>
+      <div class="inline-edit-editor">
+        <input class="form-control" type="number" name="points" value="5" min="0" max="100" aria-label="Story points">
+        <button class="btn btn-primary btn-compact" type="submit">Save</button>
+        <button class="btn btn-subtle btn-compact" type="reset">Cancel</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

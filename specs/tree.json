@@ -1,0 +1,23 @@
+{
+  "component": "tree",
+  "version": "0.1.0",
+  "intent": "Tree view for file/hierarchy browsing built on nested <details>: branch nodes are <details><summary class=\"tree-item\"> with a rotating disclosure triangle, leaf nodes are plain .tree-item elements whose indent aligns with branch labels. Branches expand independently (no name attribute — for an exclusive accordion use .sidebar-group instead). Zero JS.",
+  "root": { "selector": ".tree", "element": ["ul"], "requiredClasses": ["tree"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".tree-item", "required": true, "description": "Every visible row. Branch rows: the <summary> of a <details> (chevron ::before, rotates when [open]). Leaf rows: a plain <span> or <a class=\"tree-item\"> directly inside the <li>. Mark the selected row .selected." },
+    { "selector": "details > summary.tree-item", "required": false, "description": "Branch node: the details wraps the summary plus a nested <ul> of children. Add `open` to expand initially. Nesting a details inside a parent's <ul><li> creates deeper levels; each nested <ul> indents 20px." }
+  ],
+  "aria": [
+    { "on": ".tree-item.selected", "attr": "aria-current", "required": false, "when": "Recommended on the selected row (aria-current=\"true\", or \"page\" if rows are links) so assistive tech announces the selection." }
+  ],
+  "nesting": {
+    "allowedIn": ["sidebars", "drawers", "file/hierarchy panels"],
+    "disallowed": [".tree"]
+  },
+  "a11yNotes": "Native details/summary gives branch toggles keyboard support and expanded/collapsed announcement for free; do not add ARIA tree roles on top unless you also implement full tree keyboard navigation. Make leaf rows real links (<a class=\"tree-item\">) when they navigate. Collapsed subtrees are display:none, so hidden rows are correctly removed from the accessibility tree.",
+  "examples": [
+    "<ul class=\"tree\"><li><details open><summary class=\"tree-item\">scss</summary><ul><li><span class=\"tree-item selected\" aria-current=\"true\">_tokens.scss</span></li><li><span class=\"tree-item\">lozenge.scss</span></li></ul></details></li><li><span class=\"tree-item\">package.json</span></li></ul>"
+  ]
+}

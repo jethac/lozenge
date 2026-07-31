@@ -1,0 +1,68 @@
+{
+  "component": "comment-thread",
+  "version": "0.1.0",
+  "intent": "Issue comment stream: a vertical stack (16px gaps) of .comment rows and, typically, a trailing .comment-editor reply box. Replies nest one level via .comment-replies inside the parent comment's content.",
+  "root": { "selector": ".comment-thread", "element": ["div", "section"], "requiredClasses": ["comment-thread"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".comment", "required": false, "description": "The comment rows. A thread may momentarily hold only the editor (no comments yet)." },
+    { "selector": ".comment-editor", "required": false, "description": "Reply box, usually last in the thread." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["page content", ".card-body", ".drawer-body", ".tab-panel"],
+    "disallowed": [".comment-thread"]
+  },
+  "a11yNotes": "Order comments chronologically in the DOM — the visual stack matches reading order. For long threads consider a list structure (role=\"list\"/\"listitem\" or ol/li) so assistive tech can announce position and count.",
+  "examples": [
+    "<div class=\"comment-thread\"><div class=\"comment\"><div class=\"comment-avatar\"><span class=\"avatar avatar-md\">DK</span></div><div class=\"comment-content\"><div class=\"comment-meta\"><span class=\"comment-author\">Dana Kim</span><span class=\"comment-time\">2 hours ago</span></div><div class=\"comment-body\"><p>Looks good to me.</p></div></div></div><div class=\"comment-editor\"><span class=\"avatar avatar-md\">JC</span><textarea class=\"form-control\" aria-label=\"Add a comment\" placeholder=\"Add a comment…\"></textarea></div></div>"
+  ],
+  "subcomponents": [
+    {
+      "component": "comment",
+      "intent": "One comment: avatar column plus content column holding a meta line (author, timestamp), the body, an actions row (Reply/Edit links), and optionally a .comment-replies rail of nested reply comments.",
+      "root": { "selector": ".comment", "element": ["div", "article", "li"], "requiredClasses": ["comment"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".comment-content", "required": true, "description": "The flexible content column (flex: 1, min-width: 0)." },
+        { "selector": ".comment-body", "required": true, "description": "The comment text, inside .comment-content." },
+        { "selector": ".comment-avatar", "required": false, "description": "Leading avatar column (flex-shrink: 0) holding an .avatar." },
+        { "selector": ".comment-meta", "required": false, "description": "Baseline-aligned row: .comment-author (medium weight) then .comment-time (small, subtlest)." },
+        { "selector": ".comment-actions", "required": false, "description": "Small subtle links (Reply, Edit…) that take the link color on hover." },
+        { "selector": ".comment-replies", "required": false, "description": "Indented rail (2px inline-start separator border) stacking nested reply .comment rows, inside .comment-content." }
+      ],
+      "aria": [],
+      "nesting": {
+        "allowedIn": [".comment-thread", ".comment-replies"],
+        "disallowed": ["a .comment placed directly inside another .comment — nested replies must sit inside a .comment-replies rail"]
+      },
+      "a11yNotes": "Render timestamps with <time datetime=\"…\"> when possible. .comment-actions must be real links or buttons. Avatar initials are decorative when the author name is visible in .comment-meta; keep the .avatar text as initials only.",
+      "examples": [
+        "<div class=\"comment\"><div class=\"comment-avatar\"><span class=\"avatar avatar-md\">DK</span></div><div class=\"comment-content\"><div class=\"comment-meta\"><span class=\"comment-author\">Dana Kim</span><span class=\"comment-time\">2 hours ago</span></div><div class=\"comment-body\"><p>Confirmed on staging.</p></div><div class=\"comment-actions\"><a href=\"#\">Reply</a><a href=\"#\">Edit</a></div></div></div>"
+      ]
+    },
+    {
+      "component": "comment-editor",
+      "intent": "Reply box: the current user's avatar beside a .form-control textarea. Usually the last row of a .comment-thread; also usable inside .comment-replies for inline replying.",
+      "root": { "selector": ".comment-editor", "element": ["div", "form"], "requiredClasses": ["comment-editor"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": "textarea.form-control", "required": true, "description": "The reply textarea (flex: 1)." }
+      ],
+      "aria": [
+        { "on": "textarea.form-control", "attr": "aria-label", "required": false, "when": "Always unless a visible <label for> is associated with the textarea — the placeholder alone is not a name." }
+      ],
+      "nesting": {
+        "allowedIn": [".comment-thread", ".comment-replies"],
+        "disallowed": [".comment-editor"]
+      },
+      "a11yNotes": "Give the textarea a programmatic name (aria-label or a visible label) — placeholder text is not an accessible name. If submission is involved, make the editor a <form> with a real submit button.",
+      "examples": [
+        "<div class=\"comment-editor\"><span class=\"avatar avatar-md\">JC</span><textarea class=\"form-control\" aria-label=\"Add a comment\" placeholder=\"Add a comment…\"></textarea></div>"
+      ]
+    }
+  ]
+}

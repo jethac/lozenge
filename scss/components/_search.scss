@@ -1,0 +1,74 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Search field — compact input with a leading magnifier and an optional
+// keyboard-shortcut hint chip.
+//
+// <div class="search-field">
+//   <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+//   <kbd class="search-kbd">/</kbd>
+// </div>
+//
+// The magnifier is a mask-image data URI painted with currentColor, so it
+// follows the theme (and the contrast axis) with no baked-in fill.
+.search-field {
+  position: relative;
+  display: block;
+
+  > .form-control {
+    height: $input-height-compact;
+    padding: 4px 8px 4px 32px;
+  }
+
+  &:has(> .search-kbd) > .form-control {
+    padding-right: 36px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    color: $text-subtle;
+    background-color: currentColor;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 2a4.5 4.5 0 013.53 7.29l3.34 3.34a.875.875 0 01-1.24 1.24l-3.34-3.34A4.5 4.5 0 116.5 2zm0 1.75a2.75 2.75 0 100 5.5 2.75 2.75 0 000-5.5z'/%3E%3C/svg%3E");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 16px 16px;
+    pointer-events: none;
+  }
+
+  // Dim the icon alongside a disabled input.
+  &:has(> .form-control:disabled)::before {
+    color: $text-disabled;
+  }
+}
+
+// Shortcut hint chip ("/", "⌘K"). Decorative fine print; clicks fall
+// through to the input.
+.search-kbd {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  padding: 0 4px;
+  border-radius: $border-radius-sm;
+  background-color: var(--lz-sys-status-neutral-subtle-bg);
+  color: $text-subtle;
+  font-family: $font-family-monospace;
+  font-size: $font-size-xs;
+  line-height: 16px;
+  pointer-events: none;
+}
+
+// Forced colors: backgrounds are repainted to Canvas, which would erase the
+// masked glyph — pin it to the system text color instead.
+@media (forced-colors: active) {
+  .search-field::before {
+    forced-color-adjust: none;
+    background-color: CanvasText;
+  }
+}

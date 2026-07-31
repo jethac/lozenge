@@ -1,0 +1,87 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Tree view — nested <details>-based hierarchy (file trees, epic > story
+// breakdowns). Every branch expands independently (no name attribute — unlike
+// .sidebar-group's exclusive accordion).
+// Usage:
+// <ul class="tree">
+//   <li>
+//     <details open>
+//       <summary class="tree-item">scss</summary>
+//       <ul>
+//         <li><span class="tree-item selected" aria-current="true">_tokens.scss</span></li>
+//       </ul>
+//     </details>
+//   </li>
+//   <li><span class="tree-item">package.json</span></li>
+// </ul>
+.tree {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  // Each nesting level indents by 20px.
+  ul {
+    margin: 0;
+    padding-inline-start: 20px;
+    list-style: none;
+  }
+
+  details > summary {
+    list-style: none;
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+}
+
+.tree-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  // Leaf rows get extra start padding so their text aligns with branch
+  // labels (6px chevron + 6px gap); summaries reset this below.
+  padding-inline-start: 20px;
+  border-radius: $border-radius;
+  color: $text-color;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &.selected {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+}
+
+// Branch rows: disclosure triangle, same idiom as .sidebar-group.
+summary.tree-item {
+  padding-inline-start: 8px;
+
+  &::before {
+    content: "";
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 0 4px 6px;
+    border-color: transparent transparent transparent currentColor;
+    flex-shrink: 0;
+    transition: transform var(--lz-motion-fast) var(--lz-ease-standard);
+  }
+}
+
+.tree details[open] > summary.tree-item::before {
+  transform: rotate(90deg);
+}

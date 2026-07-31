@@ -1,0 +1,25 @@
+{
+  "component": "pagination",
+  "version": "0.1.0",
+  "intent": "Page navigation for long result sets: a flex row of 32px .page-link buttons with previous/next arrows and an optional .page-ellipsis marking elided ranges. Use under tables and search results; mark the current page with .active.",
+  "root": { "selector": ".pagination", "element": ["nav"], "requiredClasses": ["pagination"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".page-link", "required": true, "description": "The page buttons — usually <a href>. First/last children are the previous/next arrows (give them aria-label). Mark the current page .active, unavailable ones .disabled (pair with aria-disabled=\"true\")." },
+    { "selector": ".page-ellipsis", "required": false, "description": "Non-interactive <span>&hellip;</span> standing in for an elided page range. Never a .page-link." }
+  ],
+  "aria": [
+    { "on": ".pagination", "attr": "aria-label", "required": true },
+    { "on": ".page-link.active", "attr": "aria-current", "required": true },
+    { "on": ".page-link.disabled", "attr": "aria-disabled", "required": false, "when": "Recommended on disabled prev/next links so assistive tech announces them as unavailable (CSS pointer-events alone conveys nothing)." }
+  ],
+  "nesting": {
+    "allowedIn": ["below tables", "below search results", "card footers"],
+    "disallowed": [".pagination"]
+  },
+  "a11yNotes": "Use a <nav aria-label=\"Pagination\"> landmark. The current page carries aria-current=\"page\" plus .active. Arrow-only links need aria-label (\"Previous page\" / \"Next page\"). Keep .page-ellipsis a plain span so it is skipped in tab order.",
+  "examples": [
+    "<nav class=\"pagination\" aria-label=\"Pagination\"><a class=\"page-link disabled\" href=\"#\" aria-disabled=\"true\" aria-label=\"Previous page\">&lsaquo;</a><a class=\"page-link\" href=\"#\">1</a><a class=\"page-link active\" href=\"#\" aria-current=\"page\">2</a><span class=\"page-ellipsis\">&hellip;</span><a class=\"page-link\" href=\"#\">9</a><a class=\"page-link\" href=\"#\" aria-label=\"Next page\">&rsaquo;</a></nav>"
+  ]
+}

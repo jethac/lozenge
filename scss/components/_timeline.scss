@@ -1,0 +1,103 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Timeline / roadmap — a Gantt-lite CSS grid. Purely presentational: the
+// page (or the agent/app generating it) computes column placement and passes
+// it as inline custom properties; there is no runtime.
+//
+// Grid: a 200px label column plus --lz-timeline-cols equal periods
+// (weeks, months... default 12). Header and rows are subgrids, so bars
+// line up with header cells.
+//
+// Usage:
+// <div class="timeline" style="--lz-timeline-cols: 12">
+//   <div class="timeline-header">
+//     <div>Epics</div>
+//     <div style="grid-column: span 4">April</div>
+//     <div style="grid-column: span 4">May</div>
+//     <div style="grid-column: span 4">June</div>
+//   </div>
+//   <div class="timeline-row">
+//     <div class="timeline-label">
+//       <span class="issue-type issue-type-epic" role="img" aria-label="Epic"></span>
+//       Runtime theme axes
+//     </div>
+//     <div class="timeline-bar" style="--start: 3; --span: 5"></div>
+//   </div>
+// </div>
+// --start is the 1-based first period, --span the number of periods
+// (--start + --span - 1 must not exceed --lz-timeline-cols).
+.timeline {
+  display: grid;
+  grid-template-columns: 200px repeat(var(--lz-timeline-cols, 12), 1fr);
+  overflow-x: auto;
+}
+
+.timeline-header,
+.timeline-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+
+.timeline-header {
+  border-bottom: 2px solid $separator-color;
+
+  > * {
+    padding: 8px;
+    @include heading(300);
+    @include truncate;
+
+    + * {
+      border-inline-start: 1px solid $separator-color;
+    }
+  }
+}
+
+.timeline-row {
+  min-height: 36px;
+  border-bottom: 1px solid $separator-color;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-bg);
+  }
+}
+
+.timeline-label {
+  grid-column: 1;
+  padding: 8px;
+  font-weight: $font-weight-medium;
+  @include truncate;
+
+  .issue-type {
+    vertical-align: text-bottom;
+    margin-inline-end: 4px;
+  }
+}
+
+.timeline-bar {
+  grid-column: calc(var(--start, 1) + 1) / span var(--span, 1);
+  display: flex;
+  align-items: center;
+  height: 16px;
+  margin: 0 2px;
+  padding: 0 8px;
+  border-radius: $border-radius-pill;
+  background-color: var(--lz-sys-accent-bold);
+  color: var(--lz-sys-text-on-bold);
+  font-size: $font-size-xs;
+  font-weight: $font-weight-medium;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.timeline-bar-done {
+  background-color: var(--lz-sys-status-success-bold-bg);
+  color: var(--lz-sys-status-success-on-bold);
+}
+
+.timeline-bar-risk {
+  background-color: var(--lz-sys-warning-bold);
+  color: var(--lz-sys-status-warning-on-bold);
+}

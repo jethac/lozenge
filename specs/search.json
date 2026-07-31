@@ -1,0 +1,24 @@
+{
+  "component": "search-field",
+  "version": "0.1.0",
+  "intent": "Compact search input with a leading magnifier icon and an optional keyboard-shortcut hint chip. The icon is a currentColor mask (themes with scheme/contrast); the chip is decorative fine print. Authorable via <lz-search> (templates/search.html). The wiring of the shortcut itself is up to the app — the chip is only a hint.",
+  "root": { "selector": ".search-field", "element": ["div"], "requiredClasses": ["search-field"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": "input.form-control", "required": true, "description": "The input, a DIRECT child (the CSS targets > .form-control for the compact height and icon padding). Use type=\"search\"." },
+    { "selector": "kbd.search-kbd", "required": false, "description": "Optional shortcut hint chip (\"/\", \"⌘K\") as a DIRECT child after the input; pointer-events pass through to the input. Purely visual — register the actual shortcut in your app." }
+  ],
+  "aria": [
+    { "on": "input.form-control", "attr": "aria-label", "required": false, "when": "Whenever there is no visible <label> associated via for/id — search fields usually have none, so aria-label (e.g. \"Search issues\") is the norm. Placeholder text is not a label." }
+  ],
+  "nesting": {
+    "allowedIn": [".navbar", "toolbars", ".form-group", "card headers"],
+    "disallowed": [".search-field"]
+  },
+  "a11yNotes": "Name the input with aria-label (or a visible label) — the placeholder does not count. The magnifier and the .search-kbd chip are decorative and hidden from interaction; do not put the only affordance description in them. type=\"search\" gives AT the search context and native clear behavior.",
+  "examples": [
+    "<div class=\"search-field\"><input class=\"form-control\" type=\"search\" placeholder=\"Search issues\" aria-label=\"Search issues\"></div>",
+    "<div class=\"search-field\"><input class=\"form-control\" type=\"search\" placeholder=\"Search boards\" aria-label=\"Search boards\"><kbd class=\"search-kbd\">/</kbd></div>"
+  ]
+}
