@@ -112,6 +112,25 @@ for (const b of blocks) {
   out.push("");
 }
 
+out.push("## Material / Flutter → Lozenge cheat sheet\n");
+out.push(
+  "If you know Google's Material or Flutter widget names, translate with this table (full version: /docs/material.html).\n"
+);
+{
+  const map = JSON.parse(
+    fs.readFileSync(path.join(repoRoot, "tokens", "material-map.json"), "utf8")
+  );
+  for (const sec of map.sections) {
+    out.push(`### ${sec.title}`);
+    out.push("");
+    for (const r of sec.rows) {
+      const note = r.note ? ` — ${r.note}` : "";
+      out.push(`- ${r.material} (${r.flutter}) → \`${r.lozenge}\`${note}`);
+    }
+    out.push("");
+  }
+}
+
 out.push("## System tokens (--lz-sys-*)\n");
 out.push("Consume these as CSS custom properties, e.g. `color: var(--lz-sys-text)`.\n");
 

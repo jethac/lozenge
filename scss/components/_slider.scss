@@ -1,29 +1,185 @@
 @use "../tokens" as *;
 @use "../mixins" as *;
 
-// Slider — a styled native <input type="range">. Behavior is 100% the
-// platform's; only the paint changes.
+// Slider — chunky pill track with a LIVE fill, zero JS.
 //
-// The filled portion of the track is driven by a --value custom property
-// in the 0..1 range that the APP sets on the input — inline
-// (style="--value: 0.6") or with a one-liner on input:
-//   el.style.setProperty("--value", el.value / (el.max || 100));
-// When --value is absent the track degrades gracefully to unfilled;
-// the control itself still works.
+// The fill is welded to the thumb rather than computed from the value:
+// WebKit/Blink get a huge one-sided thumb box-shadow clipped by the
+// input's overflow (the shadow ends at the thumb's center, so it tracks
+// dragging natively); Firefox gets ::-moz-range-progress, a real live
+// fill pseudo. accent-color covers anything else, and forced-colors mode
+// reverts to the stock control. When ::slider-fill (appearance: base)
+// reaches Baseline this whole file collapses into three selectors.
 //
-// Usage:
-// <input type="range" class="slider" min="0" max="100" value="60"
-//        style="--value: 0.6" aria-label="Estimate">
+// <input type="range" class="slider" aria-label="Estimate">
 .slider {
   appearance: none;
+  width: 100%;
   height: 16px;
   margin: 0;
   padding: 0;
-  background: transparent;
+  border-radius: $border-radius-pill;
+  background: var(--lz-sys-track);
+  overflow: hidden;
   vertical-align: middle;
   cursor: pointer;
+  accent-color: var(--lz-sys-accent-bold);
 
-  // Track: 4px rounded bar; the accent fill stops at --value.
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &::-webkit-slider-runnable-track {
+    height: 16px;
+    background: transparent;
+  }
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--lz-ref-neutral-0);
+    border: 2px solid var(--lz-sys-accent-bold);
+    // The fill: ends exactly at the thumb's center, clipped by the input.
+    box-shadow: calc(-100vw - 8px) 0 0 100vw var(--lz-sys-accent-bold);
+  }
+
+  &::-moz-range-track {
+    height: 16px;
+    background: transparent;
+  }
+
+  &::-moz-range-progress {
+    height: 16px;
+    border-radius: $border-radius-pill;
+    background: var(--lz-sys-accent-bold);
+  }
+
+  &::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--lz-ref-neutral-0);
+    border: 2px solid var(--lz-sys-accent-bold);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+
+    &::-webkit-slider-thumb {
+      border-color: var(--lz-sys-toggle-off);
+      box-shadow: calc(-100vw - 8px) 0 0 100vw var(--lz-sys-toggle-off);
+    }
+
+    &::-moz-range-progress {
+      background: var(--lz-sys-toggle-off);
+    }
+
+    &::-moz-range-thumb {
+      border-color: var(--lz-sys-toggle-off);
+    }
+  }
+}
+
+[dir="rtl"] .slider::-webkit-slider-thumb {
+  box-shadow: calc(100vw + 8px) 0 0 100vw var(--lz-sys-accent-bold);
+}
+
+.slider-compact {
+  height: 12px;
+
+  &::-webkit-slider-runnable-track {
+    height: 12px;
+  }
+
+  &::-webkit-slider-thumb {
+    width: 12px;
+    height: 12px;
+    box-shadow: calc(-100vw - 6px) 0 0 100vw var(--lz-sys-accent-bold);
+  }
+
+  &::-moz-range-track,
+  &::-moz-range-progress {
+    height: 12px;
+  }
+
+  &::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+// Dual-thumb range: the same weld inverted. The container is painted
+// accent; each input's thumb-shadow MASKS outward in track color (left of
+// the min thumb, right of the max thumb), so only the between-region stays
+// lit. Two real inputs = two real tab stops and ARIA slider thumbs.
+//
+// <div class="range-slider">
+//   <input type="range" class="slider" aria-label="Minimum" value="20">
+//   <input type="range" class="slider" aria-label="Maximum" value="60">
+// </div>
+.range-slider {
+  position: relative;
+  height: 16px;
+  border-radius: $border-radius-pill;
+  background: var(--lz-sys-accent-bold);
+  overflow: hidden;
+
+  &:has(.slider:focus-visible) {
+    @include focus-ring;
+  }
+
+  > .slider {
+    position: absolute;
+    inset: 0;
+    background: transparent;
+    overflow: visible; // the container clips instead
+    pointer-events: none;
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: none; // the ring lives on the container
+    }
+
+    &::-webkit-slider-thumb {
+      pointer-events: auto;
+    }
+
+    &::-moz-range-thumb {
+      pointer-events: auto;
+    }
+
+    &::-moz-range-progress {
+      background: transparent;
+    }
+  }
+
+  > .slider:first-of-type::-webkit-slider-thumb {
+    box-shadow: calc(-100vw - 8px) 0 0 100vw var(--lz-sys-track);
+  }
+
+  > .slider:last-of-type::-webkit-slider-thumb {
+    box-shadow: calc(100vw + 8px) 0 0 100vw var(--lz-sys-track);
+  }
+
+  > .slider:first-of-type::-moz-range-thumb {
+    box-shadow: calc(-100vw - 8px) 0 0 100vw var(--lz-sys-track);
+  }
+
+  > .slider:last-of-type::-moz-range-thumb {
+    box-shadow: calc(100vw + 8px) 0 0 100vw var(--lz-sys-track);
+  }
+}
+
+// Legacy thin form: 4px hairline track, fill driven by an app-set --value
+// (style="--value: 0.6" or a one-liner on input). Degrades to an unfilled
+// track when unset; the chunky default above needs no wiring at all.
+.slider-thin {
+  border-radius: 0;
+  background: transparent;
+  overflow: visible;
+
   &::-webkit-slider-runnable-track {
     height: 4px;
     border-radius: $border-radius-pill;
@@ -34,89 +190,47 @@
     );
   }
 
+  &::-webkit-slider-thumb {
+    margin-top: -6px;
+    background: var(--lz-sys-accent-bold);
+    border: none;
+    box-shadow: none;
+  }
+
   &::-moz-range-track {
     height: 4px;
     border-radius: $border-radius-pill;
-    background: linear-gradient(
-      to right,
-      var(--lz-sys-accent-bold) calc(var(--value, 0) * 100%),
-      var(--lz-sys-track) 0
-    );
+    background: var(--lz-sys-track);
   }
 
-  // Thumb: 16px accent circle.
-  &::-webkit-slider-thumb {
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    margin-top: -6px;
-    border: none;
-    border-radius: 50%;
-    background-color: var(--lz-sys-accent-bold);
-    transition: box-shadow var(--lz-motion-fast) var(--lz-ease-standard);
+  &::-moz-range-progress {
+    height: 4px;
   }
 
   &::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
+    background: var(--lz-sys-accent-bold);
     border: none;
-    border-radius: 50%;
-    background-color: var(--lz-sys-accent-bold);
-    transition: box-shadow var(--lz-motion-fast) var(--lz-ease-standard);
-  }
-
-  &:hover:not(:disabled)::-webkit-slider-thumb {
-    box-shadow: 0 0 0 4px var(--lz-sys-selected-bg);
-  }
-
-  &:hover:not(:disabled)::-moz-range-thumb {
-    box-shadow: 0 0 0 4px var(--lz-sys-selected-bg);
-  }
-
-  &:focus-visible {
-    outline: none;
-
-    &::-webkit-slider-thumb {
-      @include focus-ring;
-    }
-
-    &::-moz-range-thumb {
-      @include focus-ring;
-    }
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-
-    &::-webkit-slider-runnable-track {
-      background: var(--lz-sys-track);
-    }
-
-    &::-moz-range-track {
-      background: var(--lz-sys-track);
-    }
-
-    &::-webkit-slider-thumb {
-      background-color: var(--lz-sys-toggle-off);
-    }
-
-    &::-moz-range-thumb {
-      background-color: var(--lz-sys-toggle-off);
-    }
   }
 }
 
-.slider-compact {
-  height: 12px;
-
-  &::-webkit-slider-thumb {
-    width: 12px;
-    height: 12px;
-    margin-top: -4px;
+// Windows contrast themes strip box-shadow: hand back the native control.
+@media (forced-colors: active) {
+  .slider {
+    appearance: auto;
+    overflow: visible;
+    background: none;
   }
 
-  &::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
+  .range-slider {
+    height: auto;
+    background: none;
+    overflow: visible;
+    display: grid;
+    gap: 4px;
+
+    > .slider {
+      position: static;
+      pointer-events: auto;
+    }
   }
 }

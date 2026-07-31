@@ -1,12 +1,14 @@
 @use "../tokens" as *;
 @use "../mixins" as *;
 
-// Date field — a styled native date input. The native picker IS the
-// behavior layer (keyboard, locale, AT support); we only normalize the
-// field chrome to match .form-control.
+// Date/time fields — styled native date and time inputs. The native picker
+// IS the behavior layer (keyboard, locale, AT support); we only normalize
+// the field chrome to match .form-control.
 //
 // <input class="form-control date-field" type="date">
-.date-field {
+// <input class="form-control time-field" type="time">
+.date-field,
+.time-field {
   // .form-control supplies the box skin; keep the intrinsic parts from
   // adding their own padding so heights line up with text inputs.
   &::-webkit-datetime-edit {

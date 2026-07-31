@@ -43,6 +43,7 @@
     <div class="sidebar-section">Guide</div>
     <nav aria-label="Guide">
       <a class="sidebar-item" href="index.html">Overview</a>
+      <a class="sidebar-item" href="material.html">Material → Lozenge</a>
     </nav>
     <div class="sidebar-section">Components</div>
     <nav aria-label="Components">
@@ -54,6 +55,7 @@
       <a class="sidebar-item" href="button.html">Button</a>
       <a class="sidebar-item" href="calendar.html">Calendar</a>
       <a class="sidebar-item" href="card.html">Card</a>
+      <a class="sidebar-item" href="carousel.html">Carousel</a>
       <a class="sidebar-item" href="chip.html">Chip</a>
       <a class="sidebar-item" href="comment-thread.html">Comment-thread</a>
       <a class="sidebar-item" href="date-field.html">Date-field</a>
@@ -88,22 +90,29 @@
   </aside>
   <main class="docs-main">
 <h1>Slider</h1>
-<p class="text-subtle">Styled native &lt;input type=&quot;range&quot;&gt; (Material's Slider, Lozenge-flavoured): 4px rounded track, 16px accent thumb, hover halo, focus ring. Behavior is 100% the platform's. HONEST LIMITATION: the filled portion of the track is painted from a --value custom property (0..1) that the APP must set on the input — inline style=&quot;--value: 0.6&quot; for static values, or one line of app JS on input: el.style.setProperty('--value', el.value / (el.max || 100)). Without --value the track degrades gracefully to unfilled; the control still works.</p>
+<p class="text-subtle">Styled native &lt;input type=&quot;range&quot;&gt; (Material's Slider, Lozenge-flavoured): chunky 16px pill track with a LIVE fill that requires no wiring — the fill is welded to the thumb (clipped one-sided thumb shadow on WebKit/Blink, ::-moz-range-progress on Firefox), so dragging, keyboard steps, and programmatic value changes all move it with zero JS and zero custom properties. Behavior is 100% the platform's. The legacy 4px hairline look is available as .slider-thin, whose fill IS driven by an app-set --value (0..1) — that limitation applies only to the thin variant.</p>
   <p class="text-subtlest">Root: <code>.slider</code> on <code>&lt;input&gt;</code></p>
 <section>
 <h2>Examples</h2>
 <div class="card doc-example">
   <div class="card-header">Example 1</div>
   <div class="card-body">
-    <div class="doc-live"><input type="range" class="slider" min="0" max="100" value="60" style="--value: 0.6" aria-label="Estimate"></div>
-<pre><code>&lt;input type=&quot;range&quot; class=&quot;slider&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;60&quot; style=&quot;--value: 0.6&quot; aria-label=&quot;Estimate&quot;&gt;</code></pre>
+    <div class="doc-live"><input type="range" class="slider" min="0" max="100" value="60" aria-label="Estimate"></div>
+<pre><code>&lt;input type=&quot;range&quot; class=&quot;slider&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;60&quot; aria-label=&quot;Estimate&quot;&gt;</code></pre>
   </div>
 </div>
 <div class="card doc-example">
   <div class="card-header">Example 2</div>
   <div class="card-body">
-    <div class="doc-live"><input type="range" class="slider slider-compact" min="0" max="10" value="3" style="--value: 0.3" aria-label="Story points"></div>
-<pre><code>&lt;input type=&quot;range&quot; class=&quot;slider slider-compact&quot; min=&quot;0&quot; max=&quot;10&quot; value=&quot;3&quot; style=&quot;--value: 0.3&quot; aria-label=&quot;Story points&quot;&gt;</code></pre>
+    <div class="doc-live"><input type="range" class="slider slider-compact" min="0" max="10" value="3" aria-label="Story points"></div>
+<pre><code>&lt;input type=&quot;range&quot; class=&quot;slider slider-compact&quot; min=&quot;0&quot; max=&quot;10&quot; value=&quot;3&quot; aria-label=&quot;Story points&quot;&gt;</code></pre>
+  </div>
+</div>
+<div class="card doc-example">
+  <div class="card-header">Example 3</div>
+  <div class="card-body">
+    <div class="doc-live"><div class="range-slider"><input type="range" class="slider" min="0" max="100" value="20" aria-label="Minimum"><input type="range" class="slider" min="0" max="100" value="60" aria-label="Maximum"></div></div>
+<pre><code>&lt;div class=&quot;range-slider&quot;&gt;&lt;input type=&quot;range&quot; class=&quot;slider&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;20&quot; aria-label=&quot;Minimum&quot;&gt;&lt;input type=&quot;range&quot; class=&quot;slider&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;60&quot; aria-label=&quot;Maximum&quot;&gt;&lt;/div&gt;</code></pre>
   </div>
 </div>
 </section>
@@ -114,7 +123,9 @@
     <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
     <tbody>
       <tr><td><code>slider-compact</code></td><td>size</td><td>optional · exclusive</td></tr>
+      <tr><td><code>slider-thin</code></td><td>form</td><td>optional · exclusive</td></tr>
       <tr><td><code>slider-compact</code></td><td>modifier</td><td>optional</td></tr>
+      <tr><td><code>slider-thin</code></td><td>modifier</td><td>optional</td></tr>
     </tbody>
   </table></div>
   <h3>Accessibility</h3>
@@ -124,12 +135,46 @@
       <tr><td><code>.slider</code></td><td><code>aria-label</code></td><td>required</td><td>no visible &lt;label for&gt; or aria-labelledby references the input</td></tr>
     </tbody>
   </table></div>
-  <p class="text-subtle">All interaction is the native range input: arrow keys step, Home/End jump, drag works, form participation is standard. Name the control with a visible &lt;label for&gt; or aria-label. If min/max aren't self-evident, add aria-valuetext via your app. Remember --value only paints the fill — keyboard/pointer changes move the native value regardless, so keep the two in sync with the one-liner above (or accept an unfilled track).</p>
+  <p class="text-subtle">All interaction is the native range input: arrow keys step, Home/End jump, drag works, form participation is standard. Name the control with a visible &lt;label for&gt; or aria-label. Forced-colors mode reverts to the stock control via accent-color. For .slider-thin only: keep --value in sync with app code or accept an unfilled track.</p>
   <h3>Nesting</h3>
   <p>Allowed in:</p>
-  <ul><li><code>forms</code></li> <li><code>.form-group</code></li> <li><code>toolbars</code></li> <li><code>card bodies</code></li></ul>
+  <ul><li><code>forms</code></li> <li><code>.form-group</code></li> <li><code>toolbars</code></li> <li><code>card bodies</code></li> <li><code>.range-slider</code></li></ul>
+</section>
+<section>
+<h2>Subcomponents</h2>
+<section id="range-slider">
+<h3>Range-slider</h3>
+<p class="text-subtle">Dual-thumb range (Material's RangeSlider), zero JS: two stacked native range inputs inside a .range-slider container; each thumb's shadow masks outward so the between-region stays accent-filled. Each thumb keeps its own tab stop, label, and ARIA slider semantics. The app enforces min&lt;=max on submit (the paint is agnostic).</p>
+  <p class="text-subtlest">Root: <code>.range-slider</code> on <code>&lt;div&gt;</code></p>
+  <h4>Example</h4>
+<div class="card doc-example">
+  <div class="card-header">Example</div>
+  <div class="card-body">
+    <div class="doc-live"><div class="range-slider"><input type="range" class="slider" min="0" max="100" value="20" aria-label="Minimum"><input type="range" class="slider" min="0" max="100" value="60" aria-label="Maximum"></div></div>
+<pre><code>&lt;div class=&quot;range-slider&quot;&gt;&lt;input type=&quot;range&quot; class=&quot;slider&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;20&quot; aria-label=&quot;Minimum&quot;&gt;&lt;input type=&quot;range&quot; class=&quot;slider&quot; min=&quot;0&quot; max=&quot;100&quot; value=&quot;60&quot; aria-label=&quot;Maximum&quot;&gt;&lt;/div&gt;</code></pre>
+  </div>
+</div>
+  <h4>Structure</h4>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.slider</code></td><td>required</td><td>Exactly two input.slider children (min then max, document order determines mask direction).</td></tr>
+    </tbody>
+  </table></div>
+  <h4>Accessibility</h4>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><code>.range-slider &gt; .slider</code></td><td><code>aria-label</code></td><td>required</td><td>each input needs its own name, e.g. Minimum/Maximum</td></tr>
+    </tbody>
+  </table></div>
+  <p class="text-subtle">Two real inputs: both are keyboard-reachable in document order. Under forced-colors the container unstacks into two labeled native sliders.</p>
+  <h4>Nesting</h4>
+  <p>Allowed in:</p>
+  <ul><li><code>forms</code></li> <li><code>.form-group</code></li></ul>
   <p>Never inside (or containing):</p>
-  <ul><li><code>.slider</code></li></ul>
+  <ul><li><code>.range-slider</code></li></ul>
+</section>
 </section>
   </main>
 </div>

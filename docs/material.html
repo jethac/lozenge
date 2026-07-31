@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Material → Lozenge — Lozenge</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="../demo/theme-panel.js"></script>
+<style>
+  .docs-shell { display: flex; align-items: stretch; }
+  .docs-shell > .sidebar { flex-shrink: 0; min-height: calc(100vh - 56px); }
+  .docs-main { flex: 1; min-width: 0; max-width: 880px; padding: 24px 32px 96px; }
+  .docs-main section { margin-top: 40px; }
+  .doc-example { margin: 12px 0 24px; }
+  .doc-box { border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); }
+  .doc-box-header { padding: 8px 16px; border-bottom: 1px solid var(--lz-sys-separator); font-weight: 600; }
+  .doc-box-body { padding: 16px; }
+  .doc-live { margin-bottom: 12px; }
+  .doc-src-label { margin: 12px 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .doc-example pre { margin: 0 0 4px; }
+  pre { background: var(--lz-sys-surface-sunken); border: 1px solid var(--lz-sys-separator); border-radius: 3px; padding: 12px; overflow-x: auto; font-size: 12px; line-height: 1.5; }
+  pre code { font-family: inherit; }
+  .doc-swatch { width: 48px; height: 24px; border: 1px solid var(--lz-sys-border); border-radius: 3px; }
+  .doc-table-wrap { overflow-x: auto; }
+  .doc-axis-pane { flex: 1 1 240px; min-width: 240px; padding: 16px; border: 1px solid var(--lz-sys-border); border-radius: 3px; background: var(--lz-sys-surface); color: var(--lz-sys-text); }
+</style>
+</head>
+<body>
+
+<nav class="navbar" aria-label="Main">
+  <a class="navbar-brand" href="/">Lozenge</a>
+  <ul class="navbar-nav">
+    <li><a class="nav-link" href="/">Home</a></li>
+    <li><a class="nav-link active" href="/docs/">Components</a></li>
+    <li><a class="nav-link" href="/demo/">Demo</a></li>
+    <li><a class="nav-link" href="/demo/tags.html">Tags</a></li>
+    <li><a class="nav-link" href="https://github.com/jethac/lozenge">GitHub</a></li>
+  </ul>
+</nav>
+
+<div class="docs-shell">
+  <aside class="sidebar">
+    <div class="sidebar-section">Guide</div>
+    <nav aria-label="Guide">
+      <a class="sidebar-item" href="index.html">Overview</a>
+      <a class="sidebar-item active" href="material.html" aria-current="page">Material → Lozenge</a>
+    </nav>
+    <div class="sidebar-section">Components</div>
+    <nav aria-label="Components">
+      <a class="sidebar-item" href="accordion.html">Accordion</a>
+      <a class="sidebar-item" href="avatar.html">Avatar</a>
+      <a class="sidebar-item" href="badge.html">Badge</a>
+      <a class="sidebar-item" href="board.html">Board</a>
+      <a class="sidebar-item" href="bottom-nav.html">Bottom-nav</a>
+      <a class="sidebar-item" href="button.html">Button</a>
+      <a class="sidebar-item" href="calendar.html">Calendar</a>
+      <a class="sidebar-item" href="card.html">Card</a>
+      <a class="sidebar-item" href="carousel.html">Carousel</a>
+      <a class="sidebar-item" href="chip.html">Chip</a>
+      <a class="sidebar-item" href="comment-thread.html">Comment-thread</a>
+      <a class="sidebar-item" href="date-field.html">Date-field</a>
+      <a class="sidebar-item" href="drawer.html">Drawer</a>
+      <a class="sidebar-item" href="empty-state.html">Empty-state</a>
+      <a class="sidebar-item" href="fab.html">Fab</a>
+      <a class="sidebar-item" href="forms.html">Forms</a>
+      <a class="sidebar-item" href="inline-edit.html">Inline-edit</a>
+      <a class="sidebar-item" href="list.html">List</a>
+      <a class="sidebar-item" href="select.html">Select</a>
+      <a class="sidebar-item" href="lozenge.html">Lozenge</a>
+      <a class="sidebar-item" href="message.html">Message</a>
+      <a class="sidebar-item" href="navbar.html">Navbar</a>
+      <a class="sidebar-item" href="pagination.html">Pagination</a>
+      <a class="sidebar-item" href="backlog.html">Backlog</a>
+      <a class="sidebar-item" href="rail.html">Rail</a>
+      <a class="sidebar-item" href="ring.html">Ring</a>
+      <a class="sidebar-item" href="search-field.html">Search-field</a>
+      <a class="sidebar-item" href="segmented.html">Segmented</a>
+      <a class="sidebar-item" href="sheet.html">Sheet</a>
+      <a class="sidebar-item" href="sidebar.html">Sidebar</a>
+      <a class="sidebar-item" href="skeleton.html">Skeleton</a>
+      <a class="sidebar-item" href="slider.html">Slider</a>
+      <a class="sidebar-item" href="snackbar.html">Snackbar</a>
+      <a class="sidebar-item" href="stepper.html">Stepper</a>
+      <a class="sidebar-item" href="tabs.html">Tabs</a>
+      <a class="sidebar-item" href="tag.html">Tag</a>
+      <a class="sidebar-item" href="timeline.html">Timeline</a>
+      <a class="sidebar-item" href="tracker.html">Tracker</a>
+      <a class="sidebar-item" href="tree.html">Tree</a>
+    </nav>
+  </aside>
+  <main class="docs-main">
+<h1>Material → Lozenge cheat sheet</h1>
+<p class="text-subtle">Every component in Google's Material / Flutter widget catalog,
+mapped to its Lozenge equivalent. Also available to agents as a section of
+<a href="/llms.txt">llms.txt</a>; source of truth is
+<code>tokens/material-map.json</code>.</p>
+
+<section>
+<h2>Actions</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+<tr>
+  <td>Common buttons (filled / tonal / text)</td>
+  <td class="text-subtle">FilledButton · ElevatedButton · TextButton</td>
+  <td><code>.btn-primary · .btn · .btn-subtle / .btn-link</code><div class="text-subtlest" style="font-size:12px">Outlined buttons are deliberately not in the Lozenge idiom — use .btn.</div></td>
+  <td><a href="button.html">button</a></td>
+</tr>
+<tr>
+  <td>FAB / Extended FAB</td>
+  <td class="text-subtle">FloatingActionButton(.extended)</td>
+  <td><code>.fab · .fab-small · .fab-extended · .fab-fixed</code></td>
+  <td><a href="fab.html">fab</a></td>
+</tr>
+<tr>
+  <td>Icon buttons</td>
+  <td class="text-subtle">IconButton</td>
+  <td><code>.btn.btn-icon (+ .btn-compact)</code></td>
+  <td><a href="button.html">button</a></td>
+</tr>
+<tr>
+  <td>Segmented buttons</td>
+  <td class="text-subtle">SegmentedButton</td>
+  <td><code>fieldset.segmented (+ -bold / -compact)</code><div class="text-subtlest" style="font-size:12px">Radio-backed; arrow keys come from the platform.</div></td>
+  <td><a href="segmented.html">segmented</a></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+
+<section>
+<h2>Communication</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+<tr>
+  <td>Badges</td>
+  <td class="text-subtle">Badge</td>
+  <td><code>.badge (+ -primary/-important/-added/-removed); status pills are .lozenge</code></td>
+  <td><a href="badge.html">badge</a></td>
+</tr>
+<tr>
+  <td>Linear progress</td>
+  <td class="text-subtle">LinearProgressIndicator</td>
+  <td><code>.progress (+ .progress-indeterminate, .progress-segmented)</code></td>
+  <td><a href="progress.html">progress</a></td>
+</tr>
+<tr>
+  <td>Circular progress</td>
+  <td class="text-subtle">CircularProgressIndicator</td>
+  <td><code>.ring (determinate, --value) · .spinner (indeterminate)</code></td>
+  <td><a href="ring.html">ring</a></td>
+</tr>
+<tr>
+  <td>Snackbar</td>
+  <td class="text-subtle">SnackBar</td>
+  <td><code>.snackbar (+ -fixed); richer toasts are .flag</code></td>
+  <td><a href="snackbar.html">snackbar</a></td>
+</tr>
+<tr>
+  <td>Tooltips</td>
+  <td class="text-subtle">Tooltip</td>
+  <td><code>[data-tooltip] + .tooltip-bottom/-left/-right</code><div class="text-subtlest" style="font-size:12px">Rich tooltips: compose a popover panel on the dropdown-menu skin.</div></td>
+  <td><span class="text-subtlest">—</span></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+
+<section>
+<h2>Containment</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+<tr>
+  <td>Cards (elevated / filled / outlined)</td>
+  <td class="text-subtle">Card</td>
+  <td><code>.card · .card + .bg-sunken · .card + .border</code></td>
+  <td><a href="card.html">card</a></td>
+</tr>
+<tr>
+  <td>Carousel</td>
+  <td class="text-subtle">CarouselView</td>
+  <td><code>.carousel (+ .carousel-hero) — scroll-snap, zero JS</code></td>
+  <td><a href="carousel.html">carousel</a></td>
+</tr>
+<tr>
+  <td>Dialogs</td>
+  <td class="text-subtle">AlertDialog / Dialog.fullscreen</td>
+  <td><code>dialog.modal (+ sizes) · dialog.modal-fullscreen</code><div class="text-subtlest" style="font-size:12px">Native &lt;dialog&gt;: focus trap, Esc, ::backdrop from the platform.</div></td>
+  <td><a href="sheet.html">sheet</a></td>
+</tr>
+<tr>
+  <td>Bottom sheets</td>
+  <td class="text-subtle">showModalBottomSheet</td>
+  <td><code>dialog.sheet (+ .sheet-handle, -tall)</code></td>
+  <td><a href="sheet.html">sheet</a></td>
+</tr>
+<tr>
+  <td>Side sheets</td>
+  <td class="text-subtle">side sheet pattern</td>
+  <td><code>dialog.drawer (+ -start / -wide)</code></td>
+  <td><a href="drawer.html">drawer</a></td>
+</tr>
+<tr>
+  <td>Divider</td>
+  <td class="text-subtle">Divider</td>
+  <td><code>hr, or .border-top / .border-bottom utilities</code></td>
+  <td><span class="text-subtlest">—</span></td>
+</tr>
+<tr>
+  <td>Lists</td>
+  <td class="text-subtle">ListView + ListTile</td>
+  <td><code>ul.list &gt; .list-item (leading/content/trailing; -divided, -compact)</code></td>
+  <td><a href="list.html">list</a></td>
+</tr>
+<tr>
+  <td>Expansion panels</td>
+  <td class="text-subtle">ExpansionTile / ExpansionPanelList</td>
+  <td><code>.accordion &gt; details.accordion-panel (name attr = exclusive)</code></td>
+  <td><a href="accordion.html">accordion</a></td>
+</tr>
+<tr>
+  <td>Search</td>
+  <td class="text-subtle">SearchBar / SearchAnchor</td>
+  <td><code>.search-field (+ kbd hint); full view: compose dialog.modal-fullscreen</code></td>
+  <td><a href="search.html">search</a></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+
+<section>
+<h2>Navigation</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+<tr>
+  <td>Top app bar</td>
+  <td class="text-subtle">AppBar</td>
+  <td><code>.navbar (sticky, glass; + .navbar-primary)</code></td>
+  <td><a href="navbar.html">navbar</a></td>
+</tr>
+<tr>
+  <td>Bottom app bar</td>
+  <td class="text-subtle">BottomAppBar</td>
+  <td><code>compose .bottom-nav + .fab-fixed</code></td>
+  <td><a href="bottom-nav.html">bottom-nav</a></td>
+</tr>
+<tr>
+  <td>Navigation bar</td>
+  <td class="text-subtle">NavigationBar</td>
+  <td><code>.bottom-nav (+ -fixed, pill indicators)</code></td>
+  <td><a href="bottom-nav.html">bottom-nav</a></td>
+</tr>
+<tr>
+  <td>Navigation rail</td>
+  <td class="text-subtle">NavigationRail</td>
+  <td><code>.rail (+ .rail-fab, .rail-bottom)</code></td>
+  <td><a href="rail.html">rail</a></td>
+</tr>
+<tr>
+  <td>Navigation drawer</td>
+  <td class="text-subtle">NavigationDrawer / Drawer</td>
+  <td><code>.sidebar (persistent) · dialog.drawer (modal)</code></td>
+  <td><a href="sidebar.html">sidebar</a></td>
+</tr>
+<tr>
+  <td>Tabs</td>
+  <td class="text-subtle">TabBar</td>
+  <td><code>.tabs/.tab (app-driven) · .tabset (radios + :has, zero JS)</code></td>
+  <td><a href="tabs.html">tabs</a></td>
+</tr>
+<tr>
+  <td>Stepper</td>
+  <td class="text-subtle">Stepper</td>
+  <td><code>ol.stepper (vertical; class or &lt;details&gt; flavor) · .tracker (horizontal)</code></td>
+  <td><a href="stepper.html">stepper</a></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+
+<section>
+<h2>Selection &amp; inputs</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+<tr>
+  <td>Checkbox</td>
+  <td class="text-subtle">Checkbox</td>
+  <td><code>.form-check-input</code></td>
+  <td><a href="forms.html">forms</a></td>
+</tr>
+<tr>
+  <td>Radio button</td>
+  <td class="text-subtle">Radio</td>
+  <td><code>.form-check-input[type=radio]</code></td>
+  <td><a href="forms.html">forms</a></td>
+</tr>
+<tr>
+  <td>Switch</td>
+  <td class="text-subtle">Switch</td>
+  <td><code>label.toggle (+ -lg)</code></td>
+  <td><a href="forms.html">forms</a></td>
+</tr>
+<tr>
+  <td>Chips (assist / filter / input / choice)</td>
+  <td class="text-subtle">ActionChip / FilterChip / InputChip / ChoiceChip</td>
+  <td><code>.chip · .chip-filter (checkbox) · .chip + .chip-remove · .chip-choice (radio)</code></td>
+  <td><a href="chips.html">chips</a></td>
+</tr>
+<tr>
+  <td>Menus</td>
+  <td class="text-subtle">MenuAnchor / PopupMenuButton</td>
+  <td><code>popover .dropdown-menu recipe (implicit-anchor positioning)</code></td>
+  <td><span class="text-subtlest">—</span></td>
+</tr>
+<tr>
+  <td>Exposed dropdown</td>
+  <td class="text-subtle">DropdownMenu</td>
+  <td><code>select.select (appearance: base-select ::picker) → .form-select fallback</code></td>
+  <td><a href="listbox.html">listbox</a></td>
+</tr>
+<tr>
+  <td>Sliders</td>
+  <td class="text-subtle">Slider / RangeSlider</td>
+  <td><code>input[type=range].slider (live zero-JS fill; + -compact, -thin) · .range-slider (dual-thumb)</code></td>
+  <td><a href="slider.html">slider</a></td>
+</tr>
+<tr>
+  <td>Text fields</td>
+  <td class="text-subtle">TextField</td>
+  <td><code>.form-control (+ label/helper/.is-invalid; -compact/-subtle), textarea</code></td>
+  <td><a href="forms.html">forms</a></td>
+</tr>
+<tr>
+  <td>Date pickers</td>
+  <td class="text-subtle">showDatePicker</td>
+  <td><code>.calendar grid (presentational; compose in dialog.modal) · native .date-field</code></td>
+  <td><a href="calendar.html">calendar</a></td>
+</tr>
+<tr>
+  <td>Time pickers</td>
+  <td class="text-subtle">showTimePicker</td>
+  <td><code>native input[type=time].time-field</code></td>
+  <td><a href="datefield.html">datefield</a></td>
+</tr>
+<tr>
+  <td>Autocomplete</td>
+  <td class="text-subtle">Autocomplete</td>
+  <td><code>.form-control + native &lt;datalist&gt;; richer composes popover + app state</code></td>
+  <td><span class="text-subtlest">—</span></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+
+<section>
+<h2>Out of scope (gesture/state-bound — pair Lozenge skins with app JS)</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+<tr>
+  <td>Dismissible / swipe actions</td>
+  <td class="text-subtle">Dismissible</td>
+  <td><code>—</code><div class="text-subtlest" style="font-size:12px">Gesture recognition can't be honest zero-JS.</div></td>
+  <td><span class="text-subtlest">—</span></td>
+</tr>
+<tr>
+  <td>Pull to refresh</td>
+  <td class="text-subtle">RefreshIndicator</td>
+  <td><code>—</code></td>
+  <td><span class="text-subtlest">—</span></td>
+</tr>
+<tr>
+  <td>Reorderable lists / drag-and-drop</td>
+  <td class="text-subtle">ReorderableListView</td>
+  <td><code>.board/.issue-card are drag-ready skins; DnD state is app-side</code></td>
+  <td><a href="board.html">board</a></td>
+</tr>
+<tr>
+  <td>Hero / shared-element transitions</td>
+  <td class="text-subtle">Hero</td>
+  <td><code>View Transitions API recipe territory (future)</code></td>
+  <td><span class="text-subtlest">—</span></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+
+<section>
+<h2>Lozenge-only (no Material counterpart)</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+<tr>
+  <td>—</td>
+  <td class="text-subtle">—</td>
+  <td><code>.lozenge status pills · .issue-card/.board · .timeline roadmap · .backlog/.sprint-header · .comment-thread · .empty-state · .skeleton · .flag</code><div class="text-subtlest" style="font-size:12px">The Jira-shaped surface Material never had.</div></td>
+  <td><a href="lozenge.html">lozenge</a></td>
+</tr>
+</tbody>
+</table></div>
+</section>
+  </main>
+</div>
+
+</body>
+</html>

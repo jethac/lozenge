@@ -1,0 +1,81 @@
+{
+  "$comment": "Material → Lozenge translation table. Rendered into docs/material.html and an llms.txt section by the build scripts. docs = docs-page filename or null.",
+  "sections": [
+    {
+      "title": "Actions",
+      "rows": [
+        { "material": "Common buttons (filled / tonal / text)", "flutter": "FilledButton · ElevatedButton · TextButton", "lozenge": ".btn-primary · .btn · .btn-subtle / .btn-link", "docs": "button.html", "note": "Outlined buttons are deliberately not in the Lozenge idiom — use .btn." },
+        { "material": "FAB / Extended FAB", "flutter": "FloatingActionButton(.extended)", "lozenge": ".fab · .fab-small · .fab-extended · .fab-fixed", "docs": "fab.html" },
+        { "material": "Icon buttons", "flutter": "IconButton", "lozenge": ".btn.btn-icon (+ .btn-compact)", "docs": "button.html" },
+        { "material": "Segmented buttons", "flutter": "SegmentedButton", "lozenge": "fieldset.segmented (+ -bold / -compact)", "docs": "segmented.html", "note": "Radio-backed; arrow keys come from the platform." }
+      ]
+    },
+    {
+      "title": "Communication",
+      "rows": [
+        { "material": "Badges", "flutter": "Badge", "lozenge": ".badge (+ -primary/-important/-added/-removed); status pills are .lozenge", "docs": "badge.html" },
+        { "material": "Linear progress", "flutter": "LinearProgressIndicator", "lozenge": ".progress (+ .progress-indeterminate, .progress-segmented)", "docs": "progress.html" },
+        { "material": "Circular progress", "flutter": "CircularProgressIndicator", "lozenge": ".ring (determinate, --value) · .spinner (indeterminate)", "docs": "ring.html" },
+        { "material": "Snackbar", "flutter": "SnackBar", "lozenge": ".snackbar (+ -fixed); richer toasts are .flag", "docs": "snackbar.html" },
+        { "material": "Tooltips", "flutter": "Tooltip", "lozenge": "[data-tooltip] + .tooltip-bottom/-left/-right", "docs": null, "note": "Rich tooltips: compose a popover panel on the dropdown-menu skin." }
+      ]
+    },
+    {
+      "title": "Containment",
+      "rows": [
+        { "material": "Cards (elevated / filled / outlined)", "flutter": "Card", "lozenge": ".card · .card + .bg-sunken · .card + .border", "docs": "card.html" },
+        { "material": "Carousel", "flutter": "CarouselView", "lozenge": ".carousel (+ .carousel-hero) — scroll-snap, zero JS", "docs": "carousel.html" },
+        { "material": "Dialogs", "flutter": "AlertDialog / Dialog.fullscreen", "lozenge": "dialog.modal (+ sizes) · dialog.modal-fullscreen", "docs": "sheet.html", "note": "Native <dialog>: focus trap, Esc, ::backdrop from the platform." },
+        { "material": "Bottom sheets", "flutter": "showModalBottomSheet", "lozenge": "dialog.sheet (+ .sheet-handle, -tall)", "docs": "sheet.html" },
+        { "material": "Side sheets", "flutter": "side sheet pattern", "lozenge": "dialog.drawer (+ -start / -wide)", "docs": "drawer.html" },
+        { "material": "Divider", "flutter": "Divider", "lozenge": "hr, or .border-top / .border-bottom utilities", "docs": null },
+        { "material": "Lists", "flutter": "ListView + ListTile", "lozenge": "ul.list > .list-item (leading/content/trailing; -divided, -compact)", "docs": "list.html" },
+        { "material": "Expansion panels", "flutter": "ExpansionTile / ExpansionPanelList", "lozenge": ".accordion > details.accordion-panel (name attr = exclusive)", "docs": "accordion.html" },
+        { "material": "Search", "flutter": "SearchBar / SearchAnchor", "lozenge": ".search-field (+ kbd hint); full view: compose dialog.modal-fullscreen", "docs": "search.html" }
+      ]
+    },
+    {
+      "title": "Navigation",
+      "rows": [
+        { "material": "Top app bar", "flutter": "AppBar", "lozenge": ".navbar (sticky, glass; + .navbar-primary)", "docs": "navbar.html" },
+        { "material": "Bottom app bar", "flutter": "BottomAppBar", "lozenge": "compose .bottom-nav + .fab-fixed", "docs": "bottom-nav.html" },
+        { "material": "Navigation bar", "flutter": "NavigationBar", "lozenge": ".bottom-nav (+ -fixed, pill indicators)", "docs": "bottom-nav.html" },
+        { "material": "Navigation rail", "flutter": "NavigationRail", "lozenge": ".rail (+ .rail-fab, .rail-bottom)", "docs": "rail.html" },
+        { "material": "Navigation drawer", "flutter": "NavigationDrawer / Drawer", "lozenge": ".sidebar (persistent) · dialog.drawer (modal)", "docs": "sidebar.html" },
+        { "material": "Tabs", "flutter": "TabBar", "lozenge": ".tabs/.tab (app-driven) · .tabset (radios + :has, zero JS)", "docs": "tabs.html" },
+        { "material": "Stepper", "flutter": "Stepper", "lozenge": "ol.stepper (vertical; class or <details> flavor) · .tracker (horizontal)", "docs": "stepper.html" }
+      ]
+    },
+    {
+      "title": "Selection & inputs",
+      "rows": [
+        { "material": "Checkbox", "flutter": "Checkbox", "lozenge": ".form-check-input", "docs": "forms.html" },
+        { "material": "Radio button", "flutter": "Radio", "lozenge": ".form-check-input[type=radio]", "docs": "forms.html" },
+        { "material": "Switch", "flutter": "Switch", "lozenge": "label.toggle (+ -lg)", "docs": "forms.html" },
+        { "material": "Chips (assist / filter / input / choice)", "flutter": "ActionChip / FilterChip / InputChip / ChoiceChip", "lozenge": ".chip · .chip-filter (checkbox) · .chip + .chip-remove · .chip-choice (radio)", "docs": "chips.html" },
+        { "material": "Menus", "flutter": "MenuAnchor / PopupMenuButton", "lozenge": "popover .dropdown-menu recipe (implicit-anchor positioning)", "docs": null },
+        { "material": "Exposed dropdown", "flutter": "DropdownMenu", "lozenge": "select.select (appearance: base-select ::picker) → .form-select fallback", "docs": "listbox.html" },
+        { "material": "Sliders", "flutter": "Slider / RangeSlider", "lozenge": "input[type=range].slider (live zero-JS fill; + -compact, -thin) · .range-slider (dual-thumb)", "docs": "slider.html" },
+        { "material": "Text fields", "flutter": "TextField", "lozenge": ".form-control (+ label/helper/.is-invalid; -compact/-subtle), textarea", "docs": "forms.html" },
+        { "material": "Date pickers", "flutter": "showDatePicker", "lozenge": ".calendar grid (presentational; compose in dialog.modal) · native .date-field", "docs": "calendar.html" },
+        { "material": "Time pickers", "flutter": "showTimePicker", "lozenge": "native input[type=time].time-field", "docs": "datefield.html" },
+        { "material": "Autocomplete", "flutter": "Autocomplete", "lozenge": ".form-control + native <datalist>; richer composes popover + app state", "docs": null }
+      ]
+    },
+    {
+      "title": "Out of scope (gesture/state-bound — pair Lozenge skins with app JS)",
+      "rows": [
+        { "material": "Dismissible / swipe actions", "flutter": "Dismissible", "lozenge": "—", "docs": null, "note": "Gesture recognition can't be honest zero-JS." },
+        { "material": "Pull to refresh", "flutter": "RefreshIndicator", "lozenge": "—", "docs": null },
+        { "material": "Reorderable lists / drag-and-drop", "flutter": "ReorderableListView", "lozenge": ".board/.issue-card are drag-ready skins; DnD state is app-side", "docs": "board.html" },
+        { "material": "Hero / shared-element transitions", "flutter": "Hero", "lozenge": "View Transitions API recipe territory (future)", "docs": null }
+      ]
+    },
+    {
+      "title": "Lozenge-only (no Material counterpart)",
+      "rows": [
+        { "material": "—", "flutter": "—", "lozenge": ".lozenge status pills · .issue-card/.board · .timeline roadmap · .backlog/.sprint-header · .comment-thread · .empty-state · .skeleton · .flag", "docs": "lozenge.html", "note": "The Jira-shaped surface Material never had." }
+      ]
+    }
+  ]
+}

@@ -96,15 +96,25 @@ A fixed FAB floats at the bottom-right of this page.</p>
 
 <section class="demo-section">
   <h2>Slider</h2>
-  <p class="text-subtle">The track fill reads a <code>--value</code> custom property
-  (0–1) set by the app — inline here; without it the track is simply unfilled.</p>
+  <p class="text-subtle">The fill is welded to the thumb — drag any of these:
+  it tracks live with zero JS and zero wiring. Dual-thumb range included.
+  The legacy hairline form (<code>.slider-thin</code>) is the only variant
+  that needs an app-set <code>--value</code>.</p>
   <div class="demo-row">
     <input type="range" class="slider" min="0" max="100" value="60"
-           style="--value: 0.6; width: 240px" aria-label="Estimate">
+           style="width: 240px" aria-label="Estimate">
     <input type="range" class="slider" min="0" max="100" value="40"
-           style="--value: 0.4; width: 240px" aria-label="Disabled slider" disabled>
+           style="width: 240px" aria-label="Disabled slider" disabled>
     <input type="range" class="slider slider-compact" min="0" max="100" value="60"
-           style="--value: 0.6; width: 160px" aria-label="Compact slider">
+           style="width: 160px" aria-label="Compact slider">
+  </div>
+  <div class="demo-row">
+    <div class="range-slider" style="width: 240px">
+      <input type="range" class="slider" min="0" max="100" value="20" aria-label="Minimum">
+      <input type="range" class="slider" min="0" max="100" value="60" aria-label="Maximum">
+    </div>
+    <input type="range" class="slider slider-thin" min="0" max="100" value="60"
+           style="--value: 0.6; width: 240px" aria-label="Thin slider (app-wired fill)">
   </div>
 </section>
 

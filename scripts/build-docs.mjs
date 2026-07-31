@@ -146,6 +146,7 @@ ${navItems}
     <div class="sidebar-section">Guide</div>
     <nav aria-label="Guide">
 ${sideItem("index", "Overview")}
+${sideItem("material", "Material → Lozenge")}
     </nav>
     <div class="sidebar-section">Components</div>
     <nav aria-label="Components">
@@ -553,6 +554,58 @@ ${sysTokenTables(sys)}
   return pageShell({ title: "Overview", activeSlug: "index", components, content });
 }
 
+// ------------------------------------------------- material cheat sheet
+
+function materialMapPage(components) {
+  const map = JSON.parse(
+    readFileSync(join(root, "tokens", "material-map.json"), "utf8")
+  );
+  const sections = map.sections
+    .map((sec) => {
+      const rows = sec.rows
+        .map((r) => {
+          const docsLink = r.docs
+            ? `<a href="${esc(r.docs)}">${esc(r.docs.replace(".html", ""))}</a>`
+            : '<span class="text-subtlest">—</span>';
+          const note = r.note
+            ? `<div class="text-subtlest" style="font-size:12px">${esc(r.note)}</div>`
+            : "";
+          return `<tr>
+  <td>${esc(r.material)}</td>
+  <td class="text-subtle">${esc(r.flutter)}</td>
+  <td><code>${esc(r.lozenge)}</code>${note}</td>
+  <td>${docsLink}</td>
+</tr>`;
+        })
+        .join("\n");
+      return `<section>
+<h2>${esc(sec.title)}</h2>
+<div class="doc-table-wrap"><table class="table">
+<thead><tr><th>Material</th><th>Flutter widget</th><th>Lozenge</th><th>Docs</th></tr></thead>
+<tbody>
+${rows}
+</tbody>
+</table></div>
+</section>`;
+    })
+    .join("\n\n");
+
+  const content = `<h1>Material → Lozenge cheat sheet</h1>
+<p class="text-subtle">Every component in Google's Material / Flutter widget catalog,
+mapped to its Lozenge equivalent. Also available to agents as a section of
+<a href="/llms.txt">llms.txt</a>; source of truth is
+<code>tokens/material-map.json</code>.</p>
+
+${sections}`;
+
+  return pageShell({
+    title: "Material → Lozenge",
+    activeSlug: "material",
+    components,
+    content,
+  });
+}
+
 // ------------------------------------------------------------------ main
 
 const specFiles = readdirSync(specsDir).filter((f) => f.endsWith(".json")).sort();
@@ -565,8 +618,9 @@ const sys = JSON.parse(readFileSync(join(root, "tokens", "sys.json"), "utf8"));
 mkdirSync(outDir, { recursive: true });
 
 writeFileSync(join(outDir, "index.html"), overviewPage(components, sys));
+writeFileSync(join(outDir, "material.html"), materialMapPage(components));
 for (const spec of specs) {
   writeFileSync(join(outDir, `${spec.component}.html`), componentPage(spec, components));
 }
 
-console.log(`build-docs: wrote ${specs.length + 1} pages to docs/`);
+console.log(`build-docs: wrote ${specs.length + 2} pages to docs/`);

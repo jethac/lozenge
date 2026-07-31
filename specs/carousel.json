@@ -1,0 +1,28 @@
+{
+  "component": "carousel",
+  "version": "0.1.0",
+  "intent": "Scroll-snap carousel (Material's CarouselView, Lozenge-flavoured): a horizontally scrolling strip of snap-aligned cards. Zero JS — scrolling, snapping, momentum, keyboard (when focusable content is inside) and RTL all come from the platform's scroll machinery. Use .carousel-hero for a center-snapping single-feature strip.",
+  "root": { "selector": ".carousel", "element": ["div", "ul"], "requiredClasses": ["carousel"] },
+  "variants": {
+    "snap": {
+      "classes": ["carousel-hero"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["carousel-hero"],
+  "structure": [
+    { "selector": ".carousel-item", "required": true, "description": "One or more snap-aligned items; .carousel-item-wide for 300px cards; optional .carousel-item-caption inside." }
+  ],
+  "aria": [
+    { "on": ".carousel", "attr": "aria-label", "required": true, "when": "the strip is a meaningful region (recommended: aria-label plus role=region, or a list structure with ul/li)" }
+  ],
+  "nesting": {
+    "allowedIn": ["page content", "card bodies"],
+    "disallowed": [".carousel .carousel"]
+  },
+  "a11yNotes": "Content scrolls: ensure items' interactive children are reachable by Tab (the scroller brings them into view). Provide a text alternative for image-only items via img[alt] or captions. Horizontal-scroll-only content should also be reachable another way on keyboard-only setups if it's primary navigation.",
+  "examples": [
+    "<div class=\"carousel\" aria-label=\"Recent boards\"><div class=\"carousel-item\"><div class=\"carousel-item-caption\">Sprint 14</div></div><div class=\"carousel-item carousel-item-wide\"><div class=\"carousel-item-caption\">Roadmap</div></div></div>"
+  ]
+}

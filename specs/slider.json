@@ -1,27 +1,53 @@
 {
   "component": "slider",
-  "version": "0.1.0",
-  "intent": "Styled native <input type=\"range\"> (Material's Slider, Lozenge-flavoured): 4px rounded track, 16px accent thumb, hover halo, focus ring. Behavior is 100% the platform's. HONEST LIMITATION: the filled portion of the track is painted from a --value custom property (0..1) that the APP must set on the input — inline style=\"--value: 0.6\" for static values, or one line of app JS on input: el.style.setProperty('--value', el.value / (el.max || 100)). Without --value the track degrades gracefully to unfilled; the control still works.",
+  "version": "0.2.0",
+  "intent": "Styled native <input type=\"range\"> (Material's Slider, Lozenge-flavoured): chunky 16px pill track with a LIVE fill that requires no wiring — the fill is welded to the thumb (clipped one-sided thumb shadow on WebKit/Blink, ::-moz-range-progress on Firefox), so dragging, keyboard steps, and programmatic value changes all move it with zero JS and zero custom properties. Behavior is 100% the platform's. The legacy 4px hairline look is available as .slider-thin, whose fill IS driven by an app-set --value (0..1) — that limitation applies only to the thin variant.",
   "root": { "selector": ".slider", "element": ["input"], "requiredClasses": ["slider"] },
   "variants": {
     "size": {
       "classes": ["slider-compact"],
       "required": false,
       "exclusive": true
+    },
+    "form": {
+      "classes": ["slider-thin"],
+      "required": false,
+      "exclusive": true
     }
   },
-  "modifiers": ["slider-compact"],
+  "modifiers": ["slider-compact", "slider-thin"],
   "structure": [],
   "aria": [
     { "on": ".slider", "attr": "aria-label", "required": true, "when": "no visible <label for> or aria-labelledby references the input" }
   ],
   "nesting": {
-    "allowedIn": ["forms", ".form-group", "toolbars", "card bodies"],
-    "disallowed": [".slider"]
+    "allowedIn": ["forms", ".form-group", "toolbars", "card bodies", ".range-slider"],
+    "disallowed": []
   },
-  "a11yNotes": "All interaction is the native range input: arrow keys step, Home/End jump, drag works, form participation is standard. Name the control with a visible <label for> or aria-label. If min/max aren't self-evident, add aria-valuetext via your app. Remember --value only paints the fill — keyboard/pointer changes move the native value regardless, so keep the two in sync with the one-liner above (or accept an unfilled track).",
+  "a11yNotes": "All interaction is the native range input: arrow keys step, Home/End jump, drag works, form participation is standard. Name the control with a visible <label for> or aria-label. Forced-colors mode reverts to the stock control via accent-color. For .slider-thin only: keep --value in sync with app code or accept an unfilled track.",
   "examples": [
-    "<input type=\"range\" class=\"slider\" min=\"0\" max=\"100\" value=\"60\" style=\"--value: 0.6\" aria-label=\"Estimate\">",
-    "<input type=\"range\" class=\"slider slider-compact\" min=\"0\" max=\"10\" value=\"3\" style=\"--value: 0.3\" aria-label=\"Story points\">"
+    "<input type=\"range\" class=\"slider\" min=\"0\" max=\"100\" value=\"60\" aria-label=\"Estimate\">",
+    "<input type=\"range\" class=\"slider slider-compact\" min=\"0\" max=\"10\" value=\"3\" aria-label=\"Story points\">",
+    "<div class=\"range-slider\"><input type=\"range\" class=\"slider\" min=\"0\" max=\"100\" value=\"20\" aria-label=\"Minimum\"><input type=\"range\" class=\"slider\" min=\"0\" max=\"100\" value=\"60\" aria-label=\"Maximum\"></div>"
+  ],
+  "subcomponents": [
+    {
+      "component": "range-slider",
+      "intent": "Dual-thumb range (Material's RangeSlider), zero JS: two stacked native range inputs inside a .range-slider container; each thumb's shadow masks outward so the between-region stays accent-filled. Each thumb keeps its own tab stop, label, and ARIA slider semantics. The app enforces min<=max on submit (the paint is agnostic).",
+      "root": { "selector": ".range-slider", "element": ["div"], "requiredClasses": ["range-slider"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".slider", "required": true, "description": "Exactly two input.slider children (min then max, document order determines mask direction)." }
+      ],
+      "aria": [
+        { "on": ".range-slider > .slider", "attr": "aria-label", "required": true, "when": "each input needs its own name, e.g. Minimum/Maximum" }
+      ],
+      "nesting": { "allowedIn": ["forms", ".form-group"], "disallowed": [".range-slider"] },
+      "a11yNotes": "Two real inputs: both are keyboard-reachable in document order. Under forced-colors the container unstacks into two labeled native sliders.",
+      "examples": [
+        "<div class=\"range-slider\"><input type=\"range\" class=\"slider\" min=\"0\" max=\"100\" value=\"20\" aria-label=\"Minimum\"><input type=\"range\" class=\"slider\" min=\"0\" max=\"100\" value=\"60\" aria-label=\"Maximum\"></div>"
+      ]
+    }
   ]
 }

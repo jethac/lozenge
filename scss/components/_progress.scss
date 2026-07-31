@@ -29,6 +29,28 @@
   background-color: $danger;
 }
 
+// Indeterminate: no width needed, a sweeping segment instead.
+// <div class="progress progress-indeterminate"><div class="progress-bar"></div></div>
+.progress-indeterminate {
+  position: relative;
+
+  .progress-bar {
+    position: absolute;
+    inset-block: 0;
+    width: 40%;
+    animation: lz-progress-sweep 1.4s var(--lz-ease-standard) infinite;
+  }
+}
+
+@keyframes lz-progress-sweep {
+  0% {
+    inset-inline-start: -40%;
+  }
+  100% {
+    inset-inline-start: 100%;
+  }
+}
+
 // Epic-style segmented progress (done / in progress / to do).
 // Usage:
 // <div class="progress progress-segmented">

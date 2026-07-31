@@ -149,6 +149,19 @@ A single issue on a Kanban board: summary text plus a meta row of issue-type ico
 <span class="issue-type issue-type-story" aria-label="Story"></span>
 ```
 
+### carousel
+
+Scroll-snap carousel (Material's CarouselView, Lozenge-flavoured): a horizontally scrolling strip of snap-aligned cards. Zero JS — scrolling, snapping, momentum, keyboard (when focusable content is inside) and RTL all come from the platform's scroll machinery. Use .carousel-hero for a center-snapping single-feature strip.
+
+- Root: `.carousel` (element: div | ul)
+- Variants (snap; optional, pick one): `carousel-hero`
+- Modifiers: `carousel-hero`
+- Required structure: `.carousel-item`
+
+```html
+<div class="carousel" aria-label="Recent boards"><div class="carousel-item"><div class="carousel-item-caption">Sprint 14</div></div><div class="carousel-item carousel-item-wide"><div class="carousel-item-caption">Roadmap</div></div></div>
+```
+
 ### chip
 
 Compact 24px pill for selection and input, built on native form controls with zero JavaScript — the Lozenge take on Material's chip family. Three recipes share the .chip skin: choice chips (single-select) are a <label class="chip chip-choice"> wrapping a hidden radio; filter chips (multi-select) are the same with a checkbox and grow a ✓ when checked; input chips are a plain <span class="chip"> with a .chip-remove button. A bare <span class="chip"> is a static pill (see also the squarer .tag).
@@ -569,14 +582,26 @@ Vertical stack of .skeleton-text lines with prose-like rhythm: 8px row gap, and 
 
 ### slider
 
-Styled native <input type="range"> (Material's Slider, Lozenge-flavoured): 4px rounded track, 16px accent thumb, hover halo, focus ring. Behavior is 100% the platform's. HONEST LIMITATION: the filled portion of the track is painted from a --value custom property (0..1) that the APP must set on the input — inline style="--value: 0.6" for static values, or one line of app JS on input: el.style.setProperty('--value', el.value / (el.max || 100)). Without --value the track degrades gracefully to unfilled; the control still works.
+Styled native <input type="range"> (Material's Slider, Lozenge-flavoured): chunky 16px pill track with a LIVE fill that requires no wiring — the fill is welded to the thumb (clipped one-sided thumb shadow on WebKit/Blink, ::-moz-range-progress on Firefox), so dragging, keyboard steps, and programmatic value changes all move it with zero JS and zero custom properties. Behavior is 100% the platform's. The legacy 4px hairline look is available as .slider-thin, whose fill IS driven by an app-set --value (0..1) — that limitation applies only to the thin variant.
 
 - Root: `.slider` (element: input)
 - Variants (size; optional, pick one): `slider-compact`
-- Modifiers: `slider-compact`
+- Variants (form; optional, pick one): `slider-thin`
+- Modifiers: `slider-compact`, `slider-thin`
 
 ```html
-<input type="range" class="slider" min="0" max="100" value="60" style="--value: 0.6" aria-label="Estimate">
+<input type="range" class="slider" min="0" max="100" value="60" aria-label="Estimate">
+```
+
+### range-slider
+
+Dual-thumb range (Material's RangeSlider), zero JS: two stacked native range inputs inside a .range-slider container; each thumb's shadow masks outward so the between-region stays accent-filled. Each thumb keeps its own tab stop, label, and ARIA slider semantics. The app enforces min<=max on submit (the paint is agnostic).
+
+- Root: `.range-slider` (element: div)
+- Required structure: `.slider`
+
+```html
+<div class="range-slider"><input type="range" class="slider" min="0" max="100" value="20" aria-label="Minimum"><input type="range" class="slider" min="0" max="100" value="60" aria-label="Maximum"></div>
 ```
 
 ### snackbar
@@ -667,6 +692,72 @@ Tree view for file/hierarchy browsing built on nested <details>: branch nodes ar
 ```html
 <ul class="tree"><li><details open><summary class="tree-item">scss</summary><ul><li><span class="tree-item selected" aria-current="true">_tokens.scss</span></li><li><span class="tree-item">lozenge.scss</span></li></ul></details></li><li><span class="tree-item">package.json</span></li></ul>
 ```
+
+## Material / Flutter → Lozenge cheat sheet
+
+If you know Google's Material or Flutter widget names, translate with this table (full version: /docs/material.html).
+
+### Actions
+
+- Common buttons (filled / tonal / text) (FilledButton · ElevatedButton · TextButton) → `.btn-primary · .btn · .btn-subtle / .btn-link` — Outlined buttons are deliberately not in the Lozenge idiom — use .btn.
+- FAB / Extended FAB (FloatingActionButton(.extended)) → `.fab · .fab-small · .fab-extended · .fab-fixed`
+- Icon buttons (IconButton) → `.btn.btn-icon (+ .btn-compact)`
+- Segmented buttons (SegmentedButton) → `fieldset.segmented (+ -bold / -compact)` — Radio-backed; arrow keys come from the platform.
+
+### Communication
+
+- Badges (Badge) → `.badge (+ -primary/-important/-added/-removed); status pills are .lozenge`
+- Linear progress (LinearProgressIndicator) → `.progress (+ .progress-indeterminate, .progress-segmented)`
+- Circular progress (CircularProgressIndicator) → `.ring (determinate, --value) · .spinner (indeterminate)`
+- Snackbar (SnackBar) → `.snackbar (+ -fixed); richer toasts are .flag`
+- Tooltips (Tooltip) → `[data-tooltip] + .tooltip-bottom/-left/-right` — Rich tooltips: compose a popover panel on the dropdown-menu skin.
+
+### Containment
+
+- Cards (elevated / filled / outlined) (Card) → `.card · .card + .bg-sunken · .card + .border`
+- Carousel (CarouselView) → `.carousel (+ .carousel-hero) — scroll-snap, zero JS`
+- Dialogs (AlertDialog / Dialog.fullscreen) → `dialog.modal (+ sizes) · dialog.modal-fullscreen` — Native <dialog>: focus trap, Esc, ::backdrop from the platform.
+- Bottom sheets (showModalBottomSheet) → `dialog.sheet (+ .sheet-handle, -tall)`
+- Side sheets (side sheet pattern) → `dialog.drawer (+ -start / -wide)`
+- Divider (Divider) → `hr, or .border-top / .border-bottom utilities`
+- Lists (ListView + ListTile) → `ul.list > .list-item (leading/content/trailing; -divided, -compact)`
+- Expansion panels (ExpansionTile / ExpansionPanelList) → `.accordion > details.accordion-panel (name attr = exclusive)`
+- Search (SearchBar / SearchAnchor) → `.search-field (+ kbd hint); full view: compose dialog.modal-fullscreen`
+
+### Navigation
+
+- Top app bar (AppBar) → `.navbar (sticky, glass; + .navbar-primary)`
+- Bottom app bar (BottomAppBar) → `compose .bottom-nav + .fab-fixed`
+- Navigation bar (NavigationBar) → `.bottom-nav (+ -fixed, pill indicators)`
+- Navigation rail (NavigationRail) → `.rail (+ .rail-fab, .rail-bottom)`
+- Navigation drawer (NavigationDrawer / Drawer) → `.sidebar (persistent) · dialog.drawer (modal)`
+- Tabs (TabBar) → `.tabs/.tab (app-driven) · .tabset (radios + :has, zero JS)`
+- Stepper (Stepper) → `ol.stepper (vertical; class or <details> flavor) · .tracker (horizontal)`
+
+### Selection & inputs
+
+- Checkbox (Checkbox) → `.form-check-input`
+- Radio button (Radio) → `.form-check-input[type=radio]`
+- Switch (Switch) → `label.toggle (+ -lg)`
+- Chips (assist / filter / input / choice) (ActionChip / FilterChip / InputChip / ChoiceChip) → `.chip · .chip-filter (checkbox) · .chip + .chip-remove · .chip-choice (radio)`
+- Menus (MenuAnchor / PopupMenuButton) → `popover .dropdown-menu recipe (implicit-anchor positioning)`
+- Exposed dropdown (DropdownMenu) → `select.select (appearance: base-select ::picker) → .form-select fallback`
+- Sliders (Slider / RangeSlider) → `input[type=range].slider (live zero-JS fill; + -compact, -thin) · .range-slider (dual-thumb)`
+- Text fields (TextField) → `.form-control (+ label/helper/.is-invalid; -compact/-subtle), textarea`
+- Date pickers (showDatePicker) → `.calendar grid (presentational; compose in dialog.modal) · native .date-field`
+- Time pickers (showTimePicker) → `native input[type=time].time-field`
+- Autocomplete (Autocomplete) → `.form-control + native <datalist>; richer composes popover + app state`
+
+### Out of scope (gesture/state-bound — pair Lozenge skins with app JS)
+
+- Dismissible / swipe actions (Dismissible) → `—` — Gesture recognition can't be honest zero-JS.
+- Pull to refresh (RefreshIndicator) → `—`
+- Reorderable lists / drag-and-drop (ReorderableListView) → `.board/.issue-card are drag-ready skins; DnD state is app-side`
+- Hero / shared-element transitions (Hero) → `View Transitions API recipe territory (future)`
+
+### Lozenge-only (no Material counterpart)
+
+- — (—) → `.lozenge status pills · .issue-card/.board · .timeline roadmap · .backlog/.sprint-header · .comment-thread · .empty-state · .skeleton · .flag` — The Jira-shaped surface Material never had.
 
 ## System tokens (--lz-sys-*)
 
