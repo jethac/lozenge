@@ -1,0 +1,185 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: $btn-height;
+  padding: 0 $btn-padding-x;
+  border: none;
+  border-radius: $border-radius;
+  background-color: $btn-default-bg;
+  color: $text-color;
+  font-family: inherit;
+  font-size: $font-size-base;
+  font-weight: $btn-font-weight;
+  line-height: 1;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.1s ease-out, color 0.1s ease-out;
+  user-select: none;
+
+  &:hover {
+    background-color: $btn-default-hover-bg;
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: $btn-default-active-bg;
+    color: $link-color;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &:disabled,
+  &.disabled {
+    background-color: var(--lz-sys-interaction-bg);
+    color: $text-disabled;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+.btn-primary {
+  background-color: $primary;
+  color: $text-inverse;
+
+  &:hover {
+    background-color: var(--lz-sys-accent-bold-hovered);
+    color: $text-inverse;
+  }
+
+  &:active {
+    background-color: var(--lz-sys-accent-bold-pressed);
+    color: $text-inverse;
+  }
+}
+
+.btn-danger {
+  background-color: $danger;
+  color: $text-inverse;
+
+  &:hover {
+    background-color: var(--lz-sys-danger-bold-hovered);
+    color: $text-inverse;
+  }
+
+  &:active {
+    background-color: var(--lz-sys-danger-bold-pressed);
+    color: $text-inverse;
+  }
+}
+
+.btn-warning {
+  background-color: $warning;
+  color: var(--lz-sys-status-warning-on-bold);
+
+  &:hover {
+    background-color: var(--lz-sys-warning-bold-hovered);
+    color: var(--lz-sys-status-warning-on-bold);
+  }
+
+  &:active {
+    background-color: var(--lz-sys-warning-bold-pressed);
+    color: var(--lz-sys-status-warning-on-bold);
+  }
+}
+
+.btn-subtle {
+  background-color: transparent;
+
+  &:hover {
+    background-color: $btn-default-hover-bg;
+  }
+
+  &:active {
+    background-color: $btn-default-active-bg;
+    color: $link-color;
+  }
+}
+
+.btn-link,
+.btn-subtle-link {
+  background-color: transparent;
+  color: $link-color;
+
+  &:hover {
+    background-color: transparent;
+    color: $link-hover-color;
+    text-decoration: underline;
+  }
+
+  &:active {
+    background-color: transparent;
+    color: $link-active-color;
+  }
+}
+
+.btn-subtle-link {
+  color: $text-subtle;
+
+  &:hover {
+    color: var(--lz-sys-text);
+  }
+
+  &:active {
+    color: var(--lz-sys-text);
+  }
+}
+
+// Selected (toggled-on) state, e.g. filter buttons.
+.btn.active {
+  background-color: var(--lz-sys-status-neutral-bold-bg);
+  color: var(--lz-sys-status-neutral-on-bold);
+}
+
+.btn-compact {
+  height: $btn-height-compact;
+  padding: 0 8px;
+}
+
+// Icon-only square button.
+.btn-icon {
+  width: $btn-height;
+  padding: 0;
+
+  &.btn-compact {
+    width: $btn-height-compact;
+  }
+}
+
+// Full-width.
+.btn-block {
+  display: flex;
+  width: 100%;
+}
+
+// Button group — seamless joined buttons.
+.btn-group {
+  display: inline-flex;
+
+  > .btn {
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: $border-radius;
+      border-bottom-left-radius: $border-radius;
+    }
+
+    &:last-child {
+      border-top-right-radius: $border-radius;
+      border-bottom-right-radius: $border-radius;
+    }
+
+    + .btn {
+      margin-left: 2px;
+    }
+  }
+}

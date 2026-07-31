@@ -1,0 +1,42 @@
+@use "../tokens" as *;
+
+// Usage:
+// <ul class="tabs">
+//   <li><a class="tab active" href="#">Details</a></li>
+//   <li><a class="tab" href="#">Comments</a></li>
+// </ul>
+.tabs {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-shadow: inset 0 -2px 0 $separator-color;
+}
+
+.tab {
+  display: inline-block;
+  padding: 6px 8px 8px;
+  color: $text-subtle;
+  font-weight: $font-weight-medium;
+  line-height: 16px;
+  cursor: pointer;
+
+  &:hover {
+    color: $link-hover-color;
+    text-decoration: none;
+  }
+
+  &.active {
+    color: $link-color;
+    box-shadow: inset 0 -2px 0 $link-color;
+  }
+
+  &.disabled {
+    color: $text-disabled;
+    pointer-events: none;
+  }
+}
+
+.tab-pane {
+  padding-top: 16px;
+}

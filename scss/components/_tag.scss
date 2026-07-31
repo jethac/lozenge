@@ -1,0 +1,55 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Label/tag chips, optionally removable.
+// Usage:
+// <span class="tag">design</span>
+// <span class="tag"><a href="#">frontend</a><button class="tag-remove" aria-label="Remove">×</button></span>
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 4px;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-status-neutral-subtle-bg);
+  color: $text-color;
+  font-size: $font-size-sm;
+  line-height: 1;
+
+  > a {
+    color: inherit;
+
+    &:hover {
+      color: $link-color;
+      text-decoration: underline;
+    }
+  }
+}
+
+.tag-rounded {
+  border-radius: $border-radius-pill;
+  padding: 0 8px;
+}
+
+.tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 2px;
+  margin-right: -2px;
+  padding: 0;
+  border: none;
+  border-radius: $border-radius;
+  background: none;
+  color: inherit;
+  font-size: 12px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--lz-sys-status-danger-subtle-bg);
+    color: var(--lz-sys-status-danger-subtle-text);
+  }
+}

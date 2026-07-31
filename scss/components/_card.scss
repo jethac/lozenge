@@ -1,0 +1,101 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Generic surface card.
+.card {
+  border-radius: $border-radius;
+  background-color: $card-bg;
+  box-shadow: $shadow-raised;
+}
+
+.card-body {
+  padding: 16px;
+}
+
+.card-header {
+  padding: 12px 16px;
+  border-bottom: 2px solid $separator-color;
+  @include heading(400);
+}
+
+.card-footer {
+  padding: 12px 16px;
+  border-top: 2px solid $separator-color;
+}
+
+// Board issue card (draggable-looking).
+// Usage:
+// <div class="issue-card">
+//   <div class="issue-card-summary">Fix login redirect loop</div>
+//   <div class="issue-card-meta">
+//     <span class="issue-type issue-type-bug"></span>
+//     <span class="issue-key">PROJ-42</span>
+//     <span class="badge">3</span>
+//     <span class="avatar avatar-sm">JC</span>
+//   </div>
+// </div>
+.issue-card {
+  padding: 8px 12px;
+  border-radius: $border-radius-sm;
+  background-color: $card-bg;
+  box-shadow: $shadow-raised;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $card-hover-bg;
+  }
+
+  + .issue-card {
+    margin-top: 8px;
+  }
+}
+
+.issue-card-summary {
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $text-color;
+  word-break: break-word;
+}
+
+.issue-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+
+  .avatar {
+    margin-left: auto;
+  }
+}
+
+.issue-key {
+  font-size: $font-size-sm;
+  color: $text-subtle;
+  @include truncate;
+}
+
+// Issue type square icons (colored squares standing in for glyph icons).
+.issue-type {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border-radius: $border-radius-sm;
+  flex-shrink: 0;
+}
+
+// Deliberately fixed categorical colors (not accent-driven).
+.issue-type-story {
+  background-color: var(--lz-ref-green-300);
+}
+
+.issue-type-bug {
+  background-color: var(--lz-ref-red-300);
+}
+
+.issue-type-task {
+  background-color: var(--lz-ref-blue-100);
+}
+
+.issue-type-epic {
+  background-color: var(--lz-ref-purple-300);
+}

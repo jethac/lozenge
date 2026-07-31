@@ -1,0 +1,81 @@
+{
+  "$comment": "System (semantic) tokens. Each token has light/dark scheme entries. Fields: ref = 'ramp.step' (accent.* = parametric accent ramp); k = lightness shift coefficient applied as l + k * --lz-contrast (clamped 0..1); ck = chroma multiplier coefficient, c * (1 + ck * --lz-contrast); alpha = static opacity. Both build-tokens.mjs (CSS emission) and check-contrast.mjs (numeric verification) consume THIS file — single source of truth, no drift.",
+  "tokens": {
+    "text":            { "light": { "ref": "neutral.800", "k": -0.10 },  "dark": { "ref": "darkNeutral.1100", "k": 0.08 } },
+    "text-subtle":     { "light": { "ref": "neutral.300", "k": -0.10 },  "dark": { "ref": "darkNeutral.800", "k": 0.10 } },
+    "text-subtlest":   { "light": { "ref": "neutral.100", "k": -0.10 },  "dark": { "ref": "darkNeutral.700", "k": 0.12 } },
+    "text-disabled":   { "light": { "ref": "neutral.70" },               "dark": { "ref": "darkNeutral.500" } },
+    "text-inverse":    { "light": { "ref": "neutral.0" },                "dark": { "ref": "darkNeutral.deep" } },
+    "text-on-bold":    { "light": { "ref": "neutral.0" },                "dark": { "ref": "neutral.0" } },
+
+    "link":            { "light": { "ref": "accent.400", "k": -0.08, "ck": -0.25 }, "dark": { "ref": "accent.100", "k": 0.08, "ck": -0.25 } },
+    "link-hover":      { "light": { "ref": "accent.300", "lShift": -0.04, "k": -0.08, "ck": -0.25 }, "dark": { "ref": "accent.75",  "k": 0.05, "ck": -0.25 } },
+    "link-active":     { "light": { "ref": "accent.500", "k": -0.06, "ck": -0.2 }, "dark": { "ref": "accent.200", "k": 0.06, "ck": -0.2 } },
+
+    "surface":         { "light": { "ref": "neutral.0",  "k": 0.0 },    "dark": { "ref": "darkNeutral.100", "k": -0.02 } },
+    "surface-sunken":  { "light": { "ref": "neutral.20", "k": 0.02 },   "dark": { "ref": "darkNeutral.deep", "k": -0.01 } },
+    "surface-raised":  { "light": { "ref": "neutral.0",  "k": 0.0 },    "dark": { "ref": "darkNeutral.200", "k": -0.01 } },
+    "surface-overlay": { "light": { "ref": "neutral.0",  "k": 0.0 },    "dark": { "ref": "darkNeutral.250", "k": -0.01 } },
+
+    "border":          { "light": { "ref": "neutral.40", "k": -0.30 },  "dark": { "ref": "darkNeutral.350", "k": 0.30 } },
+    "separator":       { "light": { "ref": "neutral.30", "k": -0.20 },  "dark": { "ref": "darkNeutral.300", "k": 0.20 } },
+
+    "focus-ring":      { "light": { "ref": "accent.100", "lShift": -0.08, "k": -0.06, "ck": -0.2 },  "dark": { "ref": "accent.100", "k": 0.05, "ck": -0.2 } },
+    "selected-bg":     { "light": { "ref": "accent.50" },               "dark": { "ref": "accent.400", "alpha": 0.18 } },
+    "selected-text":   { "light": { "ref": "accent.400", "k": -0.08, "ck": -0.25 }, "dark": { "ref": "accent.100", "k": 0.08, "ck": -0.25 } },
+
+    "interaction-bg":      { "light": { "ref": "neutral.900", "alpha": 0.04 }, "dark": { "ref": "darkNeutral.1100", "alpha": 0.07 } },
+    "interaction-hovered": { "light": { "ref": "neutral.900", "alpha": 0.09 }, "dark": { "ref": "darkNeutral.1100", "alpha": 0.12 } },
+    "interaction-pressed": { "light": { "ref": "accent.75",  "alpha": 0.60 }, "dark": { "ref": "accent.400", "alpha": 0.35 } },
+
+    "blanket":         { "light": { "ref": "neutral.900", "alpha": 0.54 }, "dark": { "ref": "darkNeutral.deep", "alpha": 0.62 } },
+
+    "accent-bold":           { "light": { "ref": "accent.400", "k": -0.05, "ck": -0.2 }, "dark": { "ref": "accent.400", "k": -0.04, "ck": -0.2 } },
+    "accent-bold-hovered":   { "light": { "ref": "accent.300", "k": -0.05, "ck": -0.2 }, "dark": { "ref": "accent.300", "k": -0.04, "ck": -0.2 } },
+    "accent-bold-pressed":   { "light": { "ref": "accent.500", "k": -0.04, "ck": -0.2 }, "dark": { "ref": "accent.500", "k": -0.03, "ck": -0.2 } },
+    "danger-bold":           { "light": { "ref": "red.400", "k": -0.05, "ck": -0.15 },   "dark": { "ref": "red.400", "k": -0.05, "ck": -0.15 } },
+    "danger-bold-hovered":   { "light": { "ref": "red.300", "k": -0.05, "ck": -0.15 },   "dark": { "ref": "red.300", "k": -0.05, "ck": -0.15 } },
+    "danger-bold-pressed":   { "light": { "ref": "red.500", "k": -0.04, "ck": -0.15 },   "dark": { "ref": "red.500", "k": -0.03, "ck": -0.15 } },
+    "warning-bold":          { "light": { "ref": "yellow.300", "k": 0.02 },  "dark": { "ref": "yellow.300", "k": 0.02 } },
+    "warning-bold-hovered":  { "light": { "ref": "yellow.400", "k": 0.02 },  "dark": { "ref": "yellow.400", "k": 0.02 } },
+    "warning-bold-pressed":  { "light": { "ref": "yellow.500", "k": 0.02 },  "dark": { "ref": "yellow.500", "k": 0.02 } },
+
+    "input-bg":              { "light": { "ref": "neutral.10" },             "dark": { "ref": "darkNeutral.0" } },
+    "input-hover-bg":        { "light": { "ref": "neutral.30" },             "dark": { "ref": "darkNeutral.250" } },
+    "surface-raised-hovered":{ "light": { "ref": "neutral.10" },             "dark": { "ref": "darkNeutral.300" } },
+    "toggle-off":            { "light": { "ref": "neutral.200" },            "dark": { "ref": "darkNeutral.400" } },
+    "track":                 { "light": { "ref": "neutral.40", "k": -0.08 }, "dark": { "ref": "darkNeutral.350", "k": 0.08 } },
+    "tooltip-bg":            { "light": { "ref": "neutral.800" },            "dark": { "ref": "darkNeutral.1000" } },
+    "tooltip-text":          { "light": { "ref": "neutral.0" },              "dark": { "ref": "darkNeutral.deep" } },
+
+    "status-neutral-subtle-bg":    { "light": { "ref": "neutral.30" },                   "dark": { "ref": "darkNeutral.350" } },
+    "status-neutral-subtle-text":  { "light": { "ref": "neutral.500", "k": -0.10 },      "dark": { "ref": "darkNeutral.1000", "k": 0.06 } },
+    "status-neutral-bold-bg":      { "light": { "ref": "neutral.500", "k": -0.06 },      "dark": { "ref": "darkNeutral.700", "k": 0.06 } },
+    "status-neutral-on-bold":      { "light": { "ref": "neutral.0" },                    "dark": { "ref": "darkNeutral.deep" } },
+
+    "status-info-subtle-bg":       { "light": { "ref": "accent.50" },                    "dark": { "ref": "accent.500", "alpha": 0.32 } },
+    "status-info-subtle-text":     { "light": { "ref": "accent.500", "k": -0.08, "ck": -0.2 }, "dark": { "ref": "accent.100", "k": 0.07, "ck": -0.2 } },
+    "status-info-bold-bg":         { "light": { "ref": "accent.400", "k": -0.05, "ck": -0.2 }, "dark": { "ref": "accent.400", "k": -0.04, "ck": -0.2 } },
+    "status-info-on-bold":         { "light": { "ref": "neutral.0" },                    "dark": { "ref": "neutral.0" } },
+
+    "status-warning-subtle-bg":    { "light": { "ref": "yellow.75" },                    "dark": { "ref": "yellow.500", "alpha": 0.28 } },
+    "status-warning-subtle-text":  { "light": { "ref": "neutral.800", "k": -0.08 },      "dark": { "ref": "yellow.100", "k": 0.05, "ck": -0.2 } },
+    "status-warning-bold-bg":      { "light": { "ref": "yellow.500", "k": 0.03 },        "dark": { "ref": "yellow.400", "k": 0.03 } },
+    "status-warning-on-bold":      { "light": { "ref": "neutral.800", "k": -0.08 },      "dark": { "ref": "darkNeutral.deep" } },
+
+    "status-danger-subtle-bg":     { "light": { "ref": "red.50" },                       "dark": { "ref": "red.500", "alpha": 0.30 } },
+    "status-danger-subtle-text":   { "light": { "ref": "red.500", "k": -0.08, "ck": -0.2 },  "dark": { "ref": "red.100", "k": 0.06, "ck": -0.2 } },
+    "status-danger-bold-bg":       { "light": { "ref": "red.400", "k": -0.05, "ck": -0.15 }, "dark": { "ref": "red.400", "k": -0.05, "ck": -0.15 } },
+    "status-danger-on-bold":       { "light": { "ref": "neutral.0" },                    "dark": { "ref": "neutral.0" } },
+
+    "status-success-subtle-bg":    { "light": { "ref": "green.50" },                     "dark": { "ref": "green.500", "alpha": 0.30 } },
+    "status-success-subtle-text":  { "light": { "ref": "green.500", "k": -0.08, "ck": -0.2 }, "dark": { "ref": "green.200", "k": 0.06, "ck": -0.2 } },
+    "status-success-bold-bg":      { "light": { "ref": "green.400", "k": -0.05, "ck": -0.15 }, "dark": { "ref": "green.400", "k": -0.05, "ck": -0.15 } },
+    "status-success-on-bold":      { "light": { "ref": "neutral.0" },                    "dark": { "ref": "neutral.0" } },
+
+    "status-discovery-subtle-bg":  { "light": { "ref": "purple.50" },                    "dark": { "ref": "purple.500", "alpha": 0.34 } },
+    "status-discovery-subtle-text":{ "light": { "ref": "purple.500", "k": -0.08, "ck": -0.2 }, "dark": { "ref": "purple.100", "k": 0.07, "ck": -0.2 } },
+    "status-discovery-bold-bg":    { "light": { "ref": "purple.400", "k": -0.05, "ck": -0.15 }, "dark": { "ref": "purple.300", "k": -0.04, "ck": -0.15 } },
+    "status-discovery-on-bold":    { "light": { "ref": "neutral.0" },                    "dark": { "ref": "neutral.0" } }
+  }
+}

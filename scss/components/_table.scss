@@ -1,0 +1,57 @@
+@use "../tokens" as *;
+
+// Dynamic-table style.
+// Usage: <table class="table"> with optional .table-hover / .table-striped
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    padding: 8px;
+    border-bottom: 2px solid $separator-color;
+    color: $text-subtle;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    line-height: 16px;
+    text-align: left;
+    vertical-align: bottom;
+  }
+
+  td {
+    padding: 8px;
+    border-bottom: 1px solid $separator-color;
+    vertical-align: middle;
+  }
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--lz-sys-interaction-bg);
+}
+
+.table-striped tbody tr:nth-child(odd) {
+  background-color: var(--lz-sys-interaction-bg);
+}
+
+.table-compact {
+  th,
+  td {
+    padding: 4px 8px;
+  }
+}
+
+// Sortable header affordance.
+.table th.sortable {
+  cursor: pointer;
+
+  &:hover {
+    color: $text-color;
+  }
+
+  &.sorted-asc::after {
+    content: " ↑";
+  }
+
+  &.sorted-desc::after {
+    content: " ↓";
+  }
+}

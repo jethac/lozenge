@@ -1,0 +1,97 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Top navigation bar.
+// Usage:
+// <nav class="navbar">
+//   <a class="navbar-brand" href="#">Logo</a>
+//   <ul class="navbar-nav">
+//     <li><a class="nav-link active" href="#">Your work</a></li>
+//   </ul>
+//   <div class="navbar-actions"> ...buttons/avatar... </div>
+// </nav>
+.navbar {
+  position: relative;
+  z-index: $z-navigation;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: $navbar-height;
+  padding: 0 16px;
+  background-color: $surface-bg;
+  box-shadow: 0 1px 0 $separator-color;
+}
+
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: $text-color;
+  font-size: 16px;
+  font-weight: $font-weight-semibold;
+
+  &:hover {
+    color: $text-color;
+    text-decoration: none;
+  }
+}
+
+.navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: inline-flex;
+  align-items: center;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: $border-radius;
+  color: $text-subtle;
+  font-weight: $font-weight-medium;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &.active {
+    color: $link-color;
+    box-shadow: inset 0 -3px 0 -1px $link-color;
+    border-radius: $border-radius $border-radius 0 0;
+  }
+}
+
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+// Bold blue variant.
+.navbar-primary {
+  background-color: $primary;
+  box-shadow: none;
+
+  .navbar-brand,
+  .nav-link {
+    color: var(--lz-sys-text-on-bold);
+  }
+
+  .nav-link {
+    &:hover {
+      background-color: rgba(255 255 255 / 0.16);
+      color: var(--lz-sys-text-on-bold);
+    }
+
+    &.active {
+      box-shadow: inset 0 -3px 0 -1px var(--lz-sys-text-on-bold);
+    }
+  }
+}

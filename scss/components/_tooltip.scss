@@ -1,0 +1,56 @@
+@use "../tokens" as *;
+
+// Pure-CSS tooltip via data attribute.
+// Usage: <button class="btn" data-tooltip="Assign to me">...</button>
+// Position with .tooltip-bottom / .tooltip-left / .tooltip-right (default top).
+[data-tooltip] {
+  position: relative;
+
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: calc(100% + 4px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: $z-tooltip;
+    max-width: 240px;
+    padding: 2px 6px;
+    border-radius: $border-radius;
+    background-color: var(--lz-sys-tooltip-bg);
+    color: var(--lz-sys-tooltip-text);
+    font-size: $font-size-sm;
+    font-weight: $font-weight-normal;
+    line-height: 16px;
+    white-space: nowrap;
+    text-transform: none;
+    letter-spacing: normal;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out 0.2s;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    opacity: 1;
+  }
+}
+
+.tooltip-bottom::after {
+  bottom: auto;
+  top: calc(100% + 4px);
+}
+
+.tooltip-left::after {
+  bottom: auto;
+  left: auto;
+  right: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tooltip-right::after {
+  bottom: auto;
+  left: calc(100% + 4px);
+  top: 50%;
+  transform: translateY(-50%);
+}

@@ -1,0 +1,74 @@
+@use "../tokens" as *;
+
+// Progress bar.
+// Usage:
+// <div class="progress"><div class="progress-bar" style="width: 60%"></div></div>
+.progress {
+  height: 6px;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-track);
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: $border-radius;
+  background-color: $primary;
+  transition: width 0.3s ease;
+}
+
+.progress-bar-success {
+  background-color: $success;
+}
+
+.progress-bar-warning {
+  background-color: $warning;
+}
+
+.progress-bar-danger {
+  background-color: $danger;
+}
+
+// Epic-style segmented progress (done / in progress / to do).
+// Usage:
+// <div class="progress progress-segmented">
+//   <div class="progress-bar progress-bar-success" style="width: 40%"></div>
+//   <div class="progress-bar" style="width: 25%"></div>
+// </div>
+.progress-segmented {
+  display: flex;
+
+  .progress-bar {
+    border-radius: 0;
+
+    + .progress-bar {
+      margin-left: 2px;
+    }
+  }
+}
+
+// Spinner.
+// Usage: <span class="spinner"></span> (inherits currentColor)
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  color: var(--lz-sys-text-subtle);
+  animation: lz-spin 0.86s cubic-bezier(0.4, 0.15, 0.6, 0.85) infinite;
+  vertical-align: middle;
+}
+
+.spinner-lg {
+  width: 32px;
+  height: 32px;
+  border-width: 3px;
+}
+
+@keyframes lz-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

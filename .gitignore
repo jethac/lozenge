@@ -1,0 +1,6 @@
+node_modules/
+dist/
+site/
+scss/generated/
+*.log
+.DS_Store

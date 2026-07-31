@@ -1,0 +1,260 @@
+// ============================================================
+// Lozenge — design tokens
+// Original implementation of the Jira / Atlassian visual style.
+// Every value carries !default so it can be overridden with
+// `@use "tokens" with (...)` before importing the framework.
+// ============================================================
+
+@use "sass:color";
+@use "sass:map";
+
+// ------------------------------------------------------------
+// Color palette (Atlassian-style ramps)
+// ------------------------------------------------------------
+
+// Neutrals
+$n0:    #FFFFFF !default;
+$n10:   #FAFBFC !default;
+$n20:   #F4F5F7 !default;
+$n30:   #EBECF0 !default;
+$n40:   #DFE1E6 !default;
+$n50:   #C1C7D0 !default;
+$n60:   #B3BAC5 !default;
+$n70:   #A5ADBA !default;
+$n80:   #97A0AF !default;
+$n90:   #8993A4 !default;
+$n100:  #7A869A !default;
+$n200:  #6B778C !default;
+$n300:  #5E6C84 !default;
+$n400:  #505F79 !default;
+$n500:  #42526E !default;
+$n600:  #344563 !default;
+$n700:  #253858 !default;
+$n800:  #172B4D !default;
+$n900:  #091E42 !default;
+
+// Blues
+$b50:   #DEEBFF !default;
+$b75:   #B3D4FF !default;
+$b100:  #4C9AFF !default;
+$b200:  #2684FF !default;
+$b300:  #0065FF !default;
+$b400:  #0052CC !default;
+$b500:  #0747A6 !default;
+
+// Reds
+$r50:   #FFEBE6 !default;
+$r75:   #FFBDAD !default;
+$r100:  #FF8F73 !default;
+$r200:  #FF7452 !default;
+$r300:  #FF5630 !default;
+$r400:  #DE350B !default;
+$r500:  #BF2600 !default;
+
+// Yellows
+$y50:   #FFFAE6 !default;
+$y75:   #FFF0B3 !default;
+$y100:  #FFE380 !default;
+$y200:  #FFC400 !default;
+$y300:  #FFAB00 !default;
+$y400:  #FF991F !default;
+$y500:  #FF8B00 !default;
+
+// Greens
+$g50:   #E3FCEF !default;
+$g75:   #ABF5D1 !default;
+$g100:  #79F2C0 !default;
+$g200:  #57D9A3 !default;
+$g300:  #36B37E !default;
+$g400:  #00875A !default;
+$g500:  #006644 !default;
+
+// Purples
+$p50:   #EAE6FF !default;
+$p75:   #C0B6F2 !default;
+$p100:  #998DD9 !default;
+$p200:  #8777D9 !default;
+$p300:  #6554C0 !default;
+$p400:  #5243AA !default;
+$p500:  #403294 !default;
+
+// Teals
+$t50:   #E6FCFF !default;
+$t75:   #B3F5FF !default;
+$t100:  #79E2F2 !default;
+$t200:  #00C7E6 !default;
+$t300:  #00B8D9 !default;
+$t400:  #00A3BF !default;
+$t500:  #008DA6 !default;
+
+// ------------------------------------------------------------
+// Semantic colors
+// ------------------------------------------------------------
+
+// Semantic layer — resolves through the generated runtime engine
+// (scss/generated/_engine.scss) so scheme, contrast, accent, and material
+// axes apply at runtime. Raw ramp variables above remain for
+// compile-time-only uses (shadows, categorical icon colors).
+$primary:    var(--lz-sys-accent-bold) !default;
+$secondary:  var(--lz-sys-status-neutral-bold-bg) !default;
+$success:    var(--lz-sys-status-success-bold-bg) !default;
+$warning:    var(--lz-sys-warning-bold) !default;
+$danger:     var(--lz-sys-danger-bold) !default;
+$info:       var(--lz-sys-status-info-bold-bg) !default;
+$discovery:  var(--lz-sys-status-discovery-bold-bg) !default;
+
+$text-color:          var(--lz-sys-text) !default;
+$text-subtle:         var(--lz-sys-text-subtle) !default;
+$text-subtlest:       var(--lz-sys-text-subtlest) !default;
+$text-disabled:       var(--lz-sys-text-disabled) !default;
+$text-inverse:        var(--lz-sys-text-inverse) !default;
+
+$link-color:          var(--lz-sys-link) !default;
+$link-hover-color:    var(--lz-sys-link-hover) !default;
+$link-active-color:   var(--lz-sys-link-active) !default;
+
+$body-bg:             var(--lz-sys-surface) !default;
+$surface-bg:          var(--lz-sys-surface) !default;
+$surface-sunken-bg:   var(--lz-sys-surface-sunken) !default;
+
+$border-color:        var(--lz-sys-border) !default;
+$separator-color:     var(--lz-sys-separator) !default;
+
+$focus-ring-color:    var(--lz-sys-focus-ring) !default;
+$focus-ring-width:    2px   !default;
+
+$blanket-bg: var(--lz-sys-blanket) !default;
+
+// ------------------------------------------------------------
+// Typography
+// ------------------------------------------------------------
+
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif !default;
+$font-family-monospace: "SFMono-Medium", "SF Mono", "Segoe UI Mono",
+  "Roboto Mono", "Ubuntu Mono", Menlo, Consolas, Courier,
+  monospace !default;
+
+$font-size-base:   14px !default;
+$font-size-sm:     12px !default;
+$font-size-xs:     11px !default;
+$line-height-base: 20px !default;
+
+$font-weight-normal:   400 !default;
+$font-weight-medium:   500 !default;
+$font-weight-semibold: 600 !default;
+$font-weight-bold:     700 !default;
+
+// Heading scale (Atlassian h100–h900 naming, largest first)
+$headings: (
+  900: (size: 35px, line-height: 40px, weight: $font-weight-medium,   color: $text-color),
+  800: (size: 29px, line-height: 32px, weight: $font-weight-semibold, color: $text-color),
+  700: (size: 24px, line-height: 28px, weight: $font-weight-medium,   color: $text-color),
+  600: (size: 20px, line-height: 24px, weight: $font-weight-medium,   color: $text-color),
+  500: (size: 16px, line-height: 20px, weight: $font-weight-semibold, color: $text-color),
+  400: (size: 14px, line-height: 16px, weight: $font-weight-semibold, color: $text-color),
+  300: (size: 12px, line-height: 16px, weight: $font-weight-semibold, color: $text-subtle),
+  200: (size: 12px, line-height: 16px, weight: $font-weight-semibold, color: $text-subtle),
+  100: (size: 11px, line-height: 16px, weight: $font-weight-bold,     color: $text-subtle),
+) !default;
+
+// ------------------------------------------------------------
+// Spacing (8px grid, 4px half-steps)
+// ------------------------------------------------------------
+
+$spacer: 8px !default;
+$spacers: (
+  0: 0,
+  1: 4px,
+  2: 8px,
+  3: 12px,
+  4: 16px,
+  5: 24px,
+  6: 32px,
+  7: 40px,
+  8: 48px,
+) !default;
+
+// ------------------------------------------------------------
+// Borders, radii, elevation
+// ------------------------------------------------------------
+
+$border-radius:     3px !default;
+$border-radius-sm:  2px !default;
+$border-radius-pill: 2em !default;
+
+$shadow-raised:  0 1px 1px rgba($n900, 0.25), 0 0 1px rgba($n900, 0.31) !default;
+$shadow-overlay: 0 4px 8px -2px rgba($n900, 0.25), 0 0 1px rgba($n900, 0.31) !default;
+$shadow-modal:   0 8px 16px -4px rgba($n900, 0.25), 0 0 1px rgba($n900, 0.31) !default;
+
+// ------------------------------------------------------------
+// Z-index scale
+// ------------------------------------------------------------
+
+$z-navigation: 200 !default;
+$z-dropdown:   300 !default;
+$z-blanket:    500 !default;
+$z-modal:      510 !default;
+$z-flag:       600 !default;
+$z-tooltip:    800 !default;
+
+// ------------------------------------------------------------
+// Component tokens
+// ------------------------------------------------------------
+
+// Buttons
+$btn-height:          32px !default;
+$btn-height-compact:  24px !default;
+$btn-padding-x:       12px !default;
+$btn-font-weight:     $font-weight-medium !default;
+$btn-default-bg:        var(--lz-sys-interaction-bg) !default;
+$btn-default-hover-bg:  var(--lz-sys-interaction-hovered) !default;
+$btn-default-active-bg: var(--lz-sys-interaction-pressed) !default;
+
+// Forms
+$input-bg:            var(--lz-sys-input-bg) !default;
+$input-border-color:  var(--lz-sys-border) !default;
+$input-border-width:  2px  !default;
+$input-focus-bg:      var(--lz-sys-surface) !default;
+$input-focus-border:  var(--lz-sys-focus-ring) !default;
+$input-height:        40px !default;
+$input-height-compact: 32px !default;
+
+// Cards / board
+$card-bg:        var(--lz-sys-surface-raised) !default;
+$card-hover-bg:  var(--lz-sys-surface-raised-hovered) !default;
+$column-bg:      var(--lz-sys-surface-sunken) !default;
+$column-width:   272px !default;
+
+// Navigation
+$navbar-height:   56px !default;
+$sidebar-width:   240px !default;
+$sidebar-bg:      var(--lz-sys-surface) !default;
+
+// Modal
+$modal-widths: (
+  small:  400px,
+  medium: 600px,
+  large:  800px,
+  xlarge: 968px,
+) !default;
+
+// Lozenge variants: component name -> sys status token family.
+$lozenge-variants: (
+  "default":    "neutral",
+  "inprogress": "info",
+  "moved":      "warning",
+  "new":        "discovery",
+  "removed":    "danger",
+  "success":    "success",
+) !default;
+
+// Section message / flag variants: component name -> sys status family.
+$message-variants: (
+  "info":      "info",
+  "warning":   "warning",
+  "error":     "danger",
+  "success":   "success",
+  "discovery": "discovery",
+) !default;

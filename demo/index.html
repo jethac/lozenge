@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lozenge — kitchen sink</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<style>
+  .demo-section { margin-top: 40px; }
+  .demo-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
+  .demo-shell { display: flex; min-height: 420px; border: 1px solid #EBECF0; border-radius: 3px; overflow: hidden; }
+  .demo-main { flex: 1; padding: 24px; background: #FFFFFF; min-width: 0; }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="navbar-brand" href="#"><span class="issue-type issue-type-task"></span> Lozenge</a>
+  <ul class="navbar-nav">
+    <li><a class="nav-link active" href="#">Your work</a></li>
+    <li><a class="nav-link" href="#">Projects</a></li>
+    <li><a class="nav-link" href="#">Filters</a></li>
+    <li><a class="nav-link" href="#">Dashboards</a></li>
+  </ul>
+  <div class="navbar-actions">
+    <button class="btn btn-primary">Create</button>
+    <span class="avatar avatar-md avatar-online">JC</span>
+  </div>
+</nav>
+
+<div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
+
+<h1>Lozenge kitchen sink</h1>
+<p class="text-subtle">Every component in the framework, on one page.</p>
+
+<section class="demo-section">
+  <h2>Buttons</h2>
+  <div class="demo-row">
+    <button class="btn">Default</button>
+    <button class="btn btn-primary">Primary</button>
+    <button class="btn btn-warning">Warning</button>
+    <button class="btn btn-danger">Danger</button>
+    <button class="btn btn-subtle">Subtle</button>
+    <button class="btn btn-link">Link</button>
+    <button class="btn btn-subtle-link">Subtle link</button>
+    <button class="btn" disabled>Disabled</button>
+    <button class="btn active">Selected</button>
+  </div>
+  <div class="demo-row">
+    <button class="btn btn-compact">Compact</button>
+    <button class="btn btn-primary btn-compact">Compact primary</button>
+    <button class="btn btn-primary"><span class="spinner" style="color:#fff"></span> Loading</button>
+    <div class="btn-group">
+      <button class="btn">Days</button>
+      <button class="btn active">Weeks</button>
+      <button class="btn">Months</button>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Lozenges</h2>
+  <div class="demo-row">
+    <span class="lozenge lozenge-default">To do</span>
+    <span class="lozenge lozenge-inprogress">In progress</span>
+    <span class="lozenge lozenge-moved">Moved</span>
+    <span class="lozenge lozenge-new">New</span>
+    <span class="lozenge lozenge-removed">Removed</span>
+    <span class="lozenge lozenge-success">Done</span>
+  </div>
+  <div class="demo-row">
+    <span class="lozenge lozenge-default lozenge-bold">To do</span>
+    <span class="lozenge lozenge-inprogress lozenge-bold">In progress</span>
+    <span class="lozenge lozenge-moved lozenge-bold">Moved</span>
+    <span class="lozenge lozenge-new lozenge-bold">New</span>
+    <span class="lozenge lozenge-removed lozenge-bold">Removed</span>
+    <span class="lozenge lozenge-success lozenge-bold">Done</span>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Badges, tags &amp; avatars</h2>
+  <div class="demo-row">
+    <span class="badge">25</span>
+    <span class="badge badge-primary">99+</span>
+    <span class="badge badge-important">8</span>
+    <span class="badge badge-added">+120</span>
+    <span class="badge badge-removed">−35</span>
+    <span class="tag">design</span>
+    <span class="tag"><a href="#">frontend</a><button class="tag-remove" aria-label="Remove">×</button></span>
+    <span class="tag tag-rounded">q3-goals</span>
+  </div>
+  <div class="demo-row">
+    <span class="avatar avatar-xs">A</span>
+    <span class="avatar avatar-sm">BC</span>
+    <span class="avatar avatar-md avatar-online">JC</span>
+    <span class="avatar avatar-lg avatar-busy">DK</span>
+    <span class="avatar avatar-md avatar-square" style="background:#6554C0;color:#fff">P</span>
+    <span class="avatar-group">
+      <span class="avatar avatar-md">A</span>
+      <span class="avatar avatar-md">B</span>
+      <span class="avatar avatar-md">C</span>
+      <span class="avatar avatar-md">+4</span>
+    </span>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Board</h2>
+  <div class="board">
+    <div class="board-column">
+      <div class="board-column-header">To do <span class="badge">3</span></div>
+      <div class="board-column-cards">
+        <div class="issue-card">
+          <div class="issue-card-summary">Set up CI pipeline for nightly builds</div>
+          <div class="issue-card-meta">
+            <span class="issue-type issue-type-task"></span>
+            <span class="issue-key">LOZ-12</span>
+            <span class="badge">3</span>
+            <span class="avatar avatar-sm">JC</span>
+          </div>
+        </div>
+        <div class="issue-card">
+          <div class="issue-card-summary">Login page throws redirect loop on expired session</div>
+          <div class="issue-card-meta">
+            <span class="issue-type issue-type-bug"></span>
+            <span class="issue-key">LOZ-14</span>
+            <span class="badge">5</span>
+            <span class="avatar avatar-sm">DK</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="board-column">
+      <div class="board-column-header">In progress <span class="badge">1</span></div>
+      <div class="board-column-cards">
+        <div class="issue-card">
+          <div class="issue-card-summary">Dark mode token pass for settings screens</div>
+          <div class="issue-card-meta">
+            <span class="issue-type issue-type-story"></span>
+            <span class="issue-key">LOZ-9</span>
+            <span class="lozenge lozenge-inprogress">In progress</span>
+            <span class="avatar avatar-sm">AB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="board-column">
+      <div class="board-column-header">Done <span class="badge">2</span></div>
+      <div class="board-column-cards">
+        <div class="issue-card">
+          <div class="issue-card-summary">Ship v0.1 of the design tokens package</div>
+          <div class="issue-card-meta">
+            <span class="issue-type issue-type-epic"></span>
+            <span class="issue-key">LOZ-1</span>
+            <span class="lozenge lozenge-success">Done</span>
+            <span class="avatar avatar-sm">JC</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>App shell (sidebar + breadcrumbs + tabs)</h2>
+  <div class="demo-shell">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <span class="avatar avatar-md avatar-square" style="background:#0052CC;color:#fff">L</span>
+        <div style="min-width:0">
+          <div class="sidebar-title">Lozenge</div>
+          <div class="sidebar-subtitle">Software project</div>
+        </div>
+      </div>
+      <div class="sidebar-section">Planning</div>
+      <nav>
+        <a class="sidebar-item" href="#">Roadmap</a>
+        <a class="sidebar-item" href="#">Backlog</a>
+        <a class="sidebar-item active" href="#">Board</a>
+        <a class="sidebar-item" href="#">Reports</a>
+      </nav>
+      <div class="sidebar-section">Development</div>
+      <nav>
+        <a class="sidebar-item" href="#">Code</a>
+        <a class="sidebar-item" href="#">Releases</a>
+      </nav>
+    </aside>
+    <div class="demo-main">
+      <nav class="breadcrumbs mb-3">
+        <a href="#">Projects</a>
+        <a href="#">Lozenge</a>
+        <span aria-current="page">LOZ-9</span>
+      </nav>
+      <h3>Dark mode token pass for settings screens</h3>
+      <div class="demo-row mb-4">
+        <span class="lozenge lozenge-inprogress lozenge-bold">In progress</span>
+        <span class="tag">design-system</span>
+        <span class="tag">a11y</span>
+      </div>
+      <ul class="tabs">
+        <li><a class="tab active">Details</a></li>
+        <li><a class="tab">Comments</a></li>
+        <li><a class="tab">History</a></li>
+        <li><a class="tab disabled">Automation</a></li>
+      </ul>
+      <div class="tab-pane">
+        <p>All settings surfaces need their hard-coded neutrals swapped for semantic tokens before the dark-mode beta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Forms</h2>
+  <div style="max-width: 420px">
+    <div class="form-group">
+      <label class="form-label" for="f-summary">Summary <span class="required">*</span></label>
+      <input class="form-control" id="f-summary" type="text" placeholder="What needs doing?">
+      <span class="form-text">Keep it short and scannable.</span>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="f-type">Issue type</label>
+      <select class="form-select" id="f-type">
+        <option>Story</option><option>Bug</option><option>Task</option><option>Epic</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="f-desc">Description</label>
+      <textarea class="form-control" id="f-desc" placeholder="Add more detail…"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="f-bad">Epic name</label>
+      <input class="form-control is-invalid" id="f-bad" type="text" value="">
+      <span class="invalid-feedback">Epic name is required.</span>
+    </div>
+    <div class="form-group">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="c1" checked>
+        <label for="c1">Notify watchers</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="c2">
+        <label for="c2">Create another</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="r" id="r1" checked>
+        <label for="r1">Assign to me</label>
+      </div>
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="r" id="r2">
+        <label for="r2">Leave unassigned</label>
+      </div>
+    </div>
+    <div class="form-group d-flex align-items-center gap-2">
+      <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      <span>Send me updates</span>
+      <label class="toggle toggle-lg"><input type="checkbox"><span class="toggle-slider"></span></label>
+      <span>Large toggle</span>
+    </div>
+    <div class="form-group d-flex justify-content-end gap-2">
+      <button class="btn btn-subtle">Cancel</button>
+      <button class="btn btn-primary">Create</button>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Messages &amp; banners</h2>
+  <div class="message message-info mt-3">
+    <div class="message-title">Editing is restricted</div>
+    <p>You're not allowed to edit this issue. Ask your admin for the Editor role.</p>
+    <div class="message-actions"><a href="#">Request access</a><a href="#">Learn more</a></div>
+  </div>
+  <div class="message message-warning mt-3"><div class="message-title">Trial ending</div><p>Your trial expires in 3 days.</p></div>
+  <div class="message message-error mt-3"><div class="message-title">We couldn't save your changes</div><p>Check your connection and try again.</p></div>
+  <div class="message message-success mt-3"><div class="message-title">Sprint started</div><p>Sprint 14 is now active.</p></div>
+  <div class="message message-discovery mt-3"><div class="message-title">New: timeline view</div><p>Plan work across sprints with the new timeline.</p></div>
+  <div class="banner mt-4">Scheduled maintenance on Saturday 02:00–04:00 UTC. <a href="#">Details</a></div>
+  <div class="banner banner-warning mt-2">This board is read-only while the sprint is being reconfigured.</div>
+  <div class="banner banner-error mt-2">Something's gone wrong — retrying…</div>
+</section>
+
+<section class="demo-section">
+  <h2>Flags (toasts)</h2>
+  <div class="demo-row align-items-start">
+    <div class="flag">
+      <div class="flag-icon"><span class="issue-type issue-type-story"></span></div>
+      <div class="flag-content">
+        <div class="flag-title">Issue created</div>
+        <div class="flag-description">LOZ-42 has been added to the backlog.</div>
+        <div class="flag-actions"><a href="#">View issue</a><a href="#">Add to sprint</a></div>
+      </div>
+      <button class="flag-dismiss" aria-label="Dismiss">×</button>
+    </div>
+    <div class="flag flag-success">
+      <div class="flag-content"><div class="flag-title">Changes saved</div></div>
+      <button class="flag-dismiss" aria-label="Dismiss">×</button>
+    </div>
+    <div class="flag flag-error">
+      <div class="flag-content"><div class="flag-title">Connection lost</div><div class="flag-description">Trying to reconnect…</div></div>
+      <button class="flag-dismiss" aria-label="Dismiss">×</button>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Dropdown, tooltip &amp; progress</h2>
+  <div class="demo-row" style="padding-bottom: 180px">
+    <div class="dropdown open">
+      <button class="btn">Status ▾</button>
+      <div class="dropdown-menu">
+        <div class="dropdown-heading">Move to</div>
+        <a class="dropdown-item" href="#">To do</a>
+        <a class="dropdown-item selected" href="#">In progress</a>
+        <a class="dropdown-item" href="#">Done<span class="dropdown-item-description">Resolves the issue</span></a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item danger" href="#">Delete issue</a>
+      </div>
+    </div>
+    <button class="btn" data-tooltip="Assign to me">Hover me (tooltip)</button>
+    <button class="btn tooltip-bottom" data-tooltip="Shown below">Tooltip bottom</button>
+    <span class="spinner"></span>
+    <span class="spinner spinner-lg text-primary"></span>
+  </div>
+  <div style="max-width: 420px">
+    <div class="progress"><div class="progress-bar" style="width: 60%"></div></div>
+    <div class="progress mt-2"><div class="progress-bar progress-bar-success" style="width: 100%"></div></div>
+    <div class="progress progress-segmented mt-2">
+      <div class="progress-bar progress-bar-success" style="width: 40%"></div>
+      <div class="progress-bar" style="width: 25%"></div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Table</h2>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Type</th><th class="sortable sorted-asc">Key</th><th>Summary</th><th>Assignee</th><th>Status</th><th>Points</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="issue-type issue-type-story"></span></td>
+        <td><a href="#">LOZ-9</a></td>
+        <td>Dark mode token pass</td>
+        <td><span class="avatar avatar-sm">AB</span> Alex B</td>
+        <td><span class="lozenge lozenge-inprogress">In progress</span></td>
+        <td><span class="badge">5</span></td>
+      </tr>
+      <tr>
+        <td><span class="issue-type issue-type-bug"></span></td>
+        <td><a href="#">LOZ-14</a></td>
+        <td>Login redirect loop</td>
+        <td><span class="avatar avatar-sm">DK</span> Dana K</td>
+        <td><span class="lozenge lozenge-default">To do</span></td>
+        <td><span class="badge">3</span></td>
+      </tr>
+      <tr>
+        <td><span class="issue-type issue-type-epic"></span></td>
+        <td><a href="#">LOZ-1</a></td>
+        <td>Design tokens package</td>
+        <td><span class="avatar avatar-sm">JC</span> Jetha C</td>
+        <td><span class="lozenge lozenge-success">Done</span></td>
+        <td><span class="badge">8</span></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="demo-section">
+  <h2>Modal (static preview)</h2>
+  <div style="position: relative; height: 360px; border-radius: 3px; overflow: hidden;">
+    <div class="blanket" style="position: absolute;">
+      <div class="modal modal-small" role="dialog" aria-modal="true">
+        <div class="modal-header"><h4 class="modal-title">Delete this issue?</h4></div>
+        <div class="modal-body">
+          <p>LOZ-14 and its 3 subtasks will be permanently deleted. You can't undo this.</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-subtle">Cancel</button>
+          <button class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <h2>Typography</h2>
+  <div class="h900">h900 — Page titles</div>
+  <div class="h800 mt-2">h800 — Section titles</div>
+  <div class="h700 mt-2">h700 — Card group titles</div>
+  <div class="h600 mt-2">h600 — Modal titles</div>
+  <div class="h500 mt-2">h500 — Widget titles</div>
+  <div class="h400 mt-2">h400 — Field group titles</div>
+  <div class="h300 mt-2">h300 — Column headers</div>
+  <div class="h200 mt-2">h200 — Field labels</div>
+  <div class="h100 mt-2">h100 — Fine print</div>
+  <p class="mt-4">Body text with a <a href="#">link</a>, <code>inline code</code>, and <span class="text-subtle">subtle text</span>.</p>
+</section>
+
+</div>
+</body>
+</html>

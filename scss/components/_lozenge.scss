@@ -1,0 +1,31 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// The signature Jira status pill.
+// Usage: <span class="lozenge lozenge-inprogress">In progress</span>
+//        <span class="lozenge lozenge-success lozenge-bold">Done</span>
+.lozenge {
+  display: inline-block;
+  max-width: 200px;
+  padding: 2px 6px;
+  border-radius: $border-radius;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  line-height: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  vertical-align: baseline;
+  @include truncate;
+}
+
+@each $name, $family in $lozenge-variants {
+  .lozenge-#{$name} {
+    background-color: var(--lz-sys-status-#{$family}-subtle-bg);
+    color: var(--lz-sys-status-#{$family}-subtle-text);
+
+    &.lozenge-bold {
+      background-color: var(--lz-sys-status-#{$family}-bold-bg);
+      color: var(--lz-sys-status-#{$family}-on-bold);
+    }
+  }
+}

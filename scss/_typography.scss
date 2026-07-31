@@ -1,0 +1,34 @@
+@use "sass:map";
+@use "tokens" as *;
+@use "mixins" as *;
+
+// Heading elements map onto the Atlassian scale:
+// h1=h800, h2=h700, h3=h600, h4=h500, h5=h400, h6=h300.
+$-element-levels: (h1: 800, h2: 700, h3: 600, h4: 500, h5: 400, h6: 300);
+
+@each $el, $level in $-element-levels {
+  #{$el} {
+    margin: 24px 0 0;
+    @include heading($level);
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+}
+
+// Explicit classes for the full scale: .h100 ... .h900
+@each $level, $h in $headings {
+  .h#{$level} {
+    margin: 0;
+    @include heading($level);
+  }
+}
+
+.text-truncate {
+  @include truncate;
+}
+
+.visually-hidden {
+  @include visually-hidden;
+}

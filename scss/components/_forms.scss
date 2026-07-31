@@ -1,0 +1,230 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+.form-group {
+  margin-top: 16px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 4px;
+  @include heading(200);
+
+  .required {
+    color: $danger;
+  }
+}
+
+.form-text {
+  display: block;
+  margin-top: 4px;
+  font-size: $font-size-sm;
+  line-height: 16px;
+  color: $text-subtle;
+}
+
+// Text inputs, selects, textareas.
+.form-control,
+.form-select {
+  display: block;
+  width: 100%;
+  height: $input-height;
+  padding: 8px 8px;
+  border: $input-border-width solid $input-border-color;
+  border-radius: $border-radius;
+  background-color: $input-bg;
+  color: $text-color;
+  font-family: inherit;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+  &::placeholder {
+    color: $text-subtlest;
+  }
+
+  &:hover:not(:focus):not(:disabled) {
+    background-color: var(--lz-sys-input-hover-bg);
+  }
+
+  &:focus {
+    outline: none;
+    background-color: $input-focus-bg;
+    border-color: $input-focus-border;
+  }
+
+  &:disabled {
+    background-color: var(--lz-sys-surface-sunken);
+    border-color: var(--lz-sys-surface-sunken);
+    color: $text-disabled;
+    cursor: not-allowed;
+  }
+
+  &.is-invalid {
+    border-color: $danger;
+  }
+}
+
+.form-control-compact {
+  height: $input-height-compact;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+// Subtle variant — invisible until interacted with (inline edit).
+.form-control-subtle {
+  background-color: transparent;
+  border-color: transparent;
+
+  &:hover:not(:focus):not(:disabled) {
+    background-color: var(--lz-sys-surface-sunken);
+  }
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.form-select {
+  appearance: none;
+  padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%238C9BAB' d='M8.292 10.293a1.009 1.009 0 000 1.419l2.939 2.965c.218.215.5.322.779.322s.556-.107.769-.322l2.93-2.955a1.01 1.01 0 000-1.419.987.987 0 00-1.406 0l-2.298 2.317-2.307-2.327a.99.99 0 00-1.406 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  background-size: 24px;
+}
+
+.invalid-feedback {
+  display: block;
+  margin-top: 4px;
+  font-size: $font-size-sm;
+  line-height: 16px;
+  color: $danger;
+}
+
+// Checkboxes and radios.
+.form-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 8px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  label {
+    cursor: pointer;
+  }
+}
+
+.form-check-input {
+  appearance: none;
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin: 2px 0 0;
+  border: 2px solid var(--lz-sys-border);
+  border-radius: $border-radius-sm;
+  background-color: var(--lz-sys-input-bg);
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: var(--lz-sys-input-hover-bg);
+  }
+
+  &:checked {
+    background-color: $primary;
+    border-color: $primary;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%23FFFFFF' d='M6.27 10.87h.71l4.56-4.56-.71-.71-4.2 4.21-1.92-1.92L4 8.6z'/%3E%3C/svg%3E");
+    background-size: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+
+  &[type="radio"] {
+    border-radius: 50%;
+
+    &:checked {
+      background-image: none;
+      box-shadow: inset 0 0 0 3px var(--lz-ref-neutral-0);
+    }
+  }
+}
+
+// Toggle switch.
+// Usage: <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 16px;
+  vertical-align: middle;
+
+  input {
+    @include visually-hidden;
+  }
+
+  .toggle-slider {
+    position: absolute;
+    inset: 0;
+    border-radius: $border-radius-pill;
+    background-color: var(--lz-sys-toggle-off);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--lz-ref-neutral-0);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  input:checked + .toggle-slider {
+    background-color: $success;
+
+    &::before {
+      transform: translateX(16px);
+    }
+  }
+
+  input:focus-visible + .toggle-slider {
+    @include focus-ring;
+  }
+
+  input:disabled + .toggle-slider {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.toggle-lg {
+  width: 40px;
+  height: 20px;
+
+  .toggle-slider::before {
+    width: 16px;
+    height: 16px;
+  }
+
+  input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+  }
+}

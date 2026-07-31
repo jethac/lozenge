@@ -1,0 +1,42 @@
+{
+  "$comment": "Contrast contract: fg/bg sys-token pairs verified by check-contrast.mjs across scheme × contrast-dial × accent-hue sweeps. min = required WCAG 2.x ratio at dial >= 0 (AA: 4.5 text, 3 large-text/non-text). Below dial 0 (user-chosen reduced contrast) the floor relaxes to `relaxedMin` (default: 3 for 4.5-pairs, 2.25 for 3-pairs). atDial (optional) = only check at that dial position and above.",
+  "pairs": [
+    { "fg": "text", "bg": "surface", "min": 4.5 },
+    { "fg": "text", "bg": "surface-sunken", "min": 4.5 },
+    { "fg": "text", "bg": "surface-raised", "min": 4.5 },
+    { "fg": "text", "bg": "surface-overlay", "min": 4.5 },
+    { "fg": "text-subtle", "bg": "surface", "min": 4.5 },
+    { "fg": "text-subtle", "bg": "surface-sunken", "min": 4.5 },
+    { "fg": "text-subtle", "bg": "surface-raised", "min": 4.5 },
+    { "fg": "text-subtle", "bg": "surface-overlay", "min": 4.5 },
+    { "fg": "text-subtlest", "bg": "surface", "min": 3, "note": "placeholder/caption tier; reaches 4.5 by dial +0.35" },
+    { "fg": "text-subtlest", "bg": "surface", "min": 4.5, "atDial": 0.5 },
+
+    { "fg": "link", "bg": "surface", "min": 4.5 },
+    { "fg": "link", "bg": "surface-sunken", "min": 4.5 },
+    { "fg": "link-hover", "bg": "surface", "min": 4.5 },
+    { "fg": "selected-text", "bg": "selected-bg", "min": 4.5, "bgOver": "surface" },
+    { "fg": "focus-ring", "bg": "surface", "min": 3 },
+
+    { "fg": "text-on-bold", "bg": "accent-bold", "min": 4.5 },
+    { "fg": "text-on-bold", "bg": "danger-bold", "min": 4.5 },
+    { "fg": "status-warning-on-bold", "bg": "warning-bold", "min": 4.5 },
+
+    { "fg": "status-neutral-subtle-text", "bg": "status-neutral-subtle-bg", "min": 4.5, "bgOver": "surface" },
+    { "fg": "status-info-subtle-text", "bg": "status-info-subtle-bg", "min": 4.5, "bgOver": "surface" },
+    { "fg": "status-warning-subtle-text", "bg": "status-warning-subtle-bg", "min": 4.5, "bgOver": "surface" },
+    { "fg": "status-danger-subtle-text", "bg": "status-danger-subtle-bg", "min": 4.5, "bgOver": "surface" },
+    { "fg": "status-success-subtle-text", "bg": "status-success-subtle-bg", "min": 4.5, "bgOver": "surface" },
+    { "fg": "status-discovery-subtle-text", "bg": "status-discovery-subtle-bg", "min": 4.5, "bgOver": "surface" },
+
+    { "fg": "status-neutral-on-bold", "bg": "status-neutral-bold-bg", "min": 4.5 },
+    { "fg": "status-info-on-bold", "bg": "status-info-bold-bg", "min": 4.5 },
+    { "fg": "status-warning-on-bold", "bg": "status-warning-bold-bg", "min": 4.5 },
+    { "fg": "status-danger-on-bold", "bg": "status-danger-bold-bg", "min": 4.5 },
+    { "fg": "status-success-on-bold", "bg": "status-success-bold-bg", "min": 4.5 },
+    { "fg": "status-discovery-on-bold", "bg": "status-discovery-bold-bg", "min": 4.5 },
+
+    { "fg": "tooltip-text", "bg": "tooltip-bg", "min": 4.5 },
+    { "fg": "border", "bg": "surface", "min": 3, "atDial": 1, "note": "boundaries must be fully legible at max dial" }
+  ]
+}

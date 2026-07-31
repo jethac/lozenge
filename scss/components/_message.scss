@@ -1,0 +1,161 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Section messages (inline callouts).
+// Usage:
+// <div class="message message-warning">
+//   <div class="message-title">Heads up</div>
+//   <p>Your trial expires in 3 days.</p>
+// </div>
+.message {
+  padding: 16px 16px 16px 20px;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-surface-sunken);
+  box-shadow: inset 4px 0 0 var(--lz-sys-status-neutral-bold-bg);
+}
+
+@each $name, $family in $message-variants {
+  .message-#{$name} {
+    background-color: var(--lz-sys-status-#{$family}-subtle-bg);
+    box-shadow: inset 4px 0 0 var(--lz-sys-status-#{$family}-bold-bg);
+  }
+}
+
+.message-title {
+  margin-bottom: 8px;
+  @include heading(400);
+}
+
+.message-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+
+  a {
+    font-weight: $font-weight-medium;
+  }
+}
+
+// Full-width page banner.
+// Usage: <div class="banner banner-error">Something's gone wrong — retrying…</div>
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background-color: var(--lz-sys-status-neutral-bold-bg);
+  color: var(--lz-sys-status-neutral-on-bold);
+  font-weight: $font-weight-medium;
+  text-align: center;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+.banner-warning {
+  background-color: $warning;
+  color: var(--lz-sys-status-warning-on-bold);
+}
+
+.banner-error {
+  background-color: $danger;
+  color: var(--lz-sys-status-danger-on-bold);
+}
+
+// Flag — floating toast notification (bottom-left in Jira).
+// Usage:
+// <div class="flag">
+//   <div class="flag-icon"><span class="issue-type issue-type-story"></span></div>
+//   <div class="flag-content">
+//     <div class="flag-title">Issue created</div>
+//     <div class="flag-description">LOZ-42 has been added to the backlog.</div>
+//     <div class="flag-actions"><a href="#">View issue</a></div>
+//   </div>
+//   <button class="flag-dismiss" aria-label="Dismiss">×</button>
+// </div>
+.flag {
+  display: flex;
+  gap: 12px;
+  width: 400px;
+  max-width: 100%;
+  padding: 16px;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-surface-overlay);
+  box-shadow: $shadow-modal;
+}
+
+.flag-fixed {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: $z-flag;
+}
+
+.flag-icon {
+  flex-shrink: 0;
+}
+
+.flag-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.flag-title {
+  @include heading(400);
+}
+
+.flag-description {
+  margin-top: 4px;
+  color: $text-subtle;
+}
+
+.flag-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+
+  a {
+    font-weight: $font-weight-medium;
+  }
+}
+
+.flag-dismiss {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: $border-radius;
+  background: none;
+  color: $text-subtle;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+  }
+}
+
+// Bold flag variants for success/error toasts.
+@each $name, $family in $message-variants {
+  .flag-#{$name} {
+    background-color: var(--lz-sys-status-#{$family}-bold-bg);
+
+    &,
+    .flag-title,
+    .flag-description,
+    .flag-actions a,
+    .flag-dismiss {
+      color: var(--lz-sys-status-#{$family}-on-bold);
+    }
+
+    .flag-dismiss:hover {
+      background-color: rgba(0 0 0 / 0.2);
+    }
+  }
+}

@@ -1,0 +1,108 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// CSS-only open state via .open on the wrapper, or drive with JS.
+// Usage:
+// <div class="dropdown open">
+//   <button class="btn">Filter ▾</button>
+//   <div class="dropdown-menu">
+//     <div class="dropdown-heading">Status</div>
+//     <a class="dropdown-item" href="#">To do</a>
+//     <a class="dropdown-item selected" href="#">In progress</a>
+//     <div class="dropdown-divider"></div>
+//     <a class="dropdown-item danger" href="#">Delete</a>
+//   </div>
+// </div>
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: $z-dropdown;
+  display: none;
+  min-width: 160px;
+  max-width: 320px;
+  margin-top: 4px;
+  padding: 4px 0;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-surface-overlay);
+  box-shadow: $shadow-overlay;
+}
+
+.dropdown.open > .dropdown-menu,
+.dropdown-menu.show {
+  display: block;
+}
+
+.dropdown-menu-end {
+  left: auto;
+  right: 0;
+}
+
+.dropdown-heading {
+  padding: 8px 16px 4px;
+  @include heading(100);
+  text-transform: uppercase;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  background: none;
+  color: $text-color;
+  font-family: inherit;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  text-align: left;
+  cursor: pointer;
+  @include truncate;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+
+  &.selected {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+
+  &.danger {
+    color: $danger;
+
+    &:hover {
+      background-color: var(--lz-sys-status-danger-subtle-bg);
+      color: var(--lz-sys-status-danger-subtle-text);
+    }
+  }
+
+  &.disabled {
+    color: $text-disabled;
+    pointer-events: none;
+  }
+}
+
+.dropdown-item-description {
+  display: block;
+  font-size: $font-size-sm;
+  color: $text-subtle;
+  @include truncate;
+}
+
+.dropdown-divider {
+  height: 0;
+  margin: 4px 0;
+  border-top: 2px solid $separator-color;
+}

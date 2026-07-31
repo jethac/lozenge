@@ -1,0 +1,39 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Kanban board layout.
+// Usage:
+// <div class="board">
+//   <div class="board-column">
+//     <div class="board-column-header">To do <span class="badge">4</span></div>
+//     <div class="board-column-cards"> ...issue-cards... </div>
+//   </div>
+// </div>
+.board {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.board-column {
+  flex: 0 0 $column-width;
+  max-width: $column-width;
+  border-radius: $border-radius;
+  background-color: $column-bg;
+}
+
+.board-column-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 12px 8px;
+  @include heading(300);
+  @include truncate;
+}
+
+.board-column-cards {
+  padding: 4px 8px 8px;
+  min-height: 40px;
+}

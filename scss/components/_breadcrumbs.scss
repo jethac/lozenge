@@ -1,0 +1,34 @@
+@use "../tokens" as *;
+
+// Usage:
+// <nav class="breadcrumbs">
+//   <a href="#">Projects</a>
+//   <a href="#">Lozenge</a>
+//   <span aria-current="page">LOZ-1</span>
+// </nav>
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: $font-size-base;
+  color: $text-subtle;
+
+  > a {
+    color: $text-subtle;
+
+    &:hover {
+      color: $link-hover-color;
+      text-decoration: underline;
+    }
+  }
+
+  > * + *::before {
+    content: "/";
+    margin: 0 8px;
+    color: $text-subtlest;
+  }
+
+  > [aria-current="page"] {
+    color: $text-subtle;
+  }
+}

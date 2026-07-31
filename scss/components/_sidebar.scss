@@ -1,0 +1,71 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Project sidebar navigation.
+// Usage:
+// <aside class="sidebar">
+//   <div class="sidebar-header">
+//     <span class="avatar avatar-sm avatar-square">P</span>
+//     <div><div class="sidebar-title">Project name</div>
+//          <div class="sidebar-subtitle">Software project</div></div>
+//   </div>
+//   <div class="sidebar-section">Planning</div>
+//   <nav>
+//     <a class="sidebar-item active" href="#">Board</a>
+//     <a class="sidebar-item" href="#">Backlog</a>
+//   </nav>
+// </aside>
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: $sidebar-width;
+  padding: 16px 8px;
+  background-color: $sidebar-bg;
+  border-right: 1px solid $separator-color;
+  overflow-y: auto;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px 16px;
+}
+
+.sidebar-title {
+  @include heading(400);
+  @include truncate;
+}
+
+.sidebar-subtitle {
+  font-size: $font-size-sm;
+  color: $text-subtle;
+  @include truncate;
+}
+
+.sidebar-section {
+  padding: 16px 8px 4px;
+  @include heading(100);
+  text-transform: uppercase;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: $border-radius;
+  color: $text-subtle;
+  font-weight: $font-weight-medium;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+    text-decoration: none;
+  }
+
+  &.active {
+    background-color: var(--lz-sys-selected-bg);
+    color: var(--lz-sys-selected-text);
+  }
+}

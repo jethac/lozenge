@@ -1,0 +1,73 @@
+@use "sass:map";
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Usage:
+// <div class="blanket">
+//   <div class="modal modal-medium" role="dialog" aria-modal="true">
+//     <div class="modal-header"><h4 class="modal-title">Create issue</h4></div>
+//     <div class="modal-body">...</div>
+//     <div class="modal-footer">
+//       <button class="btn btn-subtle">Cancel</button>
+//       <button class="btn btn-primary">Create</button>
+//     </div>
+//   </div>
+// </div>
+.blanket {
+  position: fixed;
+  inset: 0;
+  z-index: $z-blanket;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 60px 16px;
+  background-color: $blanket-bg;
+  overflow-y: auto;
+}
+
+.modal {
+  z-index: $z-modal;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-height: calc(100vh - 120px);
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-surface-overlay);
+  box-shadow: $shadow-modal;
+}
+
+@each $name, $width in $modal-widths {
+  .modal-#{$name} {
+    max-width: $width;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 16px;
+}
+
+.modal-title {
+  margin: 0;
+  @include heading(600);
+}
+
+.modal-body {
+  padding: 0 24px;
+  overflow-y: auto;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 16px 24px 24px;
+}
+
+// Warning/danger emphasis for destructive confirmation modals.
+.modal-danger .modal-title {
+  color: $danger;
+}

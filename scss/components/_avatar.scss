@@ -1,0 +1,90 @@
+@use "sass:map";
+@use "../tokens" as *;
+
+// Usage:
+// <span class="avatar avatar-md"><img src="..." alt="Dana"></span>
+// Initials fallback: <span class="avatar avatar-md">DK</span>
+// Presence: <span class="avatar avatar-md avatar-online">...</span>
+$avatar-sizes: (
+  xs: 16px,
+  sm: 24px,
+  md: 32px,
+  lg: 40px,
+  xl: 96px,
+) !default;
+
+.avatar {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: var(--lz-sys-status-neutral-subtle-bg);
+  color: var(--lz-sys-text-subtle);
+  font-weight: $font-weight-semibold;
+  vertical-align: middle;
+  overflow: visible;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+@each $key, $size in $avatar-sizes {
+  .avatar-#{$key} {
+    width: $size;
+    height: $size;
+    font-size: $size * 0.4;
+  }
+}
+
+// Square variant for projects / apps.
+.avatar-square {
+  border-radius: $border-radius;
+
+  img {
+    border-radius: $border-radius;
+  }
+}
+
+// Presence indicator dot.
+.avatar-online::after,
+.avatar-busy::after,
+.avatar-offline::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 30%;
+  height: 30%;
+  min-width: 8px;
+  min-height: 8px;
+  border-radius: 50%;
+  border: 2px solid var(--lz-sys-surface);
+  background-color: var(--lz-ref-green-300);
+}
+
+.avatar-busy::after {
+  background-color: var(--lz-ref-yellow-300);
+}
+
+.avatar-offline::after {
+  background-color: var(--lz-sys-toggle-off);
+}
+
+// Overlapping stack of avatars.
+.avatar-group {
+  display: inline-flex;
+
+  .avatar {
+    border: 2px solid var(--lz-sys-surface);
+
+    + .avatar {
+      margin-left: -8px;
+    }
+  }
+}

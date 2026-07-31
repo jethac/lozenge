@@ -1,0 +1,26 @@
+{
+  "name": "lozenge-css",
+  "version": "0.1.0",
+  "description": "A Jira-flavoured, Bootstrap-style SASS component framework built on the Atlassian design token palette.",
+  "main": "dist/lozenge.css",
+  "sass": "scss/lozenge.scss",
+  "style": "dist/lozenge.css",
+  "files": [
+    "scss",
+    "dist"
+  ],
+  "scripts": {
+    "dev": "npm run tokens && vite",
+    "tokens": "node scripts/build-tokens.mjs",
+    "check": "node scripts/check-contrast.mjs",
+    "build": "npm run tokens && sass scss/lozenge.scss dist/lozenge.css --style=expanded --no-source-map && sass scss/lozenge.scss dist/lozenge.min.css --style=compressed --no-source-map",
+    "watch": "sass --watch scss/lozenge.scss dist/lozenge.css --style=expanded",
+    "test": "npm run check"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "culori": "^4.0.2",
+    "sass": "^1.77.0",
+    "vite": "^6.0.0"
+  }
+}

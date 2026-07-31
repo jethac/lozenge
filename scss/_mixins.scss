@@ -1,0 +1,40 @@
+@use "sass:map";
+@use "tokens" as *;
+
+// Focus ring used across all interactive components.
+@mixin focus-ring($color: $focus-ring-color) {
+  outline: none;
+  box-shadow: 0 0 0 $focus-ring-width $color;
+}
+
+// Atlassian-style heading, by level (100–900).
+@mixin heading($level) {
+  $h: map.get($headings, $level);
+  font-size: map.get($h, size);
+  line-height: map.get($h, line-height);
+  font-weight: map.get($h, weight);
+  color: map.get($h, color);
+  @if $level == 300 {
+    text-transform: uppercase;
+  }
+}
+
+// Single-line ellipsis truncation.
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Visually hidden but accessible.
+@mixin visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
