@@ -1,0 +1,25 @@
+{
+  "component": "lozenge",
+  "version": "0.1.0",
+  "intent": "The signature Jira-style status pill: a small uppercase label communicating workflow state (To do, In progress, Done...). Use it wherever an item's status must be scannable at a glance — issue cards, tables, detail headers. It is purely presentational text; it is not interactive.",
+  "root": { "selector": ".lozenge", "element": ["span"], "requiredClasses": ["lozenge"] },
+  "variants": {
+    "status": {
+      "classes": ["lozenge-default", "lozenge-inprogress", "lozenge-moved", "lozenge-new", "lozenge-removed", "lozenge-success"],
+      "required": true,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["lozenge-bold"],
+  "structure": [],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["inline text", ".issue-card-meta", "table cells", "detail headers", "anywhere inline content is valid"],
+    "disallowed": [".lozenge"]
+  },
+  "a11yNotes": "Text content is the accessible name — keep it meaningful (the visible status word). Color is never the only signal since the label text carries the state. The base .lozenge class has no background of its own: a status variant class is mandatory. Max width is 200px with truncation; avoid statuses long enough to truncate.",
+  "examples": [
+    "<span class=\"lozenge lozenge-inprogress\">In progress</span>",
+    "<span class=\"lozenge lozenge-success lozenge-bold\">Done</span>"
+  ]
+}

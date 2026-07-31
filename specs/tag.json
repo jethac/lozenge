@@ -1,0 +1,24 @@
+{
+  "component": "tag",
+  "version": "0.1.0",
+  "intent": "A label/keyword chip, optionally linked and optionally removable. Use for labels on issues, filters, and topic chips. Plain text children render as a static chip; an <a> child makes it navigable; a .tag-remove button makes it dismissible.",
+  "root": { "selector": ".tag", "element": ["span"], "requiredClasses": ["tag"] },
+  "variants": {},
+  "modifiers": ["tag-rounded"],
+  "structure": [
+    { "selector": "a", "required": false, "description": "Optional link child; inherits chip color, underlines on hover." },
+    { "selector": "button.tag-remove", "required": false, "description": "Optional remove button rendered after the label; shows danger colors on hover. Must be a <button> for keyboard operability." }
+  ],
+  "aria": [
+    { "on": ".tag-remove", "attr": "aria-label", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["inline text", "issue detail headers", "filter rows"],
+    "disallowed": [".tag"]
+  },
+  "a11yNotes": "Give .tag-remove an aria-label that names what it removes (e.g. aria-label=\"Remove frontend\"), not just \"Remove\". The chip itself is non-interactive; interactivity lives on the inner <a>/<button> so it stays keyboard-reachable.",
+  "examples": [
+    "<span class=\"tag\">design</span>",
+    "<span class=\"tag\"><a href=\"#\">frontend</a><button class=\"tag-remove\" aria-label=\"Remove frontend\">×</button></span>"
+  ]
+}

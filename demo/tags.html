@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lozenge — lz-* authoring tags</title>
+<script type="module">import "../scss/lozenge.scss";</script>
+<script type="module" src="./theme-panel.js"></script>
+</head>
+<body>
+<div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
+
+<h1>&lt;lz-*&gt; authoring tags</h1>
+<p class="text-subtle">This page is written in custom tags and macro-expanded to plain
+Lozenge HTML at build time — view source: there's no runtime, no custom elements,
+just the expanded markup. Compare <a href="/demo/">the hand-written demo</a>.</p>
+
+<section class="demo-section mt-6">
+  <h2>Lozenges</h2>
+  <p>
+    <lz-lozenge>To do</lz-lozenge>
+    <lz-lozenge status="inprogress">In progress</lz-lozenge>
+    <lz-lozenge status="success" bold>Done</lz-lozenge>
+    <lz-lozenge status="removed" bold>Removed</lz-lozenge>
+  </p>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Badges &amp; avatars</h2>
+  <p class="d-flex align-items-center gap-2">
+    <lz-badge>25</lz-badge>
+    <lz-badge appearance="important">8</lz-badge>
+    <lz-avatar size="sm">BC</lz-avatar>
+    <lz-avatar presence="online">JC</lz-avatar>
+    <lz-avatar size="lg" square>P</lz-avatar>
+  </p>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Board</h2>
+  <div class="board">
+    <lz-board-column title="To do" count="2">
+      <lz-issue-card type="task" key="LOZ-12">
+        Set up CI pipeline for nightly builds
+        <lz-badge slot="meta">3</lz-badge>
+        <lz-avatar slot="meta" size="sm">JC</lz-avatar>
+      </lz-issue-card>
+      <lz-issue-card type="bug" key="LOZ-14">
+        Login page throws redirect loop on expired session
+        <lz-avatar slot="meta" size="sm">DK</lz-avatar>
+      </lz-issue-card>
+    </lz-board-column>
+    <lz-board-column title="In progress" count="1">
+      <lz-issue-card type="story" key="LOZ-9">
+        Dark mode token pass for settings screens
+        <lz-lozenge slot="meta" status="inprogress">In progress</lz-lozenge>
+      </lz-issue-card>
+    </lz-board-column>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Messages &amp; flags</h2>
+  <lz-message variant="warning" title="Trial ending" class="mt-3">
+    <p>Your trial expires in 3 days.</p>
+  </lz-message>
+  <div class="demo-row mt-3" style="display:flex;gap:8px;flex-wrap:wrap">
+    <lz-flag title="Issue created" icon="story" actions="true">
+      LOZ-42 has been added to the backlog.
+      <a slot="actions" href="#">View issue</a>
+    </lz-flag>
+    <lz-flag title="Changes saved" appearance="success"></lz-flag>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Modal</h2>
+  <button class="btn btn-primary" commandfor="tag-modal" command="show-modal">Open modal</button>
+  <lz-modal id="tag-modal" size="small" title="Delete this issue?">
+    <p>LOZ-14 and its 3 subtasks will be permanently deleted.</p>
+    <button slot="footer" class="btn btn-subtle" value="cancel">Cancel</button>
+    <button slot="footer" class="btn btn-danger" value="confirm">Delete</button>
+  </lz-modal>
+</section>
+
+</div>
+</body>
+</html>

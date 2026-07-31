@@ -1,0 +1,52 @@
+{
+  "component": "avatar",
+  "version": "0.1.0",
+  "intent": "A circular user/entity avatar showing an image or initials fallback, with optional presence dot and square variant for projects/apps. A size class is mandatory — the base class sets no dimensions. Use .avatar-group to overlap several avatars (watchers, assignees).",
+  "root": { "selector": ".avatar", "element": ["span"], "requiredClasses": ["avatar"] },
+  "variants": {
+    "size": {
+      "classes": ["avatar-xs", "avatar-sm", "avatar-md", "avatar-lg", "avatar-xl"],
+      "required": true,
+      "exclusive": true
+    },
+    "presence": {
+      "classes": ["avatar-online", "avatar-busy", "avatar-offline"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["avatar-square"],
+  "structure": [
+    { "selector": "img", "required": false, "description": "Optional photo; fills the avatar with object-fit: cover. Omit it and put 1-2 characters of text content for the initials fallback." }
+  ],
+  "aria": [
+    { "on": "img", "attr": "alt", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": [".navbar-actions", ".issue-card-meta (placed last — it right-aligns via margin-left:auto)", ".sidebar-header", "table cells", ".avatar-group"],
+    "disallowed": [".avatar"]
+  },
+  "a11yNotes": "Initials alone don't identify a person to assistive tech; provide the full name via img alt, adjacent visible text, or aria-label on the avatar. Presence dots (online/busy/offline) are color-only ::after pseudo-elements — convey presence in text too where it matters. avatar-group truncation counters (\"+4\") are plain avatars; label the group, e.g. aria-label=\"7 watchers\".",
+  "examples": [
+    "<span class=\"avatar avatar-md\"><img src=\"dana.png\" alt=\"Dana K\"></span>",
+    "<span class=\"avatar avatar-md avatar-online\">JC</span>"
+  ],
+  "subcomponents": [
+    {
+      "component": "avatar-group",
+      "intent": "Overlapping horizontal stack of avatars, each gaining a surface-colored ring; consecutive avatars overlap by 8px.",
+      "root": { "selector": ".avatar-group", "element": ["span", "div"], "requiredClasses": ["avatar-group"] },
+      "variants": {},
+      "modifiers": [],
+      "structure": [
+        { "selector": ".avatar", "required": true, "description": "One or more .avatar children (each still needs its size class; use the same size for all)." }
+      ],
+      "aria": [],
+      "nesting": { "allowedIn": ["table cells", "card meta rows", "toolbars"], "disallowed": [".avatar-group"] },
+      "a11yNotes": "Label the stack as a whole (e.g. aria-label=\"Watchers: Alex, Bo, Cam and 4 others\") rather than relying on per-avatar initials.",
+      "examples": [
+        "<span class=\"avatar-group\"><span class=\"avatar avatar-md\">A</span><span class=\"avatar avatar-md\">B</span><span class=\"avatar avatar-md\">+4</span></span>"
+      ]
+    }
+  ]
+}

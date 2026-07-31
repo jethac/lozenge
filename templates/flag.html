@@ -1,0 +1,9 @@
+<div class="flag flag-{appearance}">
+  <div class="flag-icon" data-lz-if="icon"><span class="issue-type issue-type-{icon}"></span></div>
+  <div class="flag-content">
+    <div class="flag-title">{title}</div>
+    <div class="flag-description"><slot></slot></div>
+    <div class="flag-actions" data-lz-if="actions"><slot name="actions"></slot></div>
+  </div>
+  <button class="flag-dismiss" aria-label="Dismiss">×</button>
+</div>

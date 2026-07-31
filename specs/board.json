@@ -1,0 +1,22 @@
+{
+  "component": "board",
+  "version": "0.1.0",
+  "intent": "Kanban board layout: a horizontally scrolling flex row of fixed-width columns, each with a header and a cards well. Use it as the main work view of a project; fill .board-column-cards with .issue-card elements.",
+  "root": { "selector": ".board", "element": ["div"], "requiredClasses": ["board"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".board-column", "required": true, "description": "Direct children of .board; fixed width, sunken background. The board is a flex row of these." },
+    { "selector": ".board-column > .board-column-header", "required": false, "description": "Column title row (flex; truncates). Commonly ends with a <span class=\"badge\"> count." },
+    { "selector": ".board-column > .board-column-cards", "required": false, "description": "Padded well holding the stack of .issue-card elements; has a min-height so empty columns remain drop targets." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["main content area of the app shell"],
+    "disallowed": [".board"]
+  },
+  "a11yNotes": "Column headers are plain divs — consider making them real headings (or adding role/aria-level) so screen-reader users can navigate columns. If cards are draggable, provide a keyboard alternative for moving them between columns.",
+  "examples": [
+    "<div class=\"board\"><div class=\"board-column\"><div class=\"board-column-header\">To do <span class=\"badge\">4</span></div><div class=\"board-column-cards\"><div class=\"issue-card\"><div class=\"issue-card-summary\">Fix login loop</div></div></div></div></div>"
+  ]
+}

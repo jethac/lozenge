@@ -1,0 +1,27 @@
+{
+  "component": "button",
+  "version": "0.1.0",
+  "intent": "The standard action button. Use <button class=\"btn\"> for actions and <a class=\"btn\"> only for navigation styled as a button. Appearance variants set emphasis (primary for the single main action, danger/warning for destructive/risky ones); .active marks a toggled-on state; group related buttons inside .btn-group.",
+  "root": { "selector": ".btn", "element": ["button", "a"], "requiredClasses": ["btn"] },
+  "variants": {
+    "appearance": {
+      "classes": ["btn-primary", "btn-warning", "btn-danger", "btn-subtle", "btn-link", "btn-subtle-link"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": ["btn-compact", "btn-icon", "btn-block", "active", "disabled"],
+  "structure": [],
+  "aria": [
+    { "on": ".btn-icon", "attr": "aria-label", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["forms", ".navbar-actions", ".modal-footer", ".message-actions", ".btn-group (as direct child)", "toolbars"],
+    "disallowed": [".btn"]
+  },
+  "a11yNotes": "Prefer the native disabled attribute on <button> over the .disabled class (the class removes pointer events but a link stays focusable). On <a class=\"btn\"> used as an action, add role=\"button\". .btn-group is a plain flex wrapper of direct .btn children — give it role=\"group\" plus aria-label when the grouping is semantic (e.g. a segmented control).",
+  "examples": [
+    "<button class=\"btn btn-primary\">Create</button>",
+    "<div class=\"btn-group\"><button class=\"btn\">Days</button><button class=\"btn active\">Weeks</button><button class=\"btn\">Months</button></div>"
+  ]
+}

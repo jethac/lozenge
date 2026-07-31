@@ -1,19 +1,28 @@
 # Lozenge
 
-A Jira-flavoured, Bootstrap-style SASS component framework. Original CSS written against the Atlassian design-token palette — the familiar Jira look (N800 text, B400 blues, 8px grid, 3px radii, the lozenge status pill) with Bootstrap-esque class naming (`.btn .btn-primary`, `.badge`, `.modal`, spacing utilities).
+A Jira-flavoured design system with **runtime theme axes** — built as original CSS on the published Atlassian palette anchors, with Bootstrap-style class ergonomics.
 
-**Not affiliated with Atlassian.** No code was copied from Jira; this is an independent implementation of the visual style for internal projects.
+**Demo: [lozenge.jethachan.net](https://lozenge.jethachan.net)** · Not affiliated with Atlassian.
+
+What makes it different from a themeable CSS framework:
+
+- **Continuous contrast dial.** `--lz-contrast` is a numeric axis from −1 to +1, resolved through OKLCH relative color at runtime — no rebuild, animatable, drivable from a slider, your own logic, or a physical knob. OS `prefers-contrast` maps onto it (including *reduced* contrast for photophobic users). Every declared text/surface pair is CI-verified against WCAG 2.2 ratios at every dial position, in both schemes, across a 12-hue accent sweep (`npm run check`).
+- **Parametric accent.** `--lz-accent-hue` / `--lz-accent-chroma` rotate the entire accent system live; Jira blue is just the dial's resting position.
+- **Glass materials.** Overlay surfaces (navbar, menus, modals, flags) are frosted glass whose alpha is a function of the contrast dial — glass fades to solid as contrast rises — gated behind `@supports`, `prefers-reduced-transparency`, and forced-colors, with the solid rendering as the designed-first canonical state (`--lz-glass`).
+- **The platform is the behavior layer.** Modals are native `<dialog>` (+ `commandfor`), dropdowns are `popover` + CSS anchor positioning (with `@supports` fallback), accordions are `<details name>`, tabs are radios + `:has()`. Lozenge ships **zero runtime JavaScript**.
+- **Compile-time components.** `<lz-modal title="…">`-style tags macro-expand to canonical HTML at build time (Vite plugin or `lz-expand` CLI). The shipped artifact is inert HTML+CSS any stack can consume; `--react` emits JSX-friendly output.
+- **Agent-readable contracts.** Every component publishes a `specs/*.json` markup contract (structure, variants, ARIA); `lozenge-lint` validates rendered HTML against them in CI, and `llms.txt` compiles the whole system into agent context.
 
 ## Quick start
 
 ```bash
-npm install          # pulls dart-sass + vite
-npm run dev          # vite dev server, opens the kitchen-sink demo with SCSS HMR
-npm run build        # -> dist/lozenge.css + dist/lozenge.min.css
-npm run watch        # rebuild on change
+npm install
+npm run dev        # vite: demo with SCSS HMR + theme-axis control panel
+npm run build      # tokens → dist/lozenge.css + dist/lozenge.min.css
+npm run check      # contrast/gamut contract (also runs in CI)
 ```
 
-Drop the compiled sheet into any page:
+Drop-in use:
 
 ```html
 <link rel="stylesheet" href="dist/lozenge.min.css">
@@ -21,50 +30,62 @@ Drop the compiled sheet into any page:
 <span class="lozenge lozenge-inprogress">In progress</span>
 ```
 
-Or consume the source with your own Sass build, overriding tokens Bootstrap-style:
+Theme at runtime — everything below is live, no rebuild:
+
+```js
+const root = document.documentElement;
+root.dataset.theme = "dark";                          // scheme
+root.style.setProperty("--lz-contrast", 0.5);          // more contrast
+root.style.setProperty("--lz-accent-hue", 152);        // green accent
+root.style.setProperty("--lz-glass", 0);               // solid materials
+```
+
+## Token architecture
+
+Three tiers, generated from `tokens/ramps.json` + `tokens/sys.json` by `scripts/build-tokens.mjs`:
+
+1. **Reference** — `--lz-ref-<ramp>-<step>`: OKLCH ramps fitted to the Atlassian hex anchors, plus a parametric accent ramp derived from the blue ramp's lightness/chroma curve with hue/chroma taken from the dials.
+2. **System** — `--lz-sys-*`: semantic roles (`text`, `surface-overlay`, `status-danger-subtle-bg`, …) expressed as relative-color functions of the reference tier and the contrast dial. Light scheme on `:root`, dark under `[data-theme="dark"]` (with `prefers-color-scheme` fallback).
+3. **Component** — Sass-level tokens consumed by the ~20 components.
+
+The same `sys.json` is evaluated numerically by `scripts/check-contrast.mjs` — the CSS and the CI proof cannot drift. A DTCG v2025.10 export is generated at `tokens/lozenge.tokens.json`.
+
+Sass consumers can still override compile-time tokens Bootstrap-style:
 
 ```scss
-// Configure tokens BEFORE loading the framework — !default values yield to yours.
-@use "lozenge/scss/tokens" with (
-  $primary: #6554C0,
-  $font-size-base: 15px,
-);
+@use "lozenge/scss/tokens" with ($font-size-base: 15px);
 @use "lozenge/scss/lozenge";
 ```
 
-A curated set of tokens is also emitted as CSS custom properties (`--lz-primary`, `--lz-text-subtle`, `--lz-shadow-overlay`, …) for JS and plain-CSS use.
+## Authoring tags
 
-## What's in the box
+```html
+<lz-board-column title="In progress" count="3">
+  <lz-issue-card type="story" key="LOZ-9">
+    Dark mode token pass
+    <lz-lozenge slot="meta" status="inprogress">In progress</lz-lozenge>
+    <lz-avatar slot="meta" size="sm">AB</lz-avatar>
+  </lz-issue-card>
+</lz-board-column>
+```
 
-| Area | Classes |
-| --- | --- |
-| Buttons | `.btn`, `.btn-primary/-warning/-danger/-subtle/-link/-subtle-link`, `.btn-compact`, `.btn-icon`, `.btn-block`, `.btn-group`, `.active`, `:disabled` |
-| Lozenges | `.lozenge` + `-default/-inprogress/-moved/-new/-removed/-success`, `.lozenge-bold` |
-| Badges & tags | `.badge` (+`-primary/-important/-added/-removed`), `.tag`, `.tag-rounded`, `.tag-remove` |
-| Avatars | `.avatar` + `-xs/-sm/-md/-lg/-xl`, `.avatar-square`, presence `-online/-busy/-offline`, `.avatar-group` |
-| Forms | `.form-group/-label/-text`, `.form-control` (+`-compact/-subtle`), `.form-select`, `.is-invalid`, `.form-check`, `.toggle` (+`-lg`) |
-| Cards & board | `.card` (+header/body/footer), `.issue-card`, `.issue-type-story/-bug/-task/-epic`, `.board`, `.board-column` |
-| Navigation | `.navbar` (+`-primary`), `.nav-link`, `.sidebar`, `.sidebar-item/-section`, `.tabs`/`.tab`, `.breadcrumbs` |
-| Overlays | `.dropdown`/`.dropdown-menu` (open via `.open`/`.show`), `.blanket`, `.modal` (+`-small/-medium/-large/-xlarge`), `[data-tooltip]` (+`.tooltip-bottom/-left/-right`) |
-| Feedback | `.message` + `-info/-warning/-error/-success/-discovery`, `.banner` (+`-warning/-error`), `.flag` (+bold variants, `.flag-fixed`), `.progress` (+segmented), `.spinner` |
-| Tables | `.table`, `.table-hover/-striped/-compact`, `.sortable` |
-| Typography | `h1–h6` mapped to the Atlassian scale, `.h100–.h900` classes |
-| Utilities | text/bg colors, `.shadow-raised/-overlay/-modal`, spacing `.m*/.p*` 0–8 on the 8px grid, flex/display, `.gap-*`, borders/radii |
+Expanded by the Vite plugin at serve/build time, or `node scripts/lz-expand.mjs --write page.html`. Templates live in `templates/` and version-lock with the CSS; expanded roots are stamped `data-lz-version`, and `lz-expand --check` flags stale output after an upgrade.
 
-## Demo
+## Components
 
-`npm run dev` serves the kitchen-sink demo at `http://localhost:5173/demo/` — it imports `scss/lozenge.scss` directly, so any token or component edit hot-reloads in the browser.
+Buttons, lozenges, badges, tags, avatars, forms (inputs/selects/checks/toggles), cards + issue cards, kanban board, navbar, sidebar (`<details name>` groups), tabs (CSS-only tabset), breadcrumbs, dropdown (`popover`+anchor), modal (`<dialog>`), tooltips (CSS-only), section messages, banners, flags, tables, progress, spinners — plus text/bg/spacing/flex utilities on the 8px grid and an `h100–h900` type scale.
+
+## Accessibility
+
+WCAG 2.2 AA ratios are the normative CI gate (APCA advisory only). Forced-colors mode gets a dedicated pass (transparent borders for elevation, outline-based focus, system Highlight selection, glass/dial disabled). `prefers-reduced-motion` collapses all motion. The negative half of the contrast dial deliberately serves `prefers-contrast: less`.
 
 ## Structure
 
 ```
-scss/
-  lozenge.scss        entry point
-  _tokens.scss        all design tokens (palette, type, spacing, shadows) — !default
-  _mixins.scss        focus-ring, heading(), truncate, visually-hidden
-  _reset.scss         base element styles
-  _root.scss          CSS custom properties
-  _typography.scss    heading scale
-  _utilities.scss     Bootstrap-style utility classes
-  components/         one file per component
+tokens/        ramps.json, sys.json, pairs.json — the design source of truth
+scripts/       build-tokens, check-contrast, expand, lz-expand, lozenge-lint
+scss/          tokens, mixins, reset, typography, a11y, utilities, components/
+templates/     lz-* expansion templates
+specs/         per-component markup contracts (agent-readable)
+demo/          kitchen-sink + lz-tags demo + theme panel
 ```

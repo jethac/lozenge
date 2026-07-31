@@ -1,0 +1,25 @@
+{
+  "component": "badge",
+  "version": "0.1.0",
+  "intent": "A small pill for numeric counters — unread counts, story points, +/− deltas. Use it next to a label or inside .issue-card-meta / .board-column-header. For status words use .lozenge instead; for free-text labels use .tag.",
+  "root": { "selector": ".badge", "element": ["span"], "requiredClasses": ["badge"] },
+  "variants": {
+    "tone": {
+      "classes": ["badge-primary", "badge-important", "badge-added", "badge-removed"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": [],
+  "structure": [],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["inline text", ".issue-card-meta", ".board-column-header", "table cells", "buttons and nav items"],
+    "disallowed": [".badge"]
+  },
+  "a11yNotes": "The number is the accessible name. A bare number can be ambiguous to screen-reader users out of context; pair the badge with visible text, or add aria-label / visually-hidden text describing what is being counted (e.g. \"3 comments\").",
+  "examples": [
+    "<span class=\"badge\">25</span>",
+    "<span class=\"badge badge-important\">8</span>"
+  ]
+}
