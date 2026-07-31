@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "npm run tokens && vite",
     "tokens": "node scripts/build-tokens.mjs",
+    "tokens:dart": "node scripts/build-dart-tokens.mjs",
     "check": "node scripts/check-contrast.mjs",
     "lint": "node scripts/lozenge-lint.mjs demo/index.html",
     "llms": "node scripts/build-llms.mjs",

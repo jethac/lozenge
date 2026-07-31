@@ -79,6 +79,10 @@ Buttons, lozenges, badges, tags, avatars, forms (inputs/selects/checks/toggles),
 
 WCAG 2.2 AA ratios are the normative CI gate (APCA advisory only). Forced-colors mode gets a dedicated pass (transparent borders for elevation, outline-based focus, system Highlight selection, glass/dial disabled). `prefers-reduced-motion` collapses all motion. The negative half of the contrast dial deliberately serves `prefers-contrast: less`.
 
+## Flutter
+
+`packages/lozenge_flutter` is the Flutter arm: the same `tokens/*.json` generates a Dart token engine (`tokens.g.dart`) with the identical four runtime axes — `LzThemeData(dark:, contrast:, accentHue:, accentChroma:, glass:)` — resolved through a Dart OKLCH implementation whose output is CI-proven to match the web engine within ±2/255 per channel (a generated fixture of resolved colors is asserted by `flutter test`). `AnimatedLzTheme` makes axis changes sweep implicitly. On top: a Jira-flavoured widget set (`LzButton`, `LzLozenge`, `LzIssueCard`, `LzBoard`, `LzModal`, `LzMenu`, `LzSidebar`, trackers, skeletons, comments, …) plus a kitchen-sink example app with live axis sliders.
+
 ## Structure
 
 ```
