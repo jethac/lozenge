@@ -617,9 +617,11 @@ ${sections}`;
 // ------------------------------------------------------------------ main
 
 const specFiles = readdirSync(specsDir).filter((f) => f.endsWith(".json")).sort();
-const specs = specFiles.map((f) =>
-  JSON.parse(readFileSync(join(specsDir, f), "utf8"))
-);
+const specs = specFiles
+  .map((f) => JSON.parse(readFileSync(join(specsDir, f), "utf8")))
+  // Alphabetical by DISPLAY name, not filename (backlog lives in
+  // planning.json, select in listbox.json).
+  .sort((a, b) => (a.component < b.component ? -1 : a.component > b.component ? 1 : 0));
 const components = specs.map((s) => s.component);
 const sys = JSON.parse(readFileSync(join(root, "tokens", "sys.json"), "utf8"));
 

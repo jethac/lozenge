@@ -61,6 +61,39 @@ Overlapping horizontal stack of avatars, each gaining a surface-colored ring; co
 <span class="avatar-group"><span class="avatar avatar-md">A</span><span class="avatar avatar-md">B</span><span class="avatar avatar-md">+4</span></span>
 ```
 
+### backlog
+
+Sprint planning backlog: a flat list of separator-divided issue rows (.backlog-item), each showing type square, key, truncating summary, and optional status lozenge / story-point badge / assignee avatar. Pair with a .sprint-header strip above it. Author rows with the <lz-backlog-item> tag (templates/backlog-item.html).
+
+- Root: `.backlog` (element: div)
+- Required structure: `.backlog-item`
+
+```html
+<div class="backlog"><div class="backlog-item"><span class="issue-type issue-type-story" role="img" aria-label="story"></span><span class="issue-key">LOZ-1</span><span class="backlog-summary">Set up runtime theme axes</span><span class="lozenge lozenge-inprogress">In progress</span><span class="badge">3</span><span class="avatar avatar-sm">JC</span></div></div>
+```
+
+### sprint-header
+
+Sprint title strip above a backlog or board: sprint name (h500), date range, and a right-aligned actions cluster (total story-point badge + Start/Complete sprint compact button).
+
+- Root: `.sprint-header` (element: div | header)
+- Required structure: `.sprint-name`
+
+```html
+<div class="sprint-header"><h3 class="sprint-name">Sprint 14</h3><span class="sprint-dates">21 Jul &ndash; 1 Aug</span><div class="sprint-actions"><span class="badge" aria-label="23 story points">23</span><button class="btn btn-compact">Complete sprint</button></div></div>
+```
+
+### backlog-item
+
+One backlog row: issue-type square, key, flexible truncating summary, then optional status lozenge, story-point badge, and assignee avatar. Authored via <lz-backlog-item type key points status assignee> — points/status/assignee render only when the attribute is present; status maps to .lozenge.lozenge-{status}.
+
+- Root: `.backlog-item` (element: div)
+- Required structure: `.issue-type`, `.issue-key`, `.backlog-summary`
+
+```html
+<div class="backlog-item"><span class="issue-type issue-type-bug" role="img" aria-label="bug"></span><span class="issue-key">LOZ-34</span><span class="backlog-summary">Login page redirect loop</span><span class="badge" aria-label="1 story points">1</span><span class="avatar avatar-sm">DK</span></div>
+```
+
 ### badge
 
 A small pill for numeric counters — unread counts, story points, +/− deltas. Use it next to a label or inside .issue-card-meta / .board-column-header. For status words use .lozenge instead; for free-text labels use .tag.
@@ -378,30 +411,6 @@ List of tiles (Material ListTile equivalent): rows of optional leading icon/avat
 <ul class="list list-divided"><li class="list-item"><span class="list-item-leading"><span class="avatar avatar-md">JC</span></span><span class="list-item-content"><span class="list-item-title">Jetha Chan</span><span class="list-item-subtitle">Product designer</span></span><span class="list-item-trailing"><span class="lozenge lozenge-success">Active</span></span></li><li class="list-item"><span class="list-item-leading"><span class="avatar avatar-md">DK</span></span><span class="list-item-content"><span class="list-item-title">Dana Kim</span><span class="list-item-subtitle">Engineering</span></span><span class="list-item-trailing"><span class="lozenge lozenge-default">Away</span></span></li></ul>
 ```
 
-### select
-
-Customizable select: a native <select class="form-select select"> progressively enhanced with `appearance: base-select`. Supporting browsers render the picker as a styled overlay panel (dropdown-menu skin, styled options and checkmark); other browsers keep the fully native picker with the .form-select field skin. No extra markup and no JavaScript — semantics, keyboard, and AT behavior stay native in both modes.
-
-- Root: `select.select` (element: select)
-- Variants (base-skin; required, pick one): `form-select`
-- Modifiers: `is-invalid`
-- Required structure: `option`
-
-```html
-<select class="form-select select" id="status" aria-label="Status"><option>To do</option><option selected>In progress</option><option>Done</option></select>
-```
-
-### listbox
-
-Always-open listbox: a static ul/li list styled like an open picker panel, for pick-lists that stay visible (sidebars, transfer lists, command palettes). Selection is conveyed twice: the .selected class (or aria-selected="true") for styling, and aria-selected for AT. Purely presentational + ARIA — it ships no keyboard behavior of its own.
-
-- Root: `.listbox` (element: ul)
-- Required structure: `li.listbox-option`
-
-```html
-<ul class="listbox" role="listbox" aria-label="Labels"><li class="listbox-option" role="option" aria-selected="false">accessibility</li><li class="listbox-option selected" role="option" aria-selected="true">design-system</li><li class="listbox-option disabled" role="option" aria-disabled="true" aria-selected="false">legacy</li></ul>
-```
-
 ### lozenge
 
 The signature Jira-style status pill: a small uppercase label communicating workflow state (To do, In progress, Done...). Use it wherever an item's status must be scannable at a glance — issue cards, tables, detail headers. It is purely presentational text; it is not interactive.
@@ -493,39 +502,6 @@ Page navigation for long result sets: a flex row of 32px .page-link buttons with
 <nav class="pagination" aria-label="Pagination"><a class="page-link disabled" href="#" aria-disabled="true" aria-label="Previous page">&lsaquo;</a><a class="page-link" href="#">1</a><a class="page-link active" href="#" aria-current="page">2</a><span class="page-ellipsis">&hellip;</span><a class="page-link" href="#">9</a><a class="page-link" href="#" aria-label="Next page">&rsaquo;</a></nav>
 ```
 
-### backlog
-
-Sprint planning backlog: a flat list of separator-divided issue rows (.backlog-item), each showing type square, key, truncating summary, and optional status lozenge / story-point badge / assignee avatar. Pair with a .sprint-header strip above it. Author rows with the <lz-backlog-item> tag (templates/backlog-item.html).
-
-- Root: `.backlog` (element: div)
-- Required structure: `.backlog-item`
-
-```html
-<div class="backlog"><div class="backlog-item"><span class="issue-type issue-type-story" role="img" aria-label="story"></span><span class="issue-key">LOZ-1</span><span class="backlog-summary">Set up runtime theme axes</span><span class="lozenge lozenge-inprogress">In progress</span><span class="badge">3</span><span class="avatar avatar-sm">JC</span></div></div>
-```
-
-### sprint-header
-
-Sprint title strip above a backlog or board: sprint name (h500), date range, and a right-aligned actions cluster (total story-point badge + Start/Complete sprint compact button).
-
-- Root: `.sprint-header` (element: div | header)
-- Required structure: `.sprint-name`
-
-```html
-<div class="sprint-header"><h3 class="sprint-name">Sprint 14</h3><span class="sprint-dates">21 Jul &ndash; 1 Aug</span><div class="sprint-actions"><span class="badge" aria-label="23 story points">23</span><button class="btn btn-compact">Complete sprint</button></div></div>
-```
-
-### backlog-item
-
-One backlog row: issue-type square, key, flexible truncating summary, then optional status lozenge, story-point badge, and assignee avatar. Authored via <lz-backlog-item type key points status assignee> — points/status/assignee render only when the attribute is present; status maps to .lozenge.lozenge-{status}.
-
-- Root: `.backlog-item` (element: div)
-- Required structure: `.issue-type`, `.issue-key`, `.backlog-summary`
-
-```html
-<div class="backlog-item"><span class="issue-type issue-type-bug" role="img" aria-label="bug"></span><span class="issue-key">LOZ-34</span><span class="backlog-summary">Login page redirect loop</span><span class="badge" aria-label="1 story points">1</span><span class="avatar avatar-sm">DK</span></div>
-```
-
 ### promo
 
 Marketing promo/news tile: a 4:3 media zone (family-subtle tint, optional cover image) over a saturated family-colored body carrying a content-type kicker pill (Event, Podcast, Announcement…), an optional meta line (date · location), a display title, and an arrow CTA. The CTA link stretches across the whole card, so the tile reads as a single target. Unlike the neutral grouping surface .card, .promo is loud and self-linking — for marketing/docs surfaces, not app work views. Fluid width and full height; size it from your grid.
@@ -583,6 +559,30 @@ Segmented button with Material SegmentedButton anatomy in Lozenge tokens, on a n
 
 ```html
 <fieldset class="segmented" aria-label="View"><input type="radio" name="view" id="view-board" checked><label for="view-board">Board</label><input type="radio" name="view" id="view-list"><label for="view-list">List</label><input type="radio" name="view" id="view-timeline"><label for="view-timeline">Timeline</label></fieldset>
+```
+
+### select
+
+Customizable select: a native <select class="form-select select"> progressively enhanced with `appearance: base-select`. Supporting browsers render the picker as a styled overlay panel (dropdown-menu skin, styled options and checkmark); other browsers keep the fully native picker with the .form-select field skin. No extra markup and no JavaScript — semantics, keyboard, and AT behavior stay native in both modes.
+
+- Root: `select.select` (element: select)
+- Variants (base-skin; required, pick one): `form-select`
+- Modifiers: `is-invalid`
+- Required structure: `option`
+
+```html
+<select class="form-select select" id="status" aria-label="Status"><option>To do</option><option selected>In progress</option><option>Done</option></select>
+```
+
+### listbox
+
+Always-open listbox: a static ul/li list styled like an open picker panel, for pick-lists that stay visible (sidebars, transfer lists, command palettes). Selection is conveyed twice: the .selected class (or aria-selected="true") for styling, and aria-selected for AT. Purely presentational + ARIA — it ships no keyboard behavior of its own.
+
+- Root: `.listbox` (element: ul)
+- Required structure: `li.listbox-option`
+
+```html
+<ul class="listbox" role="listbox" aria-label="Labels"><li class="listbox-option" role="option" aria-selected="false">accessibility</li><li class="listbox-option selected" role="option" aria-selected="true">design-system</li><li class="listbox-option disabled" role="option" aria-disabled="true" aria-selected="false">legacy</li></ul>
 ```
 
 ### sheet

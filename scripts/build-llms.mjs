@@ -17,8 +17,12 @@ const outPath = path.join(repoRoot, "llms.txt");
 // ---------------------------------------------------------------- specs
 
 const blocks = [];
-for (const f of fs.readdirSync(specsDir).filter((x) => x.endsWith(".json")).sort()) {
-  const spec = JSON.parse(fs.readFileSync(path.join(specsDir, f), "utf8"));
+const topSpecs = fs.readdirSync(specsDir).filter((x) => x.endsWith(".json")).sort()
+  .map((f) => JSON.parse(fs.readFileSync(path.join(specsDir, f), "utf8")))
+  // Alphabetical by DISPLAY name, not filename (backlog lives in
+  // planning.json, select in listbox.json).
+  .sort((a, b) => (a.component < b.component ? -1 : a.component > b.component ? 1 : 0));
+for (const spec of topSpecs) {
   blocks.push(spec);
   for (const sub of spec.subcomponents ?? []) blocks.push(sub);
 }
