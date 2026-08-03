@@ -1,0 +1,82 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Consent — GDPR-style cookie/consent notice bar: a wide raised surface
+// holding legal copy with inline links,
+// a cluster of choice buttons, and an optional dismiss. Static in document
+// flow by default; add .consent-fixed to pin it bottom-center, above flags.
+// Unlike .flag or .snackbar it stays until the user decides — showing,
+// hiding, and persisting the choice are the app's job.
+// Usage:
+// <div class="consent" role="region" aria-label="Cookie consent">
+//   <div class="consent-body">This site uses cookies… <a href="#">Notice</a></div>
+//   <div class="consent-actions">
+//     <button class="btn btn-subtle-link">Manage preferences</button>
+//     <button class="btn">Reject all cookies</button>
+//     <button class="btn btn-primary">Accept all cookies</button>
+//   </div>
+//   <button class="consent-dismiss" aria-label="Dismiss">×</button>
+// </div>
+.consent {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  width: 100%;
+  padding: 16px;
+  border-radius: $border-radius;
+  box-shadow: $shadow-modal;
+  @include glass(var(--lz-sys-surface-overlay));
+}
+
+.consent-fixed {
+  position: fixed;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  z-index: $z-consent;
+  width: min(1200px, calc(100vw - 48px));
+  margin-inline: auto;
+}
+
+.consent-body {
+  flex: 1 1 320px;
+  min-width: 0;
+  color: $text-subtle;
+
+  a {
+    font-weight: $font-weight-medium;
+  }
+}
+
+.consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.consent-dismiss {
+  align-self: flex-start;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: $border-radius;
+  background: none;
+  color: $text-subtle;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}

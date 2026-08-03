@@ -310,6 +310,61 @@ vertical stepper — zero JS, platform primitives only. Back to
   </nav>
 </section>
 
+<section class="demo-section mt-6">
+  <h2>Mega menu</h2>
+  <p class="text-subtle">The marketing-nav pattern: a navbar item opens a wide
+  glass panel of grouped destinations — popover + implicit anchor, zero JS.
+  Panel markup lives outside the glass navbar as its sibling (glass never
+  nests). Click Products to open it.</p>
+  <nav class="navbar mt-3" aria-label="Site">
+    <a class="navbar-brand" href="#">Lozenge</a>
+    <ul class="navbar-nav">
+      <li><button class="nav-link" popovertarget="mm-products">Products</button></li>
+      <li><a class="nav-link" href="#">Pricing</a></li>
+      <li><a class="nav-link" href="#">Docs</a></li>
+    </ul>
+    <div class="navbar-actions">
+      <a class="nav-link" href="#">Sign in</a>
+      <button class="btn btn-primary btn-pill">Get started</button>
+    </div>
+  </nav>
+  <nav id="mm-products" popover class="mega-menu" aria-label="Products">
+    <div class="mega-menu-group">
+      <div class="mega-menu-heading">Plan and track</div>
+      <a class="mega-menu-item" href="#">
+        <span class="mega-menu-item-title">Board</span>
+        <span class="mega-menu-item-description">Kanban for the zero-JS era</span>
+      </a>
+      <a class="mega-menu-item" href="#">
+        <span class="mega-menu-item-title">Backlog</span>
+        <span class="mega-menu-item-description">Sprint planning with story points</span>
+      </a>
+    </div>
+    <div class="mega-menu-group">
+      <div class="mega-menu-heading">Report</div>
+      <a class="mega-menu-item" href="#">
+        <span class="mega-menu-item-title">Timeline</span>
+        <span class="mega-menu-item-description">Gantt-lite across epics</span>
+      </a>
+      <a class="mega-menu-item" href="#">
+        <span class="mega-menu-item-title">Tracker</span>
+        <span class="mega-menu-item-description">Milestones and check-ins</span>
+      </a>
+    </div>
+    <div class="mega-menu-group">
+      <div class="mega-menu-heading">Platform</div>
+      <a class="mega-menu-item" href="#">
+        <span class="mega-menu-item-title">Tokens</span>
+        <span class="mega-menu-item-description">Four runtime theme axes</span>
+      </a>
+      <a class="mega-menu-item" href="#">
+        <span class="mega-menu-item-title">Authoring tags</span>
+        <span class="mega-menu-item-description">lz-* macros, no runtime</span>
+      </a>
+    </div>
+  </nav>
+</section>
+
 </div>
 </body>
 </html>

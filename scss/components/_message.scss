@@ -65,6 +65,13 @@
   color: var(--lz-sys-status-danger-on-bold);
 }
 
+// Inverted announcement strip (events, launches) on the tooltip surface —
+// the one contrast-verified pairing on that surface in both schemes.
+.banner-inverse {
+  background-color: var(--lz-sys-tooltip-bg);
+  color: var(--lz-sys-tooltip-text);
+}
+
 // Flag — floating toast notification (bottom-left in Jira).
 // Usage:
 // <div class="flag">

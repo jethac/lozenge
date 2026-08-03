@@ -1,0 +1,36 @@
+{
+  "component": "promo",
+  "version": "0.1.0",
+  "intent": "Marketing promo/news tile: a 4:3 media zone (family-subtle tint, optional cover image) over a saturated family-colored body carrying a content-type kicker pill (Event, Podcast, Announcement…), an optional meta line (date · location), a display title, and an arrow CTA. The CTA link stretches across the whole card, so the tile reads as a single target. Unlike the neutral grouping surface .card, .promo is loud and self-linking — for marketing/docs surfaces, not app work views. Fluid width and full height; size it from your grid.",
+  "root": { "selector": ".promo", "element": ["div", "article", "li"], "requiredClasses": ["promo"] },
+  "variants": {
+    "tone": {
+      "classes": ["promo-info", "promo-warning", "promo-error", "promo-success", "promo-discovery"],
+      "required": false,
+      "exclusive": true
+    }
+  },
+  "modifiers": [],
+  "structure": [
+    { "selector": ".promo-body", "required": true, "description": "The content column: kicker, meta, title, CTA. Flex column; the CTA pins to the bottom so tiles in a row stay aligned." },
+    { "selector": ".promo-title", "required": true, "description": "Display title (heading 500 scale). A plain div or a real h2/h3 — the class zeroes the margin." },
+    { "selector": ".promo-media", "required": false, "description": "4:3 media zone tinted with the family's subtle background; drop in an <img> for photography/illustration (object-fit cover). Omit for a text-only tile." },
+    { "selector": ".promo-kicker", "required": false, "description": "Content-type pill (Event, Podcast…). Author in normal case — CSS uppercases it, like .lozenge." },
+    { "selector": ".promo-meta", "required": false, "description": "Meta line (date · location · runtime): spans of text, optional inline svg icons (16px, currentColor)." },
+    { "selector": ".promo-cta", "required": false, "description": "The arrow CTA link. It stretches over the whole card via ::before, so it is the card's only interactive element." }
+  ],
+  "aria": [
+    { "on": ".promo-cta", "attr": "aria-label", "required": false, "when": "the CTA text is generic (\"Read now\") — carry the title: \"Read now: <title>\"" },
+    { "on": ".promo-media img", "attr": "alt", "required": false, "when": "use empty alt (alt=\"\") when the image is decorative — the body already describes the subject" }
+  ],
+  "nesting": {
+    "allowedIn": ["card grids and marketing sections", "page content", "docs pages"],
+    "disallowed": [".promo .promo", ".card", ".issue-card", ".board", ".dropdown-menu"]
+  },
+  "a11yNotes": "One interactive element per tile: .promo-cta stretches across the card, so any other link or button inside .promo-body would become unreachable — put secondary actions outside the tile. When the CTA text is generic, its aria-label must carry the title (\"Read now: …\") so screen-reader link lists stay meaningful. The kicker's surface background picks the page surface token, which always sits further from mid-tone than the family's subtle background — the verified -subtle-text pairing survives in both schemes. Body text rides the CI-checked on-bold/bold-bg pair.",
+  "examples": [
+    "<article class=\"promo promo-info\"><div class=\"promo-media\"><img src=\"summit.png\" alt=\"\"></div><div class=\"promo-body\"><span class=\"promo-kicker\">Event</span><div class=\"promo-meta\"><span>Oct 6–8</span><span>Amsterdam</span></div><div class=\"promo-title\">The runtime-theming workshop, live</div><a class=\"promo-cta\" href=\"#\" aria-label=\"Watch now: The runtime-theming workshop, live\">Watch now</a></div></article>",
+    "<article class=\"promo promo-discovery\"><div class=\"promo-body\"><span class=\"promo-kicker\">Announcement</span><div class=\"promo-title\">Theme axes graduate from the lab</div><a class=\"promo-cta\" href=\"#\" aria-label=\"Read now: Theme axes graduate from the lab\">Read now</a></div></article>"
+  ],
+  "subcomponents": []
+}

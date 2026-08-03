@@ -10,7 +10,7 @@
       "exclusive": true
     }
   },
-  "modifiers": ["btn-compact", "btn-icon", "btn-block", "active", "disabled"],
+  "modifiers": ["btn-compact", "btn-icon", "btn-block", "btn-pill", "active", "disabled"],
   "structure": [],
   "aria": [
     { "on": ".btn-icon", "attr": "aria-label", "required": true }

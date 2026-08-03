@@ -1,0 +1,24 @@
+{
+  "component": "hero",
+  "version": "0.1.0",
+  "intent": "Marketing page-topper: a centered column with a display-size title (one phrase optionally wrapped in .hero-accent for the accent-colored run), a measured lede paragraph, and a CTA row — typically a stadium .btn-primary.btn-pill next to a .btn-subtle-link. The huge vertical whitespace is the point. .hero-grid adds a faint hairline grid backdrop that fades radially behind the content. For in-app empty regions use .empty-state — heroes belong to marketing/docs surfaces.",
+  "root": { "selector": ".hero", "element": ["section", "div", "header"], "requiredClasses": ["hero"] },
+  "variants": {},
+  "modifiers": ["hero-grid"],
+  "structure": [
+    { "selector": ".hero-title", "required": true, "description": "The display headline (display 900: 68px/76px, semibold, max-width 15ch). Any heading element; the class zeroes its margin. Wrap one phrase in .hero-accent for the accent run." },
+    { "selector": ".hero-lede", "required": false, "description": "Supporting paragraph: max-width 640px, 20px/30px, subtle." },
+    { "selector": ".hero-actions", "required": false, "description": "Centered CTA row with 12px gaps, wrapping allowed." }
+  ],
+  "aria": [],
+  "nesting": {
+    "allowedIn": ["page content, normally the first element of a marketing/docs page"],
+    "disallowed": [".hero", ".card", ".dropdown-menu", ".mega-menu"]
+  },
+  "a11yNotes": "One hero per page, and its title is the h1 — the display size is not a license to break the heading outline. .hero-accent is decoration, not emphasis: it must restate or color-amplify a word, never carry meaning that would be lost without the color (its pairing, status-info subtle text on the page surface, follows the verified contrast direction and tracks the accent-hue dial). The grid backdrop is a content-':before over a separator token; under forced-colors it repaints with the gridlines gone, which is the correct degradation.",
+  "examples": [
+    "<section class=\"hero hero-grid\"><h1 class=\"hero-title\">Ship the sprint, <span class=\"hero-accent\">skip the ceremony</span></h1><p class=\"hero-lede\">Lozenge turns platform primitives into a whole workflow surface — boards, backlogs, and flags with zero JavaScript.</p><div class=\"hero-actions\"><a class=\"btn btn-primary btn-pill\" href=\"#\">Get started</a><a class=\"btn btn-subtle-link\" href=\"#\">Read the docs</a></div></section>",
+    "<section class=\"hero\"><h1 class=\"hero-title\">Docs that lint themselves</h1><p class=\"hero-lede\">Every example on this site is generated from a machine-checked spec.</p></section>"
+  ],
+  "subcomponents": []
+}

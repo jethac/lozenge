@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tooltip — Lozenge</title>
+<title>Hero — Lozenge</title>
 <script type="module">import "../scss/lozenge.scss";</script>
 <script type="module" src="../demo/theme-panel.js"></script>
 <style>
@@ -65,7 +65,7 @@
       <a class="sidebar-item" href="empty-state.html">Empty-state</a>
       <a class="sidebar-item" href="fab.html">Fab</a>
       <a class="sidebar-item" href="forms.html">Forms</a>
-      <a class="sidebar-item" href="hero.html">Hero</a>
+      <a class="sidebar-item active" href="hero.html" aria-current="page">Hero</a>
       <a class="sidebar-item" href="inline-edit.html">Inline-edit</a>
       <a class="sidebar-item" href="list.html">List</a>
       <a class="sidebar-item" href="select.html">Select</a>
@@ -90,22 +90,29 @@
       <a class="sidebar-item" href="tabs.html">Tabs</a>
       <a class="sidebar-item" href="tag.html">Tag</a>
       <a class="sidebar-item" href="timeline.html">Timeline</a>
-      <a class="sidebar-item active" href="tooltip.html" aria-current="page">Tooltip</a>
+      <a class="sidebar-item" href="tooltip.html">Tooltip</a>
       <a class="sidebar-item" href="tracker.html">Tracker</a>
       <a class="sidebar-item" href="tree.html">Tree</a>
     </nav>
   </aside>
   <main class="docs-main">
-<h1>Tooltip</h1>
-<p class="text-subtle">Pure-CSS tooltip (Material's plain Tooltip): any element with a data-tooltip attribute grows a positioned label on hover/focus-visible — no elements, no JS. Position with .tooltip-bottom/.tooltip-left/.tooltip-right (default: above). For rich tooltips (title + body + action), compose a small [popover] panel on the .dropdown-menu skin with an interestfor trigger instead.</p>
-  <p class="text-subtlest">Root: <code>[data-tooltip]</code></p>
+<h1>Hero</h1>
+<p class="text-subtle">Marketing page-topper: a centered column with a display-size title (one phrase optionally wrapped in .hero-accent for the accent-colored run), a measured lede paragraph, and a CTA row — typically a stadium .btn-primary.btn-pill next to a .btn-subtle-link. The huge vertical whitespace is the point. .hero-grid adds a faint hairline grid backdrop that fades radially behind the content. For in-app empty regions use .empty-state — heroes belong to marketing/docs surfaces.</p>
+  <p class="text-subtlest">Root: <code>.hero</code> on <code>&lt;section&gt;</code>, <code>&lt;div&gt;</code>, <code>&lt;header&gt;</code></p>
 <section>
-<h2>Example</h2>
+<h2>Examples</h2>
 <div class="card doc-example">
-  <div class="card-header">Example</div>
+  <div class="card-header">Example 1</div>
   <div class="card-body">
-    <div class="doc-live"><button class="btn btn-icon" aria-label="Assign to me" data-tooltip="Assign to me">@</button></div>
-<pre><code>&lt;button class=&quot;btn btn-icon&quot; aria-label=&quot;Assign to me&quot; data-tooltip=&quot;Assign to me&quot;&gt;@&lt;/button&gt;</code></pre>
+    <div class="doc-live"><section class="hero hero-grid"><h1 class="hero-title">Ship the sprint, <span class="hero-accent">skip the ceremony</span></h1><p class="hero-lede">Lozenge turns platform primitives into a whole workflow surface — boards, backlogs, and flags with zero JavaScript.</p><div class="hero-actions"><a class="btn btn-primary btn-pill" href="#">Get started</a><a class="btn btn-subtle-link" href="#">Read the docs</a></div></section></div>
+<pre><code>&lt;section class=&quot;hero hero-grid&quot;&gt;&lt;h1 class=&quot;hero-title&quot;&gt;Ship the sprint, &lt;span class=&quot;hero-accent&quot;&gt;skip the ceremony&lt;/span&gt;&lt;/h1&gt;&lt;p class=&quot;hero-lede&quot;&gt;Lozenge turns platform primitives into a whole workflow surface — boards, backlogs, and flags with zero JavaScript.&lt;/p&gt;&lt;div class=&quot;hero-actions&quot;&gt;&lt;a class=&quot;btn btn-primary btn-pill&quot; href=&quot;#&quot;&gt;Get started&lt;/a&gt;&lt;a class=&quot;btn btn-subtle-link&quot; href=&quot;#&quot;&gt;Read the docs&lt;/a&gt;&lt;/div&gt;&lt;/section&gt;</code></pre>
+  </div>
+</div>
+<div class="card doc-example">
+  <div class="card-header">Example 2</div>
+  <div class="card-body">
+    <div class="doc-live"><section class="hero"><h1 class="hero-title">Docs that lint themselves</h1><p class="hero-lede">Every example on this site is generated from a machine-checked spec.</p></section></div>
+<pre><code>&lt;section class=&quot;hero&quot;&gt;&lt;h1 class=&quot;hero-title&quot;&gt;Docs that lint themselves&lt;/h1&gt;&lt;p class=&quot;hero-lede&quot;&gt;Every example on this site is generated from a machine-checked spec.&lt;/p&gt;&lt;/section&gt;</code></pre>
   </div>
 </div>
 </section>
@@ -115,19 +122,25 @@
   <div class="doc-table-wrap"><table class="table table-compact">
     <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
     <tbody>
-      <tr><td><code>tooltip-bottom</code></td><td>position</td><td>optional · exclusive</td></tr>
-      <tr><td><code>tooltip-left</code></td><td>position</td><td>optional · exclusive</td></tr>
-      <tr><td><code>tooltip-right</code></td><td>position</td><td>optional · exclusive</td></tr>
-      <tr><td><code>tooltip-bottom</code></td><td>modifier</td><td>optional</td></tr>
-      <tr><td><code>tooltip-left</code></td><td>modifier</td><td>optional</td></tr>
-      <tr><td><code>tooltip-right</code></td><td>modifier</td><td>optional</td></tr>
+      <tr><td><code>hero-grid</code></td><td>modifier</td><td>optional</td></tr>
+    </tbody>
+  </table></div>
+  <h3>Structure</h3>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>.hero-title</code></td><td>required</td><td>The display headline (display 900: 68px/76px, semibold, max-width 15ch). Any heading element; the class zeroes its margin. Wrap one phrase in .hero-accent for the accent run.</td></tr>
+      <tr><td><code>.hero-lede</code></td><td>optional</td><td>Supporting paragraph: max-width 640px, 20px/30px, subtle.</td></tr>
+      <tr><td><code>.hero-actions</code></td><td>optional</td><td>Centered CTA row with 12px gaps, wrapping allowed.</td></tr>
     </tbody>
   </table></div>
   <h3>Accessibility</h3>
-  <p class="text-subtle">The tooltip text is CSS content, invisible to assistive tech — data-tooltip must NEVER be the only label. Pair it with a real accessible name (aria-label or visible text): the tooltip is a visual reinforcement, not the name. It shows on :focus-visible as well as hover, and disappears for touch-only users — never put essential information here.</p>
+  <p class="text-subtle">One hero per page, and its title is the h1 — the display size is not a license to break the heading outline. .hero-accent is decoration, not emphasis: it must restate or color-amplify a word, never carry meaning that would be lost without the color (its pairing, status-info subtle text on the page surface, follows the verified contrast direction and tracks the accent-hue dial). The grid backdrop is a content-':before over a separator token; under forced-colors it repaints with the gridlines gone, which is the correct degradation.</p>
   <h3>Nesting</h3>
   <p>Allowed in:</p>
-  <ul><li><code>any focusable or hoverable element</code></li></ul>
+  <ul><li><code>page content, normally the first element of a marketing/docs page</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.hero</code></li> <li><code>.card</code></li> <li><code>.dropdown-menu</code></li> <li><code>.mega-menu</code></li></ul>
 </section>
   </main>
 </div>

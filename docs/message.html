@@ -58,21 +58,25 @@
       <a class="sidebar-item" href="carousel.html">Carousel</a>
       <a class="sidebar-item" href="chip.html">Chip</a>
       <a class="sidebar-item" href="comment-thread.html">Comment-thread</a>
+      <a class="sidebar-item" href="consent.html">Consent</a>
       <a class="sidebar-item" href="date-field.html">Date-field</a>
       <a class="sidebar-item" href="drawer.html">Drawer</a>
       <a class="sidebar-item" href="dropdown.html">Dropdown</a>
       <a class="sidebar-item" href="empty-state.html">Empty-state</a>
       <a class="sidebar-item" href="fab.html">Fab</a>
       <a class="sidebar-item" href="forms.html">Forms</a>
+      <a class="sidebar-item" href="hero.html">Hero</a>
       <a class="sidebar-item" href="inline-edit.html">Inline-edit</a>
       <a class="sidebar-item" href="list.html">List</a>
       <a class="sidebar-item" href="select.html">Select</a>
       <a class="sidebar-item" href="lozenge.html">Lozenge</a>
+      <a class="sidebar-item" href="mega-menu.html">Mega-menu</a>
       <a class="sidebar-item" href="menubar.html">Menubar</a>
       <a class="sidebar-item active" href="message.html" aria-current="page">Message</a>
       <a class="sidebar-item" href="navbar.html">Navbar</a>
       <a class="sidebar-item" href="pagination.html">Pagination</a>
       <a class="sidebar-item" href="backlog.html">Backlog</a>
+      <a class="sidebar-item" href="promo.html">Promo</a>
       <a class="sidebar-item" href="rail.html">Rail</a>
       <a class="sidebar-item" href="ring.html">Ring</a>
       <a class="sidebar-item" href="search-field.html">Search-field</a>
@@ -189,12 +193,19 @@
 <h3>Banner</h3>
 <p class="text-subtle">Full-width single-line page banner (maintenance notices, read-only mode, outages). Sits above or below the navbar spanning the viewport; content is centered and links inherit the bold text color.</p>
   <p class="text-subtlest">Root: <code>.banner</code> on <code>&lt;div&gt;</code></p>
-  <h4>Example</h4>
+  <h4>Examples</h4>
 <div class="card doc-example">
-  <div class="card-header">Example</div>
+  <div class="card-header">Example 1</div>
   <div class="card-body">
     <div class="doc-live"><div class="banner banner-error">Something's gone wrong — retrying…</div></div>
 <pre><code>&lt;div class=&quot;banner banner-error&quot;&gt;Something's gone wrong — retrying…&lt;/div&gt;</code></pre>
+  </div>
+</div>
+<div class="card doc-example">
+  <div class="card-header">Example 2</div>
+  <div class="card-body">
+    <div class="doc-live"><div class="banner banner-inverse">Lozenge Summit 2026 — tickets are live. <a href="#">Register now</a></div></div>
+<pre><code>&lt;div class=&quot;banner banner-inverse&quot;&gt;Lozenge Summit 2026 — tickets are live. &lt;a href=&quot;#&quot;&gt;Register now&lt;/a&gt;&lt;/div&gt;</code></pre>
   </div>
 </div>
   <h4>Variants &amp; modifiers</h4>
@@ -203,10 +214,11 @@
     <tbody>
       <tr><td><code>banner-warning</code></td><td>tone</td><td>optional · exclusive</td></tr>
       <tr><td><code>banner-error</code></td><td>tone</td><td>optional · exclusive</td></tr>
+      <tr><td><code>banner-inverse</code></td><td>tone</td><td>optional · exclusive</td></tr>
     </tbody>
   </table></div>
   <h4>Accessibility</h4>
-  <p class="text-subtle">Banners on bold backgrounds keep sufficient contrast via on-bold tokens. If a banner appears dynamically (e.g. connection lost) give it role=&quot;status&quot; / role=&quot;alert&quot;.</p>
+  <p class="text-subtle">Banners on bold backgrounds keep sufficient contrast via on-bold tokens; .banner-inverse uses the tooltip surface pair (events, launches) instead. If a banner appears dynamically (e.g. connection lost) give it role=&quot;status&quot; / role=&quot;alert&quot;.</p>
   <h4>Nesting</h4>
   <p>Allowed in:</p>
   <ul><li><code>directly under &lt;body&gt;, adjacent to .navbar</code></li></ul>

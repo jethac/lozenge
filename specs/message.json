@@ -31,7 +31,7 @@
       "root": { "selector": ".banner", "element": ["div"], "requiredClasses": ["banner"] },
       "variants": {
         "tone": {
-          "classes": ["banner-warning", "banner-error"],
+          "classes": ["banner-warning", "banner-error", "banner-inverse"],
           "required": false,
           "exclusive": true
         }
@@ -40,9 +40,10 @@
       "structure": [],
       "aria": [],
       "nesting": { "allowedIn": ["directly under <body>, adjacent to .navbar"], "disallowed": [".banner"] },
-      "a11yNotes": "Banners on bold backgrounds keep sufficient contrast via on-bold tokens. If a banner appears dynamically (e.g. connection lost) give it role=\"status\" / role=\"alert\".",
+      "a11yNotes": "Banners on bold backgrounds keep sufficient contrast via on-bold tokens; .banner-inverse uses the tooltip surface pair (events, launches) instead. If a banner appears dynamically (e.g. connection lost) give it role=\"status\" / role=\"alert\".",
       "examples": [
-        "<div class=\"banner banner-error\">Something's gone wrong — retrying…</div>"
+        "<div class=\"banner banner-error\">Something's gone wrong — retrying…</div>",
+        "<div class=\"banner banner-inverse\">Lozenge Summit 2026 — tickets are live. <a href=\"#\">Register now</a></div>"
       ]
     },
     {

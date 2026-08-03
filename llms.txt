@@ -10,7 +10,7 @@ Theming is runtime-parametric via four CSS custom properties on :root:
 - --lz-contrast      contrast boost, 0..1 (shifts lightness/chroma of system colors)
 - --lz-accent-hue    OKLCH hue of the accent ramp (default 260.48 — Jira blue)
 - --lz-accent-chroma accent chroma multiplier (0 = grayscale accent)
-- --lz-glass         frosted-glass materials on/off (navbar, modal, dropdown, flag)
+- --lz-glass         frosted-glass materials on/off (navbar, modal, dropdown, flag, consent, mega-menu)
 
 Dark scheme: set data-theme="dark" on <html> (system tokens carry light and dark
 values; components never hard-code scheme colors).
@@ -21,7 +21,8 @@ are the semantic tokens components consume. Always style with --lz-sys-*.
 Markup contracts below are machine-checked by scripts/lozenge-lint.mjs against
 specs/*.json. Rules of thumb: variant classes on one axis are mutually
 exclusive; "required" axes must have exactly one class; glass surfaces
-(navbar, dropdown-menu, modal, flag) must never nest inside each other.
+(navbar, dropdown-menu, modal, flag, consent, mega-menu) must never nest
+inside each other.
 
 ## Components
 
@@ -100,7 +101,7 @@ The standard action button. Use <button class="btn"> for actions and <a class="b
 
 - Root: `.btn` (element: button | a)
 - Variants (appearance; optional, pick one): `btn-primary`, `btn-warning`, `btn-danger`, `btn-subtle`, `btn-link`, `btn-subtle-link`
-- Modifiers: `btn-compact`, `btn-icon`, `btn-block`, `active`, `disabled`
+- Modifiers: `btn-compact`, `btn-icon`, `btn-block`, `btn-pill`, `active`, `disabled`
 
 ```html
 <button class="btn btn-primary">Create</button>
@@ -203,6 +204,18 @@ Reply box: the current user's avatar beside a .form-control textarea. Usually th
 
 ```html
 <div class="comment-editor"><span class="avatar avatar-md">JC</span><textarea class="form-control" aria-label="Add a comment" placeholder="Add a comment…"></textarea></div>
+```
+
+### consent
+
+GDPR-style cookie/consent notice bar: a wide raised surface holding legal copy with inline links and a cluster of choice buttons (typically Manage preferences / Reject all / Accept all), plus an optional dismiss. Static in document flow by default; add .consent-fixed to pin it bottom-center of the viewport, above flags. Unlike .flag (transient toast) or .banner (page-status strip), consent blocks on a decision and stays until the user acts. The component is purely presentational — showing, hiding, and persisting the choice (server-set consent cookie, no re-render) are the app's job.
+
+- Root: `.consent` (element: div | section | form)
+- Modifiers: `consent-fixed`
+- Required structure: `.consent-body`, `.consent-actions`
+
+```html
+<div class="consent" role="region" aria-label="Cookie consent"><div class="consent-body">This site uses cookies to improve your browsing experience and perform analytics. To change your preferences, click Manage preferences. <a href="#">Cookies and Tracking Notice</a></div><div class="consent-actions"><button class="btn btn-subtle-link" type="button">Manage preferences</button><button class="btn" type="button">Reject all cookies</button><button class="btn btn-primary" type="button">Accept all cookies</button></div></div>
 ```
 
 ### date-field
@@ -330,6 +343,18 @@ iOS-style switch: a <label class="toggle"> wrapping a visually-hidden checkbox a
 <label class="toggle"><input type="checkbox" aria-label="Send me updates" checked><span class="toggle-slider"></span></label>
 ```
 
+### hero
+
+Marketing page-topper: a centered column with a display-size title (one phrase optionally wrapped in .hero-accent for the accent-colored run), a measured lede paragraph, and a CTA row — typically a stadium .btn-primary.btn-pill next to a .btn-subtle-link. The huge vertical whitespace is the point. .hero-grid adds a faint hairline grid backdrop that fades radially behind the content. For in-app empty regions use .empty-state — heroes belong to marketing/docs surfaces.
+
+- Root: `.hero` (element: section | div | header)
+- Modifiers: `hero-grid`
+- Required structure: `.hero-title`
+
+```html
+<section class="hero hero-grid"><h1 class="hero-title">Ship the sprint, <span class="hero-accent">skip the ceremony</span></h1><p class="hero-lede">Lozenge turns platform primitives into a whole workflow surface — boards, backlogs, and flags with zero JavaScript.</p><div class="hero-actions"><a class="btn btn-primary btn-pill" href="#">Get started</a><a class="btn btn-subtle-link" href="#">Read the docs</a></div></section>
+```
+
 ### inline-edit
 
 In-place view/edit swap for a single field value. The zero-JS DEFAULT drives the swap with a visually-hidden checkbox: clicking the .inline-edit-view label checks it, and :has(:checked) on the wrapper hides the view and shows .inline-edit-editor (a .form-control plus compact Save/Cancel buttons). With a <form> root, Cancel is type="reset" — it unchecks the toggle AND reverts the field, and Save is type="submit": all platform behavior. Real apps will usually swap the two states with JS instead (render either the view or the editor); the classes work identically that way, and the checkbox may then be dropped.
@@ -389,6 +414,17 @@ The signature Jira-style status pill: a small uppercase label communicating work
 <span class="lozenge lozenge-inprogress">In progress</span>
 ```
 
+### mega-menu
+
+The wide marketing-nav panel opened from a navbar item (Products ▾, Solutions ▾ …), zero JS: a button.nav-link with popovertarget opens a [popover].mega-menu sibling — a glass surface of .mega-menu-group columns, each an optional uppercase .mega-menu-heading over .mega-menu-item links (title + one-line description). The platform supplies open/close, light-dismiss, Esc, and the top layer; positioning mirrors the .dropdown-menu popover recipe (implicit anchor, block-end) with a centered fixed fallback. For action menus use .dropdown-menu / .menubar — mega-menus are navigation.
+
+- Root: `.mega-menu` (element: div | nav)
+- Required structure: `.mega-menu-group`
+
+```html
+<button class="nav-link" popovertarget="mm-products">Products</button><nav id="mm-products" popover class="mega-menu" aria-label="Products"><div class="mega-menu-group"><div class="mega-menu-heading">Plan and track</div><a class="mega-menu-item" href="#"><span class="mega-menu-item-title">Board</span><span class="mega-menu-item-description">Kanban for the zero-JS era</span></a><a class="mega-menu-item" href="#"><span class="mega-menu-item-title">Backlog</span><span class="mega-menu-item-description">Sprint planning with story points</span></a></div><div class="mega-menu-group"><div class="mega-menu-heading">Report</div><a class="mega-menu-item" href="#"><span class="mega-menu-item-title">Timeline</span><span class="mega-menu-item-description">Gantt-lite across epics</span></a></div></nav>
+```
+
 ### menubar
 
 Desktop-style menu bar (File/Edit/View with cascading submenus), zero JS. Triggers open popover menus on the .dropdown-menu skin; submenus are popovers nested inside their parent menu's DOM (so opening one keeps the ancestor open), placed to the inline-end of their invoker item via implicit-anchor positioning. Items dismiss the chain with popovertarget/popovertargetaction="hide". Progressive layers: interest invokers (interestfor attribute, Chromium-first) add hover-open; /lozenge-sprinkle.js adds roving arrow-key focus.
@@ -416,7 +452,7 @@ Inline section message (callout) with a colored edge bar: contextual info, warni
 Full-width single-line page banner (maintenance notices, read-only mode, outages). Sits above or below the navbar spanning the viewport; content is centered and links inherit the bold text color.
 
 - Root: `.banner` (element: div)
-- Variants (tone; optional, pick one): `banner-warning`, `banner-error`
+- Variants (tone; optional, pick one): `banner-warning`, `banner-error`, `banner-inverse`
 
 ```html
 <div class="banner banner-error">Something's gone wrong — retrying…</div>
@@ -488,6 +524,18 @@ One backlog row: issue-type square, key, flexible truncating summary, then optio
 
 ```html
 <div class="backlog-item"><span class="issue-type issue-type-bug" role="img" aria-label="bug"></span><span class="issue-key">LOZ-34</span><span class="backlog-summary">Login page redirect loop</span><span class="badge" aria-label="1 story points">1</span><span class="avatar avatar-sm">DK</span></div>
+```
+
+### promo
+
+Marketing promo/news tile: a 4:3 media zone (family-subtle tint, optional cover image) over a saturated family-colored body carrying a content-type kicker pill (Event, Podcast, Announcement…), an optional meta line (date · location), a display title, and an arrow CTA. The CTA link stretches across the whole card, so the tile reads as a single target. Unlike the neutral grouping surface .card, .promo is loud and self-linking — for marketing/docs surfaces, not app work views. Fluid width and full height; size it from your grid.
+
+- Root: `.promo` (element: div | article | li)
+- Variants (tone; optional, pick one): `promo-info`, `promo-warning`, `promo-error`, `promo-success`, `promo-discovery`
+- Required structure: `.promo-body`, `.promo-title`
+
+```html
+<article class="promo promo-info"><div class="promo-media"><img src="summit.png" alt=""></div><div class="promo-body"><span class="promo-kicker">Event</span><div class="promo-meta"><span>Oct 6–8</span><span>Amsterdam</span></div><div class="promo-title">The runtime-theming workshop, live</div><a class="promo-cta" href="#" aria-label="Watch now: The runtime-theming workshop, live">Watch now</a></div></article>
 ```
 
 ### rail

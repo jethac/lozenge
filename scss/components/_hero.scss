@@ -1,0 +1,67 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Hero — marketing page-topper: a centered column with a display-size title
+// (optional accent run via .hero-accent), a measured lede, and a CTA row.
+// The huge vertical whitespace is the point. .hero-grid adds a faint
+// hairline grid backdrop that fades radially behind the content.
+// Usage:
+// <section class="hero hero-grid">
+//   <h1 class="hero-title">Ship it <span class="hero-accent">together</span></h1>
+//   <p class="hero-lede">…</p>
+//   <div class="hero-actions">
+//     <a class="btn btn-primary btn-pill" href="#">Get started</a>
+//     <a class="btn btn-subtle-link" href="#">Read the docs</a>
+//   </div>
+// </section>
+.hero {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 96px 24px;
+  text-align: center;
+}
+
+// Faint hairline grid behind the content, radially faded so edges dissolve
+// (::before so the mask never touches the text).
+.hero-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--lz-sys-separator) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--lz-sys-separator) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(0 0 0 / 0.5), transparent 72%);
+  mask-image: radial-gradient(ellipse 80% 90% at 50% 0%, rgba(0 0 0 / 0.5), transparent 72%);
+}
+
+.hero-title {
+  margin: 0;
+  max-width: 15ch;
+  @include display(900);
+}
+
+// The accent word: tracks the accent dial (status-info rides the parametric
+// accent ramp); the subtle-text-on-surface pairing keeps its verified
+// contrast direction in both schemes.
+.hero-accent {
+  color: var(--lz-sys-status-info-subtle-text);
+}
+
+.hero-lede {
+  margin: 16px 0 0;
+  max-width: 640px;
+  font-size: 20px;
+  line-height: 30px;
+  color: $text-subtle;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}

@@ -25,6 +25,14 @@ $-element-levels: (h1: 800, h2: 700, h3: 600, h4: 500, h5: 400, h6: 300);
   }
 }
 
+// Explicit display classes for marketing surfaces: .d700 / .d800 / .d900
+@each $level, $d in $displays {
+  .d#{$level} {
+    margin: 0;
+    @include display($level);
+  }
+}
+
 .text-truncate {
   @include truncate;
 }

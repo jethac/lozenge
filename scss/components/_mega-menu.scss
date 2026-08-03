@@ -1,0 +1,96 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Mega-menu — the wide marketing-nav panel opened from a navbar item
+// (Products ▾, Solutions ▾ …), zero JS: a button.nav-link with popovertarget
+// opens a [popover].mega-menu sibling; the platform supplies open/close,
+// light-dismiss, Esc, and the top layer. The panel markup sits OUTSIDE the
+// glass navbar (glass surfaces never nest). For action menus use
+// .dropdown-menu / .menubar — mega-menus are navigation.
+// Usage:
+// <button class="nav-link" popovertarget="mm-products">Products</button>
+// <nav id="mm-products" popover class="mega-menu" aria-label="Products">
+//   <div class="mega-menu-group">
+//     <div class="mega-menu-heading">Plan and track</div>
+//     <a class="mega-menu-item" href="#"><span class="mega-menu-item-title">Board</span>
+//       <span class="mega-menu-item-description">Kanban, zero JS</span></a>
+//   </div>
+// </nav>
+.mega-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px 32px;
+  width: min(960px, calc(100vw - 32px));
+  padding: 24px;
+  border: none;
+  border-radius: $border-radius;
+  box-shadow: $shadow-modal;
+  color: $text-color;
+  @include glass(var(--lz-sys-surface-overlay));
+}
+
+// Popover recipe (implicit anchor under the trigger), mirroring
+// .dropdown-menu[popover]; fallback: centered fixed panel below the navbar.
+.mega-menu[popover] {
+  inset: auto;
+  margin: 8px 0 0;
+
+  @supports (position-area: block-end) {
+    position-area: block-end span-inline-end;
+    position-try-fallbacks: flip-block, flip-inline;
+  }
+
+  @supports not (position-area: block-end) {
+    position: fixed;
+    top: 72px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  opacity: 1;
+  transition:
+    opacity var(--lz-motion-fast) var(--lz-ease-entrance),
+    display var(--lz-motion-fast) allow-discrete,
+    overlay var(--lz-motion-fast) allow-discrete;
+
+  @starting-style {
+    &:popover-open {
+      opacity: 0;
+    }
+  }
+}
+
+.mega-menu-heading {
+  padding: 0 8px 8px;
+  @include heading(100);
+  text-transform: uppercase;
+}
+
+.mega-menu-item {
+  display: block;
+  padding: 8px;
+  border-radius: $border-radius;
+  color: $text-color;
+  text-decoration: none;
+
+  &:hover {
+    background-color: var(--lz-sys-interaction-hovered);
+    color: $text-color;
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+.mega-menu-item-title {
+  display: block;
+  font-weight: $font-weight-medium;
+}
+
+.mega-menu-item-description {
+  display: block;
+  margin-top: 2px;
+  color: $text-subtle;
+  font-size: $font-size-sm;
+}

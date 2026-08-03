@@ -11,8 +11,24 @@
 <div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
 
 <h1>Content &amp; feedback</h1>
-<p class="text-subtle">Skeletons, empty states, drawers, and comment threads.
+<p class="text-subtle">Skeletons, empty states, promo cards, drawers, and comment threads.
 Compare <a href="/demo/">the demo index</a>.</p>
+
+<section class="demo-section mt-6">
+  <h2>Hero</h2>
+  <p class="text-subtle">The marketing page-topper: display title with one accent
+  word (<code>.hero-accent</code>, tracks the accent dial), measured lede, pill CTA
+  row. <code>.hero-grid</code> adds the faint hairline grid backdrop.</p>
+  <section class="hero hero-grid border rounded mt-3" aria-label="Intro">
+    <h1 class="hero-title">Ship the sprint, <span class="hero-accent">skip the ceremony</span></h1>
+    <p class="hero-lede">Lozenge turns platform primitives into a whole workflow
+    surface — boards, backlogs, and flags with zero JavaScript.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary btn-pill" href="#">Get started</a>
+      <a class="btn btn-subtle-link" href="#">Read the docs</a>
+    </div>
+  </section>
+</section>
 
 <section class="demo-section mt-6">
   <h2>Skeleton</h2>
@@ -41,6 +57,41 @@ Compare <a href="/demo/">the demo index</a>.</p>
     <button slot="actions" class="btn btn-primary">Create issue</button>
     <button slot="actions" class="btn btn-subtle">Import issues</button>
   </lz-empty-state>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Promo cards</h2>
+  <p class="text-subtle">Marketing/news tiles for docs &amp; announcement surfaces:
+  family-tinted media zone (drop in an <code>&lt;img&gt;</code> for photography),
+  content-type kicker, display title, arrow CTA — the link stretches across the
+  whole card, so each tile is a single target.</p>
+  <div class="mt-3" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px;">
+    <article class="promo promo-info">
+      <div class="promo-media"></div>
+      <div class="promo-body">
+        <span class="promo-kicker">Event</span>
+        <div class="promo-meta"><span>Oct 6–8</span><span>Amsterdam</span></div>
+        <div class="promo-title">The runtime-theming workshop, live</div>
+        <a class="promo-cta" href="#" aria-label="Watch now: The runtime-theming workshop, live">Watch now</a>
+      </div>
+    </article>
+    <article class="promo promo-discovery">
+      <div class="promo-media"></div>
+      <div class="promo-body">
+        <span class="promo-kicker">Ebook</span>
+        <div class="promo-title">Design tokens that argue back: a field guide</div>
+        <a class="promo-cta" href="#" aria-label="Read now: Design tokens that argue back: a field guide">Read now</a>
+      </div>
+    </article>
+    <article class="promo promo-success">
+      <div class="promo-media"></div>
+      <div class="promo-body">
+        <span class="promo-kicker">Podcast</span>
+        <div class="promo-title">Sprint ceremonies, ranked, with a guest from QA</div>
+        <a class="promo-cta" href="#" aria-label="Listen now: Sprint ceremonies, ranked, with a guest from QA">Listen now</a>
+      </div>
+    </article>
+  </div>
 </section>
 
 <section class="demo-section mt-6">

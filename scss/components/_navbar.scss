@@ -51,9 +51,14 @@
   align-items: center;
   height: 32px;
   padding: 0 8px;
+  border: none;
+  background: none;
   border-radius: $border-radius;
   color: $text-subtle;
+  font-family: inherit;
+  font-size: inherit;
   font-weight: $font-weight-medium;
+  cursor: pointer;
 
   &:hover {
     background-color: var(--lz-sys-interaction-hovered);

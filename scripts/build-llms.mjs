@@ -68,7 +68,7 @@ Theming is runtime-parametric via four CSS custom properties on :root:
 - --lz-contrast      contrast boost, 0..1 (shifts lightness/chroma of system colors)
 - --lz-accent-hue    OKLCH hue of the accent ramp (default 260.48 — Jira blue)
 - --lz-accent-chroma accent chroma multiplier (0 = grayscale accent)
-- --lz-glass         frosted-glass materials on/off (navbar, modal, dropdown, flag)
+- --lz-glass         frosted-glass materials on/off (navbar, modal, dropdown, flag, consent, mega-menu)
 
 Dark scheme: set data-theme="dark" on <html> (system tokens carry light and dark
 values; components never hard-code scheme colors).
@@ -79,7 +79,8 @@ are the semantic tokens components consume. Always style with --lz-sys-*.
 Markup contracts below are machine-checked by scripts/lozenge-lint.mjs against
 specs/*.json. Rules of thumb: variant classes on one axis are mutually
 exclusive; "required" axes must have exactly one class; glass surfaces
-(navbar, dropdown-menu, modal, flag) must never nest inside each other.
+(navbar, dropdown-menu, modal, flag, consent, mega-menu) must never nest
+inside each other.
 `);
 
 out.push("## Components\n");

@@ -17,6 +17,9 @@
 @use "components/tag";
 @use "components/forms";
 @use "components/card";
+@use "components/promo";
+@use "components/hero";
+@use "components/mega-menu";
 @use "components/board";
 @use "components/navbar";
 @use "components/sidebar";
@@ -49,6 +52,7 @@
 @use "components/accordion";
 @use "components/sheet";
 @use "components/snackbar";
+@use "components/consent";
 @use "components/ring";
 @use "components/bottom-nav";
 @use "components/rail";

@@ -36,6 +36,15 @@
   }
 }
 
+// Marketing display type, above the product heading scale (700–900).
+@mixin display($level) {
+  $d: map.get($displays, $level);
+  font-size: map.get($d, size);
+  line-height: map.get($d, line-height);
+  font-weight: map.get($d, weight);
+  color: map.get($d, color);
+}
+
 // Single-line ellipsis truncation.
 @mixin truncate {
   overflow: hidden;

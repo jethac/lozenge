@@ -1,0 +1,25 @@
+{
+  "component": "mega-menu",
+  "version": "0.1.0",
+  "intent": "The wide marketing-nav panel opened from a navbar item (Products ▾, Solutions ▾ …), zero JS: a button.nav-link with popovertarget opens a [popover].mega-menu sibling — a glass surface of .mega-menu-group columns, each an optional uppercase .mega-menu-heading over .mega-menu-item links (title + one-line description). The platform supplies open/close, light-dismiss, Esc, and the top layer; positioning mirrors the .dropdown-menu popover recipe (implicit anchor, block-end) with a centered fixed fallback. For action menus use .dropdown-menu / .menubar — mega-menus are navigation.",
+  "root": { "selector": ".mega-menu", "element": ["div", "nav"], "requiredClasses": ["mega-menu"] },
+  "variants": {},
+  "modifiers": [],
+  "structure": [
+    { "selector": ".mega-menu-group", "required": true, "description": "One column of the panel grid: an optional .mega-menu-heading over .mega-menu-item links. Groups flow in an auto-fit grid (min 200px tracks)." },
+    { "selector": ".mega-menu-heading", "required": false, "description": "Uppercase group label, heading-100 style." },
+    { "selector": ".mega-menu-item", "required": false, "description": "A destination link: .mega-menu-item-title over an optional one-line .mega-menu-item-description." }
+  ],
+  "aria": [
+    { "on": ".mega-menu", "attr": "aria-label", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["directly adjacent to its .navbar trigger, as a [popover] sibling — the panel markup lives outside the glass navbar"],
+    "disallowed": [".mega-menu .mega-menu", ".navbar", ".flag", ".consent", ".dropdown-menu"]
+  },
+  "a11yNotes": "Honest semantics: this is navigation, so it is a <nav class=\"mega-menu\"> with an aria-label — NOT role=menu/menuitem, which would promise arrow-key roving the zero-JS recipe does not ship (load /lozenge-sprinkle.js before opting into those roles). Hover-open can be layered on with interestfor invokers; focus return comes from the platform. Keep groups short — a mega panel is an index of destinations, not a sitemap.",
+  "examples": [
+    "<button class=\"nav-link\" popovertarget=\"mm-products\">Products</button><nav id=\"mm-products\" popover class=\"mega-menu\" aria-label=\"Products\"><div class=\"mega-menu-group\"><div class=\"mega-menu-heading\">Plan and track</div><a class=\"mega-menu-item\" href=\"#\"><span class=\"mega-menu-item-title\">Board</span><span class=\"mega-menu-item-description\">Kanban for the zero-JS era</span></a><a class=\"mega-menu-item\" href=\"#\"><span class=\"mega-menu-item-title\">Backlog</span><span class=\"mega-menu-item-description\">Sprint planning with story points</span></a></div><div class=\"mega-menu-group\"><div class=\"mega-menu-heading\">Report</div><a class=\"mega-menu-item\" href=\"#\"><span class=\"mega-menu-item-title\">Timeline</span><span class=\"mega-menu-item-description\">Gantt-lite across epics</span></a></div></nav>"
+  ],
+  "subcomponents": []
+}

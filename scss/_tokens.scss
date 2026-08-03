@@ -159,6 +159,14 @@ $headings: (
   100: (size: 11px, line-height: 16px, weight: $font-weight-bold,     color: $text-subtle),
 ) !default;
 
+// Display scale — marketing hero type sitting above the h100–h900 product
+// range. Consumed by .hero-title and by the standalone .d700–.d900 classes.
+$displays: (
+  700: (size: 44px, line-height: 52px, weight: $font-weight-semibold, color: $text-color),
+  800: (size: 56px, line-height: 64px, weight: $font-weight-semibold, color: $text-color),
+  900: (size: 68px, line-height: 76px, weight: $font-weight-semibold, color: $text-color),
+) !default;
+
 // ------------------------------------------------------------
 // Spacing (8px grid, 4px half-steps)
 // ------------------------------------------------------------
@@ -197,6 +205,7 @@ $z-dropdown:   300 !default;
 $z-blanket:    500 !default;
 $z-modal:      510 !default;
 $z-flag:       600 !default;
+$z-consent:    610 !default;
 $z-tooltip:    800 !default;
 
 // ------------------------------------------------------------

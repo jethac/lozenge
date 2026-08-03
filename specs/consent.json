@@ -1,0 +1,27 @@
+{
+  "component": "consent",
+  "version": "0.1.0",
+  "intent": "GDPR-style cookie/consent notice bar: a wide raised surface holding legal copy with inline links and a cluster of choice buttons (typically Manage preferences / Reject all / Accept all), plus an optional dismiss. Static in document flow by default; add .consent-fixed to pin it bottom-center of the viewport, above flags. Unlike .flag (transient toast) or .banner (page-status strip), consent blocks on a decision and stays until the user acts. The component is purely presentational — showing, hiding, and persisting the choice (server-set consent cookie, no re-render) are the app's job.",
+  "root": { "selector": ".consent", "element": ["div", "section", "form"], "requiredClasses": ["consent"] },
+  "variants": {},
+  "modifiers": ["consent-fixed"],
+  "structure": [
+    { "selector": ".consent-body", "required": true, "description": "The legal copy — a short paragraph that may carry inline links (privacy policy, tracking notice). Text renders subtle; links get medium weight." },
+    { "selector": ".consent-actions", "required": true, "description": "Button cluster for the consent choices. Reject and Accept should carry equal prominence (e.g. .btn next to .btn-primary); preferences/customise is usually a .btn-subtle-link." },
+    { "selector": ".consent-dismiss", "required": false, "description": "Optional close button, wired by the app. It must be equivalent to Reject — dismissal must never be treated as consent." }
+  ],
+  "aria": [
+    { "on": ".consent", "attr": "role", "required": false, "when": "give the bar role=\"region\" so it is landmark-discoverable without trapping focus" },
+    { "on": ".consent", "attr": "aria-label", "required": true }
+  ],
+  "nesting": {
+    "allowedIn": ["directly under <body> (with .consent-fixed)", "page content (static)"],
+    "disallowed": [".consent", ".flag", ".snackbar", ".dropdown-menu", ".navbar", "glass surfaces"]
+  },
+  "a11yNotes": "Consent is non-modal: it must not trap focus or block reading — users may ignore it. Give the bar role=\"region\" and a short aria-label (e.g. \"Cookie consent\") so it is landmark-discoverable. Accept and Reject need equal visual prominence; do not bury Reject in a submenu or pre-tick optional categories. A .consent-dismiss is equivalent to Reject, never implied consent. Because the bar can sit above page content, do not auto-focus it on load.",
+  "examples": [
+    "<div class=\"consent\" role=\"region\" aria-label=\"Cookie consent\"><div class=\"consent-body\">This site uses cookies to improve your browsing experience and perform analytics. To change your preferences, click Manage preferences. <a href=\"#\">Cookies and Tracking Notice</a></div><div class=\"consent-actions\"><button class=\"btn btn-subtle-link\" type=\"button\">Manage preferences</button><button class=\"btn\" type=\"button\">Reject all cookies</button><button class=\"btn btn-primary\" type=\"button\">Accept all cookies</button></div></div>",
+    "<div class=\"consent consent-fixed\" role=\"region\" aria-label=\"Cookie consent\"><div class=\"consent-body\">We use cookies to remember your theme and plan settings. <a href=\"#\">Learn more</a></div><div class=\"consent-actions\"><button class=\"btn\" type=\"button\">Reject</button><button class=\"btn btn-primary\" type=\"button\">Accept</button></div><button class=\"consent-dismiss\" type=\"button\" aria-label=\"Dismiss\">×</button></div>"
+  ],
+  "subcomponents": []
+}

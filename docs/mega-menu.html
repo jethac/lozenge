@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tooltip — Lozenge</title>
+<title>Mega-menu — Lozenge</title>
 <script type="module">import "../scss/lozenge.scss";</script>
 <script type="module" src="../demo/theme-panel.js"></script>
 <style>
@@ -70,7 +70,7 @@
       <a class="sidebar-item" href="list.html">List</a>
       <a class="sidebar-item" href="select.html">Select</a>
       <a class="sidebar-item" href="lozenge.html">Lozenge</a>
-      <a class="sidebar-item" href="mega-menu.html">Mega-menu</a>
+      <a class="sidebar-item active" href="mega-menu.html" aria-current="page">Mega-menu</a>
       <a class="sidebar-item" href="menubar.html">Menubar</a>
       <a class="sidebar-item" href="message.html">Message</a>
       <a class="sidebar-item" href="navbar.html">Navbar</a>
@@ -90,44 +90,49 @@
       <a class="sidebar-item" href="tabs.html">Tabs</a>
       <a class="sidebar-item" href="tag.html">Tag</a>
       <a class="sidebar-item" href="timeline.html">Timeline</a>
-      <a class="sidebar-item active" href="tooltip.html" aria-current="page">Tooltip</a>
+      <a class="sidebar-item" href="tooltip.html">Tooltip</a>
       <a class="sidebar-item" href="tracker.html">Tracker</a>
       <a class="sidebar-item" href="tree.html">Tree</a>
     </nav>
   </aside>
   <main class="docs-main">
-<h1>Tooltip</h1>
-<p class="text-subtle">Pure-CSS tooltip (Material's plain Tooltip): any element with a data-tooltip attribute grows a positioned label on hover/focus-visible — no elements, no JS. Position with .tooltip-bottom/.tooltip-left/.tooltip-right (default: above). For rich tooltips (title + body + action), compose a small [popover] panel on the .dropdown-menu skin with an interestfor trigger instead.</p>
-  <p class="text-subtlest">Root: <code>[data-tooltip]</code></p>
+<h1>Mega-menu</h1>
+<p class="text-subtle">The wide marketing-nav panel opened from a navbar item (Products ▾, Solutions ▾ …), zero JS: a button.nav-link with popovertarget opens a [popover].mega-menu sibling — a glass surface of .mega-menu-group columns, each an optional uppercase .mega-menu-heading over .mega-menu-item links (title + one-line description). The platform supplies open/close, light-dismiss, Esc, and the top layer; positioning mirrors the .dropdown-menu popover recipe (implicit anchor, block-end) with a centered fixed fallback. For action menus use .dropdown-menu / .menubar — mega-menus are navigation.</p>
+  <p class="text-subtlest">Root: <code>.mega-menu</code> on <code>&lt;div&gt;</code>, <code>&lt;nav&gt;</code></p>
 <section>
 <h2>Example</h2>
 <div class="card doc-example">
   <div class="card-header">Example</div>
   <div class="card-body">
-    <div class="doc-live"><button class="btn btn-icon" aria-label="Assign to me" data-tooltip="Assign to me">@</button></div>
-<pre><code>&lt;button class=&quot;btn btn-icon&quot; aria-label=&quot;Assign to me&quot; data-tooltip=&quot;Assign to me&quot;&gt;@&lt;/button&gt;</code></pre>
+    <div class="doc-live"><button class="nav-link" popovertarget="mm-products">Products</button><nav id="mm-products" popover class="mega-menu" aria-label="Products"><div class="mega-menu-group"><div class="mega-menu-heading">Plan and track</div><a class="mega-menu-item" href="#"><span class="mega-menu-item-title">Board</span><span class="mega-menu-item-description">Kanban for the zero-JS era</span></a><a class="mega-menu-item" href="#"><span class="mega-menu-item-title">Backlog</span><span class="mega-menu-item-description">Sprint planning with story points</span></a></div><div class="mega-menu-group"><div class="mega-menu-heading">Report</div><a class="mega-menu-item" href="#"><span class="mega-menu-item-title">Timeline</span><span class="mega-menu-item-description">Gantt-lite across epics</span></a></div></nav></div>
+<pre><code>&lt;button class=&quot;nav-link&quot; popovertarget=&quot;mm-products&quot;&gt;Products&lt;/button&gt;&lt;nav id=&quot;mm-products&quot; popover class=&quot;mega-menu&quot; aria-label=&quot;Products&quot;&gt;&lt;div class=&quot;mega-menu-group&quot;&gt;&lt;div class=&quot;mega-menu-heading&quot;&gt;Plan and track&lt;/div&gt;&lt;a class=&quot;mega-menu-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;mega-menu-item-title&quot;&gt;Board&lt;/span&gt;&lt;span class=&quot;mega-menu-item-description&quot;&gt;Kanban for the zero-JS era&lt;/span&gt;&lt;/a&gt;&lt;a class=&quot;mega-menu-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;mega-menu-item-title&quot;&gt;Backlog&lt;/span&gt;&lt;span class=&quot;mega-menu-item-description&quot;&gt;Sprint planning with story points&lt;/span&gt;&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;mega-menu-group&quot;&gt;&lt;div class=&quot;mega-menu-heading&quot;&gt;Report&lt;/div&gt;&lt;a class=&quot;mega-menu-item&quot; href=&quot;#&quot;&gt;&lt;span class=&quot;mega-menu-item-title&quot;&gt;Timeline&lt;/span&gt;&lt;span class=&quot;mega-menu-item-description&quot;&gt;Gantt-lite across epics&lt;/span&gt;&lt;/a&gt;&lt;/div&gt;&lt;/nav&gt;</code></pre>
   </div>
 </div>
 </section>
 <section>
 <h2>Contract</h2>
-  <h3>Variants &amp; modifiers</h3>
+  <h3>Structure</h3>
   <div class="doc-table-wrap"><table class="table table-compact">
-    <thead><tr><th>Class</th><th>Axis</th><th>Rules</th></tr></thead>
+    <thead><tr><th>Selector</th><th>Required</th><th>Description</th></tr></thead>
     <tbody>
-      <tr><td><code>tooltip-bottom</code></td><td>position</td><td>optional · exclusive</td></tr>
-      <tr><td><code>tooltip-left</code></td><td>position</td><td>optional · exclusive</td></tr>
-      <tr><td><code>tooltip-right</code></td><td>position</td><td>optional · exclusive</td></tr>
-      <tr><td><code>tooltip-bottom</code></td><td>modifier</td><td>optional</td></tr>
-      <tr><td><code>tooltip-left</code></td><td>modifier</td><td>optional</td></tr>
-      <tr><td><code>tooltip-right</code></td><td>modifier</td><td>optional</td></tr>
+      <tr><td><code>.mega-menu-group</code></td><td>required</td><td>One column of the panel grid: an optional .mega-menu-heading over .mega-menu-item links. Groups flow in an auto-fit grid (min 200px tracks).</td></tr>
+      <tr><td><code>.mega-menu-heading</code></td><td>optional</td><td>Uppercase group label, heading-100 style.</td></tr>
+      <tr><td><code>.mega-menu-item</code></td><td>optional</td><td>A destination link: .mega-menu-item-title over an optional one-line .mega-menu-item-description.</td></tr>
     </tbody>
   </table></div>
   <h3>Accessibility</h3>
-  <p class="text-subtle">The tooltip text is CSS content, invisible to assistive tech — data-tooltip must NEVER be the only label. Pair it with a real accessible name (aria-label or visible text): the tooltip is a visual reinforcement, not the name. It shows on :focus-visible as well as hover, and disappears for touch-only users — never put essential information here.</p>
+  <div class="doc-table-wrap"><table class="table table-compact">
+    <thead><tr><th>On</th><th>Attribute</th><th>Level</th><th>When</th></tr></thead>
+    <tbody>
+      <tr><td><code>.mega-menu</code></td><td><code>aria-label</code></td><td>required</td><td></td></tr>
+    </tbody>
+  </table></div>
+  <p class="text-subtle">Honest semantics: this is navigation, so it is a &lt;nav class=&quot;mega-menu&quot;&gt; with an aria-label — NOT role=menu/menuitem, which would promise arrow-key roving the zero-JS recipe does not ship (load /lozenge-sprinkle.js before opting into those roles). Hover-open can be layered on with interestfor invokers; focus return comes from the platform. Keep groups short — a mega panel is an index of destinations, not a sitemap.</p>
   <h3>Nesting</h3>
   <p>Allowed in:</p>
-  <ul><li><code>any focusable or hoverable element</code></li></ul>
+  <ul><li><code>directly adjacent to its .navbar trigger, as a [popover] sibling — the panel markup lives outside the glass navbar</code></li></ul>
+  <p>Never inside (or containing):</p>
+  <ul><li><code>.mega-menu .mega-menu</code></li> <li><code>.navbar</code></li> <li><code>.flag</code></li> <li><code>.consent</code></li> <li><code>.dropdown-menu</code></li></ul>
 </section>
   </main>
 </div>

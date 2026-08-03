@@ -11,7 +11,7 @@
 <div style="max-width: 1040px; margin: 0 auto; padding: 24px 16px 96px;">
 
 <h1>Surfaces &amp; data</h1>
-<p class="text-subtle">Lists, accordions, sheets, snackbars, and progress rings —
+<p class="text-subtle">Lists, accordions, sheets, snackbars, consent bars, and progress rings —
 zero-JS surface &amp; data components on platform primitives. Back to
 <a href="/demo/">the kitchen sink</a>.</p>
 
@@ -147,6 +147,25 @@ zero-JS surface &amp; data components on platform primitives. Back to
   <div class="snackbar mt-3" role="status">
     <span class="snackbar-message">Issue LOZ-42 moved to Done.</span>
     <button class="snackbar-action" type="button">Undo</button>
+  </div>
+</section>
+
+<section class="demo-section mt-6">
+  <h2>Consent bar</h2>
+  <p class="text-subtle">GDPR-style cookie notice — static in flow below;
+  <code>.consent-fixed</code> pins it
+  bottom-center above flags. Showing, hiding, and persisting the choice are
+  the app's (usually a server-set cookie decides whether to render).</p>
+  <div class="consent mt-3" role="region" aria-label="Cookie consent">
+    <div class="consent-body">This demo uses cookies to remember your theme
+    panel settings and to count visits. Clicking Reject or Accept stores your
+    choice on your device. <a href="#">Cookies and Tracking Notice</a></div>
+    <div class="consent-actions">
+      <button class="btn btn-subtle-link" type="button">Manage preferences</button>
+      <button class="btn" type="button">Reject all cookies</button>
+      <button class="btn btn-primary" type="button">Accept all cookies</button>
+    </div>
+    <button class="consent-dismiss" type="button" aria-label="Dismiss">×</button>
   </div>
 </section>
 

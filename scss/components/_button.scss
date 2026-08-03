@@ -145,6 +145,12 @@
   padding: 0 8px;
 }
 
+// Stadium-pill CTA (marketing hero buttons): 2em radius, a touch wider.
+.btn-pill {
+  padding: 0 ($btn-padding-x + 4px);
+  border-radius: $border-radius-pill;
+}
+
 // Icon-only square button.
 .btn-icon {
   width: $btn-height;

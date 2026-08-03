@@ -1,0 +1,136 @@
+@use "../tokens" as *;
+@use "../mixins" as *;
+
+// Promo — marketing promo/news tile: a 4:3 media zone over a saturated
+// family-colored body carrying a content-type kicker pill, an optional meta
+// line (date · location), a display title, and an arrow CTA. The CTA link
+// stretches across the whole card, so the tile reads as a single target.
+// Tone variants ride the status families (default neutral), named like
+// .message/.flag. Unlike the neutral grouping surface .card, .promo is
+// loud and self-linking — for marketing/docs surfaces, not app work views.
+// Usage:
+// <article class="promo promo-info">
+//   <div class="promo-media"><img src="cover.png" alt=""></div>
+//   <div class="promo-body">
+//     <span class="promo-kicker">Event</span>
+//     <div class="promo-meta"><span>Oct 6–8</span><span>Amsterdam</span></div>
+//     <div class="promo-title">The runtime-theming workshop, live</div>
+//     <a class="promo-cta" href="/workshop"
+//        aria-label="Watch now: The runtime-theming workshop, live">Watch now</a>
+//   </div>
+// </article>
+.promo {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: $border-radius;
+  color: var(--lz-sys-status-neutral-on-bold);
+  background-color: var(--lz-sys-status-neutral-bold-bg);
+}
+
+.promo-media {
+  aspect-ratio: 4 / 3;
+  background-color: var(--lz-sys-status-neutral-subtle-bg);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.promo-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+}
+
+// Content-type pill — the kicker conventions of .lozenge, on the page
+// surface so it reads white-on-color. Text takes the family's -subtle-text:
+// the surface token sits further from mid-tone than -subtle-bg does, so the
+// pairing keeps its verified contrast direction in both schemes.
+.promo-kicker {
+  align-self: flex-start;
+  padding: 2px 6px;
+  border-radius: $border-radius;
+  background-color: var(--lz-sys-surface);
+  color: var(--lz-sys-status-neutral-subtle-text);
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  line-height: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.promo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  color: inherit;
+
+  svg {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.promo-title {
+  margin: 0;
+  @include heading(500);
+  color: inherit; // after the mixin: its heading color must yield to on-bold
+}
+
+// Arrow CTA: stretched over the whole card via ::before (the tile is one
+// target — put no other links or buttons in the body), arrow nudge on hover
+// via ::after, both collapsed under prefers-reduced-motion.
+.promo-cta {
+  align-self: flex-start;
+  margin-top: auto;
+  color: inherit;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  &::after {
+    content: "\2192";
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 120ms ease;
+  }
+
+  &:hover::after {
+    transform: translateX(4px);
+  }
+
+  &:focus-visible {
+    @include focus-ring;
+  }
+}
+
+// Tone variants ride the status families: media tint, body fill, body text,
+// kicker text.
+@each $name, $family in $message-variants {
+  .promo-#{$name} {
+    color: var(--lz-sys-status-#{$family}-on-bold);
+    background-color: var(--lz-sys-status-#{$family}-bold-bg);
+
+    .promo-media {
+      background-color: var(--lz-sys-status-#{$family}-subtle-bg);
+    }
+
+    .promo-kicker {
+      color: var(--lz-sys-status-#{$family}-subtle-text);
+    }
+  }
+}
