@@ -45,11 +45,19 @@ const liveHtml = (html) =>
 
 // .card may not be used as the example container when the rendered example
 // itself contains a .card or .issue-card root (the contracts forbid nesting
-// them inside .card) — fall back to a plain bordered box.
+// them inside .card) — or a marketing-surface root like .hero/.promo, whose
+// contracts forbid living inside a card at all — fall back to a plain
+// bordered box.
 function hasCardConflict(html) {
   for (const m of html.matchAll(/class="([^"]*)"/g)) {
     const tokens = m[1].split(/\s+/);
-    if (tokens.includes("card") || tokens.includes("issue-card")) return true;
+    if (
+      tokens.includes("card") ||
+      tokens.includes("issue-card") ||
+      tokens.includes("hero") ||
+      tokens.includes("promo")
+    )
+      return true;
   }
   return false;
 }
